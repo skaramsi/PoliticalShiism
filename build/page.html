@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shi'a Political Movements, 1916–2026</title>
+<style>
+__FONTS__
+  :root {
+    --bg: #141c17;
+    --panel: #1b2520;
+    --line: #34443a;
+    --ink: #ece4d3;
+    --faint: #aaa995;
+    --terra: #c8673f;
+    --sand: #d6c49b;
+    --land: #27332b;
+    --sans: Calibri, Carlito, "Segoe UI", -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 20px; line-height: 1.55; }
+  .page { max-width: 920px; margin: 0 auto; padding: 22px 16px 48px; }
+  .kicker { margin: 0 0 6px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terra); }
+  h1 { margin: 0 0 6px; font-size: 34px; line-height: 1.1; font-weight: 600; }
+  .hint { margin: 0 0 14px; color: var(--faint); font-size: 17px; }
+  .years { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+  button { font: inherit; color: inherit; }
+  .years button, .back {
+    font-size: 15px;
+    color: var(--faint);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 11px;
+    cursor: pointer;
+  }
+  .years button[aria-current="true"] { background: var(--terra); border-color: var(--terra); color: #fff7ea; }
+  .years button:hover, .back:hover { border-color: var(--sand); color: var(--ink); }
+  .map-card { background: #0e1612; border: 1px solid var(--line); border-radius: 16px; padding: 8px; margin-bottom: 12px; }
+  svg { width: 100%; height: auto; max-height: 460px; display: block; }
+  .land { fill: var(--land); stroke: #0e1612; stroke-width: 1.1; }
+  .land.live { cursor: pointer; fill: #314033; }
+  .land.pick { fill: var(--terra); cursor: pointer; }
+  .label { fill: var(--sand); font-size: 22px; font-family: var(--sans); pointer-events: none; }
+  svg.zoomed .label { display: none; }
+  article { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px 16px; }
+  .where { margin: 0 0 6px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terra); }
+  article h2 { margin: 0 0 10px; font-size: 28px; line-height: 1.15; color: var(--sand); font-weight: 600; }
+  article p { margin: 0 0 12px; }
+  article p:last-of-type { margin-bottom: 0; }
+  .back { margin-top: 14px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="kicker">1916–2026</p>
+  <h1>Four movements</h1>
+  <p class="hint">Choose a year. Click a country to see what was happening there at the same time.</p>
+  <div class="years" id="years"></div>
+  <div class="map-card"><svg id="map" viewBox="0 90 900 800" role="img" aria-label="Map of the Middle East. Click a country."></svg></div>
+  <article id="card"></article>
+</div>
+<script id="payload" type="application/json">__DATA__</script>
+<script id="geo" type="application/json">__MAP__</script>
+<script>
+const DATA = JSON.parse(document.getElementById("payload").textContent);
+const GEO = JSON.parse(document.getElementById("geo").textContent);
+const SCENES = DATA.SCENES;
+const LABEL = { iran: "Iran", iraq: "Iraq", lebanon: "Lebanon", syria: "Syria", yemen: "Yemen", gulf: "The Gulf", jordan: "Jordan", palestine: "Israel & Palestine" };
+const MARK = {
+  iran: [620, 300, "Iran"],
+  iraq: [330, 250, "Iraq"],
+  syria: [190, 190, "Syria"],
+  lebanon: [70, 228, "Lebanon"],
+  jordan: [150, 360, "Jordan"],
+  palestine: [48, 325, "Israel"],
+  yemen: [400, 800, "Yemen"],
+  gulf: [560, 560, "Gulf"],
+};
+const LIVE = new Set(Object.keys(LABEL));
+
+let year = 0;
+let country = null;
+
+const yearsEl = document.getElementById("years");
+const card = document.getElementById("card");
+const svg = document.getElementById("map");
+
+function esc(s) {
+  return String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+}
+
+yearsEl.innerHTML = SCENES.map((s, n) => `<button type="button" data-y="${n}">${esc(s.years)}</button>`).join("");
+
+const byStage = {};
+for (const c of GEO.countries) {
+  if (!LIVE.has(c.stage)) continue;
+  (byStage[c.stage] = byStage[c.stage] || []).push(c);
+}
+svg.innerHTML = GEO.countries.filter((c) => LIVE.has(c.stage)).map((c) =>
+  `<path class="land" data-c="${c.stage}" d="${c.d}"></path>`).join("")
+  + Object.entries(MARK).map(([id, m]) => `<text class="label" x="${m[0]}" y="${m[1]}">${m[2]}</text>`).join("");
+
+svg.addEventListener("click", (e) => {
+  const path = e.target.closest(".land");
+  if (!path) return;
+  const id = path.dataset.c;
+  country = country === id ? null : id;
+  render();
+});
+
+function noteFor(scene, id) {
+  const note = DATA.LENS[scene.id]?.[id];
+  if (!note) return null;
+  const paras = Array.isArray(note[1]) ? note[1] : [note[1]];
+  return { title: note[0], paras };
+}
+
+function zoom(id) {
+  svg.classList.toggle("zoomed", !!id);
+  if (!id) {
+    svg.setAttribute("viewBox", "0 90 900 800");
+    return;
+  }
+  const parts = byStage[id] || [];
+  const cx = parts.reduce((s, c) => s + c.cx, 0) / (parts.length || 1);
+  const cy = parts.reduce((s, c) => s + c.cy, 0) / (parts.length || 1);
+  const w = 520;
+  const h = 400;
+  const x = Math.max(0, Math.min(900 - w, cx - w / 2));
+  const y = Math.max(0, Math.min(943 - h, cy - h / 2));
+  svg.setAttribute("viewBox", `${x} ${y} ${w} ${h}`);
+}
+
+function render() {
+  const scene = SCENES[year];
+  [...yearsEl.children].forEach((b, n) => {
+    if (n === year) b.setAttribute("aria-current", "true");
+    else b.removeAttribute("aria-current");
+  });
+  svg.querySelectorAll(".land").forEach((path) => {
+    const on = path.dataset.c === country;
+    path.classList.toggle("pick", on);
+    path.classList.toggle("live", !on);
+  });
+  zoom(country);
+  const picked = country && noteFor(scene, country);
+  const where = picked ? `${LABEL[country]} · ${scene.years}` : scene.years;
+  const title = picked ? picked.title : scene.title;
+  const paras = picked ? picked.paras : [scene.hook];
+  const back = country ? `<button type="button" class="back" id="back">The whole year</button>` : "";
+  card.innerHTML = `<p class="where">${esc(where)}</p><h2>${esc(title)}</h2>${paras.map((p) => `<p>${esc(p)}</p>`).join("")}${back}`;
+  const b = document.getElementById("back");
+  if (b) b.addEventListener("click", () => { country = null; render(); });
+  const hash = scene.id + (country ? "/" + country : "");
+  history.replaceState(null, "", "#" + hash);
+}
+
+yearsEl.addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  year = Number(b.dataset.y);
+  country = null;
+  render();
+});
+
+const hash = decodeURIComponent(location.hash.slice(1));
+const [sid, cid] = hash.split("/");
+const found = SCENES.findIndex((s) => s.id === sid);
+if (found >= 0) year = found;
+if (cid && LABEL[cid]) country = cid;
+render();
+</script>
+</body>
+</html>

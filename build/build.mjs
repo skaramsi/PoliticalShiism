@@ -78,7 +78,7 @@ data.INFLUENCE = INFLUENCE.map((l, i) => (RW.INFLUENCE_LABELS[i] ? { ...l, label
 const safe = (obj) => JSON.stringify(obj).replace(/</g, "\\u003c");
 const face = (style, weight, file) => `  @font-face { font-family: "Carlito"; font-style: ${style}; font-weight: ${weight}; font-display: swap; src: url(data:font/woff;base64,${readFileSync(here(`./fonts/${file}`)).toString("base64")}) format("woff"); }`;
 const fonts = [face("normal", 400, "carlito-Regular.woff"), face("normal", 700, "carlito-Bold.woff"), face("italic", 400, "carlito-Italic.woff")].join("\n");
-const html = readFileSync(here("./template.html"), "utf8")
+const html = readFileSync(here("./page.html"), "utf8")
   .replace("__FONTS__", () => fonts)
   .replaceAll("__W__", String(geo.width))
   .replaceAll("__H__", String(geo.height))
