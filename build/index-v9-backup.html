@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Political Shiism, 1930–2026</title>
+<meta name="description" content="An interactive chronology of political Shiism in the Middle East, from clerical quietism in 1930 to the unfinished war of 2026.">
+<style>
+  :root {
+    --paper: #f6f1e6;
+    --card: #fffaf3;
+    --ink: #1c1915;
+    --muted: #5c564c;
+    --faint: #8a8175;
+    --line: #e2d6c4;
+    --accent: #c4471a;
+    --accent-soft: #fde7da;
+    --warn: #7a4e12;
+    --warn-soft: #f8efd9;
+    --info-soft: #e5eef3;
+    --sea: #134058;
+    --iran: #d4531c;
+    --iraq: #e0a106;
+    --lebanon: #1c9a62;
+    --syria: #3b74d8;
+    --yemen: #c43b78;
+    --gulf: #0e8f8a;
+    --region: #6d5bd0;
+    --marginal: #6e7c86;
+    --parties: #2a6f97;
+    --revolution: #c23b22;
+    --contained: #c47b2b;
+    --state: #1f7a4d;
+    --axis: #6b3fa0;
+    --strain: #b4234a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  button, input { font: inherit; color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 32px 22px 80px; }
+  .stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.7fr);
+    gap: 18px;
+    margin: 0 0 22px;
+    align-items: stretch;
+  }
+  .map-card {
+    background: var(--sea);
+    border-radius: 18px;
+    padding: 12px 12px 8px;
+    color: #f3efe4;
+  }
+  .map { width: 100%; height: auto; display: block; }
+  .quiet-land { fill: #e4d2ae; stroke: #f7f1e6; stroke-width: 1.5; }
+  .water-label { fill: #9ec4d4; font-size: 11px; letter-spacing: 0.12em; font-weight: 600; }
+  .land { cursor: pointer; }
+  .land path, .land circle.hit { stroke: #fff8ee; stroke-width: 1.6; transition: opacity 0.2s ease; }
+  .land.is-dim { opacity: 0.38; }
+  .land.is-active path, .land.is-active circle.hit { stroke: #fff; stroke-width: 3; }
+  .land text { font-size: 14px; font-weight: 700; fill: #fffaf3; pointer-events: none; }
+  .land.iraq text { fill: #2a2118; }
+  .cities, #pin, .bridge { pointer-events: none; }
+  .cities { fill: #fff6df; opacity: 0.85; }
+  .bridge { fill: none; stroke: #f0d48a; stroke-width: 2.2; stroke-dasharray: 5 6; opacity: 0.35; }
+  .bridge.show { opacity: 0.95; stroke-width: 3; }
+  .pin-ring { fill: none; stroke: #ffe08a; stroke-width: 2; }
+  .pin-core { fill: #ffe08a; stroke: #1c1915; stroke-width: 1; }
+  .map-place {
+    margin: 6px 4px 2px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+    color: #d5e6ee;
+  }
+  .stage-side { display: flex; flex-direction: column; gap: 12px; }
+  .ribbon { display: flex; gap: 6px; position: relative; margin: 0 0 22px; padding-top: 10px; }
+  .ribbon button {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    border-radius: 8px;
+    background: var(--band);
+    color: #fffaf3;
+    text-align: left;
+    padding: 8px 6px;
+    cursor: pointer;
+    line-height: 1.15;
+  }
+  .ribbon button b, .ribbon button span { display: block; }
+  .ribbon button b { font-size: 11px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .ribbon button span { font-size: 12px; font-weight: 600; margin-top: 3px; }
+  .ribbon button[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .ribbon button.is-here { box-shadow: inset 0 -4px 0 #fff6d8; }
+  #playhead {
+    position: absolute;
+    top: -6px;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    border-radius: 99px;
+    background: var(--ink);
+    pointer-events: none;
+  }
+  .story { margin: 0 0 22px; }
+  .scenes { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 8px; }
+  .scene {
+    flex: 1 1 180px;
+    text-align: left;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 12px;
+    padding: 10px 12px;
+    cursor: pointer;
+  }
+  .scene b { display: block; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; letter-spacing: 0.04em; color: var(--faint); }
+  .scene span { display: block; font-size: 15px; font-weight: 600; line-height: 1.25; margin-top: 3px; }
+  .scene[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
+  .scene[aria-pressed="true"] b, .scene[aria-pressed="true"] span { color: #fffaf3; }
+  .lane-chart { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px 14px; }
+  .axis, .lane { display: grid; grid-template-columns: 92px 1fr; gap: 8px; align-items: center; }
+  .axis { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; color: var(--faint); margin-bottom: 4px; }
+  .axis-track, .lane-track { position: relative; }
+  .axis-track { height: 16px; }
+  .axis-track span { position: absolute; transform: translateX(-50%); }
+  .lane { margin: 3px 0; }
+  .lane-name { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; font-weight: 700; color: var(--tone); }
+  .lane-track { height: 28px; background: #f3ecdf; border-radius: 99px; }
+  .lane-shade { position: absolute; top: 2px; bottom: 2px; background: rgba(28, 25, 21, 0.08); border-radius: 99px; pointer-events: none; }
+  .blip, .bar { position: absolute; border: 2px solid #fff; padding: 0; cursor: pointer; }
+  .blip { top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 99px; background: var(--tone); }
+  .bar { top: 8px; height: 12px; border-radius: 99px; background: var(--tone); min-width: 8px; }
+  .blip[aria-current="true"], .bar[aria-current="true"] { outline: 2px solid var(--ink); z-index: 2; }
+  .also { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .also button {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    text-align: left;
+    background: #f3ecdf;
+    border: none;
+    border-left: 4px solid var(--tone);
+    border-radius: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+  }
+  #pins { pointer-events: none; }
+  .kicker {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 8px;
+  }
+  h1 { font-size: 42px; line-height: 1.05; font-weight: 600; margin: 0 0 12px; letter-spacing: -0.02em; }
+  h2 { font-size: 26px; line-height: 1.2; font-weight: 600; margin: 0; }
+  h3 { font-size: 18px; margin: 0 0 6px; font-weight: 600; }
+  .lede { color: var(--muted); max-width: 68ch; margin: 0 0 28px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 0 0 22px; }
+  .stats { grid-template-columns: 1fr 1fr; margin: 0; flex: 1; }
+  .stat {
+    text-align: left;
+    background: var(--card);
+    border: none;
+    border-left: 6px solid var(--tone, var(--accent));
+    border-radius: 10px;
+    padding: 10px 10px 10px 12px;
+    cursor: pointer;
+  }
+  .stat:hover { background: var(--accent-soft); }
+  .stat-value { display: block; font-size: 26px; line-height: 1; font-weight: 600; color: var(--tone, var(--ink)); }
+  .stat-label {
+    display: block;
+    margin-top: 6px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--muted);
+  }
+  .note, .warn-note {
+    padding: 14px 16px;
+    margin: 0 0 26px;
+    background: var(--info-soft);
+  }
+  .warn-note { background: var(--warn-soft); }
+  .note strong, .warn-note strong { display: block; margin-bottom: 4px; }
+  .note p, .warn-note p, .sources { margin: 0; }
+  .filters {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    padding: 12px 0 14px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
+  }
+  .filter-label {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 8px;
+  }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .pill {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+    line-height: 1;
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    background: transparent;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .pill i {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: var(--swatch, transparent);
+    display: inline-block;
+    margin-right: 6px;
+  }
+  .pill[aria-pressed="true"] {
+    background: var(--swatch, var(--ink));
+    color: #fffaf3;
+    border-color: transparent;
+  }
+  .pill[aria-pressed="true"] i { background: #fffaf3; }
+  .essay { max-width: 78ch; margin: 0 0 22px; }
+  .count {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+    color: var(--faint);
+    margin: 0 0 8px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: 28px;
+    align-items: start;
+    margin-bottom: 42px;
+  }
+  .detail {
+    position: sticky;
+    top: 128px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 8px solid var(--tone, var(--accent));
+    border-radius: 14px;
+    padding: 16px 18px 14px;
+  }
+  .detail-top { display: flex; gap: 12px; align-items: flex-start; }
+  .badge {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    color: #fffaf3;
+    background: var(--tone, var(--accent));
+    flex: none;
+  }
+  .badge svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linejoin: round; stroke-linecap: round; }
+  .detail h2 { font-size: 28px; margin-bottom: 8px; }
+  .meta {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 12px;
+  }
+  .why-label {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 14px 0 4px;
+  }
+  .why { color: var(--muted); margin: 0; }
+  .nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .nav button, .empty {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+  }
+  .nav button {
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .nav button:disabled { opacity: 0.4; cursor: default; }
+  .group-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 8px 0 4px;
+  }
+  .group-head h3 { margin: 0; }
+  .group-head span {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    color: var(--faint);
+  }
+  .event {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 8px;
+    cursor: pointer;
+  }
+  .event:hover { background: rgba(0, 0, 0, 0.03); }
+  .event[aria-current="true"] { background: color-mix(in srgb, var(--tone, var(--accent-soft)) 18%, white); }
+  .when {
+    width: 92px;
+    flex: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    color: var(--faint);
+    padding-top: 3px;
+  }
+  .rail { width: 12px; flex: none; display: flex; flex-direction: column; align-items: center; padding-top: 7px; }
+  .dot { width: 9px; height: 9px; border-radius: 99px; background: var(--tone, var(--line)); flex: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone, var(--line)) 25%, transparent); }
+  .event[aria-current="true"] .dot { box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone, var(--accent)) 35%, transparent); }
+  .stem { width: 1px; flex: 1; min-height: 16px; background: var(--line); }
+  .event-title { display: block; font-size: 16px; line-height: 1.3; }
+  .event[aria-current="true"] .event-title { font-weight: 600; }
+  .event-meta {
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .section { margin: 10px 0 36px; }
+  .section > p { color: var(--muted); max-width: 70ch; }
+  .ideas { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .idea {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 14px 14px 16px;
+    border-top: 8px solid var(--tone);
+  }
+  .idea .mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--tone);
+    margin-bottom: 8px;
+  }
+  .ideas p { margin: 0; color: var(--muted); font-size: 16px; }
+  th.c-iran { color: var(--iran); }
+  th.c-iraq { color: #9a6b00; }
+  th.c-leb { color: var(--lebanon); }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 600;
+  }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  tr.now td { background: var(--warn-soft); }
+  .table-wrap { overflow-x: auto; border-top: 1px solid var(--line); }
+  .caption {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+    color: var(--faint);
+    margin: 0 0 8px;
+  }
+  .sources { font-size: 14px; color: var(--faint); max-width: 80ch; }
+  @media (max-width: 860px) {
+    h1 { font-size: 34px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stage, .layout, .ideas { grid-template-columns: 1fr; }
+    .detail { position: static; }
+    .timeline { order: 2; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Middle East · 1930–2026</p>
+  <h1>Political Shiism, 1930–2026</h1>
+  <p class="lede">This was never one plot. In any given year Iran, Iraq, Lebanon, Syria, Yemen, and the Gulf were often in the middle of different arguments. Pick a scene. The map marks every place that scene touches, and the lanes show what else was already underway.</p>
+
+  <div class="stage">
+    <div class="map-card">
+      <svg class="map" viewBox="0 0 880 540" role="img" aria-label="Schematic map of the Middle East. Click a country to filter the timeline.">
+        <rect width="880" height="540" fill="#134058"/>
+        <text class="water-label" x="28" y="318">MEDITERRANEAN</text>
+        <text class="water-label" x="78" y="470">RED SEA</text>
+        <text class="water-label" x="560" y="430">PERSIAN GULF</text>
+        <path class="quiet-land" d="M40 78 L210 62 L186 148 L58 156 Z"/>
+        <path class="quiet-land" d="M210 268 C290 248 400 258 468 318 C505 372 478 438 400 476 C310 512 214 498 176 444 C140 386 152 304 210 268 Z"/>
+        <path class="quiet-land" d="M168 214 L236 226 L222 276 L158 262 Z"/>
+        <g class="land syria" data-map="syria" tabindex="0" role="button" aria-label="Syria">
+          <path fill="#3b74d8" d="M168 112 L310 98 L338 150 L300 206 L214 220 L176 178 L158 140 Z"/>
+          <text x="214" y="162">Syria</text>
+        </g>
+        <g class="land iraq" data-map="iraq" tabindex="0" role="button" aria-label="Iraq">
+          <path fill="#e0a106" d="M312 116 L468 104 L508 172 L478 268 L392 308 L308 252 L322 176 Z"/>
+          <text x="360" y="210">Iraq</text>
+        </g>
+        <g class="land iran" data-map="iran" tabindex="0" role="button" aria-label="Iran">
+          <path fill="#d4531c" d="M508 86 L760 66 L842 150 L818 276 L708 356 L572 334 L498 248 L528 156 Z"/>
+          <text x="640" y="210">Iran</text>
+        </g>
+        <g class="land lebanon" data-map="lebanon" tabindex="0" role="button" aria-label="Lebanon">
+          <path fill="#1c9a62" d="M142 150 L176 138 L192 178 L170 218 L136 194 Z"/>
+          <text x="58" y="128">Lebanon</text>
+        </g>
+        <g class="land yemen" data-map="yemen" tabindex="0" role="button" aria-label="Yemen">
+          <path fill="#c43b78" d="M176 438 L318 422 L362 486 L300 528 L188 520 L156 478 Z"/>
+          <text x="214" y="484">Yemen</text>
+        </g>
+        <g class="land gulf" data-map="gulf" tabindex="0" role="button" aria-label="Gulf">
+          <circle class="hit" cx="530" cy="368" r="26" fill="#0e8f8a"/>
+          <text x="508" y="412">Gulf</text>
+        </g>
+        <g class="cities">
+          <circle cx="655" cy="175" r="2.4"/>
+          <circle cx="392" cy="188" r="2.4"/>
+          <circle cx="158" cy="176" r="2.4"/>
+          <circle cx="236" cy="150" r="2.4"/>
+          <circle cx="258" cy="478" r="2.4"/>
+          <circle cx="372" cy="240" r="2.4"/>
+        </g>
+        <g id="pin" transform="translate(655 175)" style="display:none">
+          <circle class="pin-ring" r="11"/>
+          <circle class="pin-core" r="5"/>
+        </g>
+        <path class="bridge" id="bridge" d="M640 190 C520 170 450 175 390 195 C300 220 230 190 160 185"/>
+        <g id="pins"></g>
+      </svg>
+      <p class="map-place" id="map-place">Click a country, or an event.</p>
+    </div>
+    <div class="stage-side">
+      <div class="stats">
+        <button class="stat" data-jump="goharshad-1935" style="--tone:#6e7c86"><span class="stat-value">1935</span><span class="stat-label">Clergy fired on at Goharshad</span></button>
+        <button class="stat" data-jump="rev-1979" style="--tone:#c23b22"><span class="stat-value">1979</span><span class="stat-label">A jurist rules Iran</span></button>
+        <button class="stat" data-jump="iraq-2003" style="--tone:#1f7a4d"><span class="stat-value">2005</span><span class="stat-label">Shi'a parties govern Iraq</span></button>
+        <button class="stat" data-jump="assad-2024" style="--tone:#b4234a"><span class="stat-value">2024</span><span class="stat-label">The Syrian land bridge breaks</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="ribbon" id="ribbon"></div>
+
+  <section class="story">
+    <h2>Scenes, not a single line</h2>
+    <p class="caption">Each card is a few years in which more than one country was moving. The shaded band on the lanes is the scene you are in.</p>
+    <div class="scenes" id="scenes"></div>
+  </section>
+  <section class="story">
+    <h2>Six countries, one century</h2>
+    <div class="lane-chart" id="lanes"></div>
+  </section>
+
+  <aside class="note">
+    <strong>Three communities, three politics</strong>
+    <p>Twelver Shiism is the school of Iran, Arab Iraq, Lebanese Shi'a, and Bahrain. Zaydism is the school of northern Yemen and of the Houthis. The Alawites of Syria are a separate esoteric tradition; the Assad state was a military Ba'athist regime whose pact with Tehran was political. Each event below is labeled under its own name. Velayat-e faqih, the guardianship of the jurist, is a Twelver theory of rule from Khomeini's 1970 lectures. It is the constitution of Iran and the oath of Hezbollah. It is a theory of government, not a description of the faith.</p>
+  </aside>
+
+  <div class="filters">
+    <p class="filter-label">Period</p>
+    <div class="pills" id="phase-pills"></div>
+    <p class="filter-label">Country</p>
+    <div class="pills" id="country-pills"></div>
+  </div>
+
+  <p class="essay" id="essay"></p>
+  <p class="count" id="count"></p>
+
+  <div class="layout">
+    <article class="detail" id="detail"></article>
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <section class="section">
+    <h2>Four projects, running at once</h2>
+    <p>The timeline can look like one bloc advancing. These four lines spent the same decades arguing with each other.</p>
+    <div class="ideas">
+      <div class="idea" style="--tone:#2a6f97">
+        <div class="mark"></div>
+        <h3>Quietism</h3>
+        <p>Borujerdi, then Sistani. The jurist guides the faithful and stays out of the ruler's chair. In Iraq after 2003 that refusal was itself a political act: Sistani dictated the procedure of founding the state, then declined to run it. Najaf remains the counterweight to Qom.</p>
+      </div>
+      <div class="idea" style="--tone:#c23b22">
+        <div class="mark"></div>
+        <h3>Velayat-e faqih</h3>
+        <p>Khomeini's claim that a jurist must rule, written into Iran's 1979 constitution and loosened in 1989 so a political cleric could hold the office. Hezbollah's 1985 letter swore to it. The Islamic Republic's internal opposition — 1997, 2009, 2019, 2022 — is a fight over this theory by people living under it.</p>
+      </div>
+      <div class="idea" style="--tone:#e0a106">
+        <div class="mark"></div>
+        <h3>The Iraqi Sadr line</h3>
+        <p>Muhammad Baqir al-Sadr built a party and was hanged in 1980. Muhammad Sadiq al-Sadr built a mass following under Saddam and was killed in 1999. His son Muqtada led a militia, then a party, then a street against both the Americans and the Iranian-aligned factions. An Iraqi Shi'a politics with its own center.</p>
+      </div>
+      <div class="idea" style="--tone:#c43b78">
+        <div class="mark"></div>
+        <h3>Zaydi revival</h3>
+        <p>The imamate fell in 1962. Ansar Allah grew out of the Saada wars and took Sanaa in 2014. The slogan points at America and Israel; the jurisprudence is Zaydi; the wartime patron is Iran. An alliance is a choice of arms and money. It does not merge two schools.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Where power actually sat</h2>
+    <p class="caption">Political position at four moments. Population and piety are a different map.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Moment</th><th class="c-iran">Iran</th><th class="c-iraq">Iraq</th><th class="c-leb">Lebanon</th><th>Gulf, Yemen, Syria</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1932</td>
+            <td>Pahlavi monarchy subordinating the clergy</td>
+            <td>Shi'a majority under a Sunni Hashemite throne</td>
+            <td>A poor community with no party of its own</td>
+            <td>Alawite statelet about to be dissolved into Syria. Zaydi imam still rules north Yemen. Gulf Shi'a are subjects, without a movement.</td>
+          </tr>
+          <tr>
+            <td>1979</td>
+            <td>Jurist-state. Velayat-e faqih written into the constitution</td>
+            <td>Ba'ath. Dawa underground. Its thinker has a year to live</td>
+            <td>Amal exists. Its founder is already missing. Civil war</td>
+            <td>Qatif is crushed. Assad, an Alawite officer, is about to become Tehran's ally of convenience.</td>
+          </tr>
+          <tr>
+            <td>2005</td>
+            <td>Republic intact. Reformists beaten. Ahmadinejad elected</td>
+            <td>Shi'a parties win elections and write the constitution</td>
+            <td>Hezbollah armed, in parliament, Israel already gone</td>
+            <td>Bahrain's Shi'a majority still shut out. Houthis are a local insurgency. Assad's alliance with Iran holds.</td>
+          </tr>
+          <tr class="now">
+            <td>Oct 2026</td>
+            <td>At war with the US and Israel. A June truce has collapsed. Clerical rule contested at home since 2022</td>
+            <td>Shi'a parties still govern. PMF factions still armed</td>
+            <td>Hezbollah degraded. The state is trying to disarm and prosecute it</td>
+            <td>Assad gone since Dec 2024. Houthis still hold the north. Hormuz is a battlefield. Bahrain's political structure is unchanged.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <aside class="warn-note">
+    <strong>Where this gets overstated</strong>
+    <p>Iranian links are real in Lebanon, Iraq, and Yemen, and they do not turn every Shi'a crowd into an Iranian one. Bahrain in 2011 was a domestic constitutional movement; the king's own commission did not find Iranian direction. The Green Movement and Woman, Life, Freedom were Iranian publics against a Shi'a state. Tishreen was an Iraqi public against Shi'a parties. The 2026 war has no published ending. Rows that depend on a single research institute's weekly note are attributed in the event itself.</p>
+  </aside>
+
+  <p class="sources">Dates through 2022 follow the standard political histories of Iran, Iraq, Lebanon, and the Gulf, among them Ervand Abrahamian, Nikki Keddie, Yitzhak Nakash, Augustus Richard Norton, and Laurence Louër. From 2024 to 24 October 2026 the page follows contemporaneous reporting and research notes from the Associated Press, Brookings, the Jewish Institute for National Security of America, and the Institute for the Study of War. Tolls that historians still dispute are described as disputed. This is a political chronology, not a religious one.</p>
+</div>
+<script id="payload" type="application/json">{"COUNTRIES": [{"id": "iran", "label": "Iran"}, {"id": "iraq", "label": "Iraq"}, {"id": "lebanon", "label": "Lebanon"}, {"id": "yemen", "label": "Yemen"}, {"id": "gulf", "label": "Gulf"}, {"id": "syria", "label": "Syria"}, {"id": "region", "label": "Regional"}], "PHASES": [{"id": "marginal", "years": "1930–1957", "title": "Marginal and quietist", "essay": "Iran and Iraq hold most of the region's Shi'a, and in both countries other people hold the state. Reza Shah, then his son, subordinate the Iranian clergy. Independent Iraq is a Shi'a-majority country run by a Sunni monarchy and a Sunni officer corps. The leading jurist, Hossein Borujerdi, treats political office as a distraction from the scholarly one. The one organized challenge, the Devotees of Islam, is small, violent, and finished by 1956."}, {"id": "parties", "years": "1958–1978", "title": "Parties and protest", "essay": "Borujerdi's death removes the quietist brake. Three projects start in three places. Muhammad Baqir al-Sadr builds a party in Najaf. Musa al-Sadr builds a communal movement among the Shi'a of Lebanon, then the poorest constituency in that system. Ruhollah Khomeini turns a protest against the Shah's reforms into a theory that a jurist should rule. In Yemen the Zaydi imamate, a separate tradition with its own history of rule, has already been overthrown."}, {"id": "revolution", "years": "1979–1988", "title": "Revolution and war", "essay": "The Iranian Revolution is the break. A cleric returns from exile, takes the state, and writes his authority into a constitution as velayat-e faqih, the guardianship of the jurist. Saddam invades, and hangs the Iraqi party's thinker. In Lebanon, during the Israeli invasion, a new militia swears itself to Khomeini. By the ceasefire of 1988, political Shiism in the region's diplomacy means Tehran."}, {"id": "contained", "years": "1989–2002", "title": "A smaller system", "essay": "Khomeini dies and the office of Leader passes to Ali Khamenei, a political cleric junior in scholarly rank to the great marjas, the sources of emulation lay people follow. The constitution is changed so the Leader no longer has to be one. Tehran stops expecting a copy of itself in every capital and builds a tighter system: Hezbollah's arms inside Lebanon, an Iraqi opposition housed in Iran, an alliance with Hafez al-Assad. The 1991 uprising shows what it costs to have no state. Khatami's election shows the pressure from inside Iran."}, {"id": "state", "years": "2003–2010", "title": "They take a state", "essay": "The American invasion does what Iraqi Shi'a parties could not do alone. Exiles return, and Ali al-Sistani, heir of Najaf's quietism, forces Washington toward elections. Those elections produce the first Shi'a-led government in modern Iraq, and then a sectarian war. The same years make Hezbollah look like an Arab force that can fight Israel and remain standing. In 2009 Iranians march against a declared election result, and the marches become a challenge to the Leader."}, {"id": "axis", "years": "2011–2022", "title": "The alliance at war", "essay": "The 2011 uprisings pull this history in opposite directions. Bahrain's Shi'a majority demands a constitutional monarchy and is crushed with Saudi and Emirati troops. In Syria, Iran and then Hezbollah fight to save an Alawite-led Ba'athist state. ISIS takes Mosul, Sistani calls men to arms, and the militias never fully stand down. The Houthis, a Zaydi movement, take Sanaa and become the southern front of the rivalry with Riyadh. By 2019 the parties that once spoke for the excluded are the establishment, and in Baghdad, Beirut, and Iranian cities people march against them."}, {"id": "strain", "years": "2023–2026", "title": "Under direct fire", "essay": "Hamas's attack on 7 October 2023 is the act of a Sunni movement. Hezbollah, Iraqi militias, and the Houthis join the war, and then Iran and Israel fight each other in the open. In 2024 Israel kills Hassan Nasrallah and breaks much of Hezbollah's command. Assad falls, and with him the land route to the Mediterranean. June 2025 brings American bombs onto Iranian nuclear sites. A wider war from the end of February 2026 is unfinished on 24 October: a June memorandum collapsed in July, the Strait of Hormuz is still violent, and Beirut is testing whether the Lebanese state can disarm what remains of Hezbollah. The expeditionary alliance is the weakest it has been since Iraq's Shi'a parties took power. Those parties still govern Iraq. The Islamic Republic still rules Iran."}], "EVENTS": [{"id": "iraq-1932", "sort": 1932.1, "when": "1932", "title": "A Sunni throne, a Shi'a country", "country": "iraq", "phase": "marginal", "kind": "State", "summary": "Iraq becomes formally independent under the Hashemite king Faisal. Shi'a Arabs are the majority of the population. The cabinet, the senior bureaucracy, and the officer corps stay overwhelmingly Sunni, a pattern carried over from Ottoman practice and locked in by the British-built monarchy.", "why": "For the next seventy years, Iraqi political Shiism is a demand for entry into a state that was built over a Shi'a society."}, {"id": "goharshad-1935", "sort": 1935.7, "when": "Jul 1935", "title": "The army at Goharshad", "country": "iran", "phase": "marginal", "kind": "Crackdown", "summary": "Worshippers gather at the Goharshad Mosque in Mashhad against Reza Shah's dress laws. The army fires on the crowd. The death toll is still disputed: official counts were small, later accounts much larger. The senior clergy has no party and no militia with which to answer.", "why": "This is the baseline. Clerical opposition in Iran is real, local, and crushable. It is not yet a political movement."}, {"id": "alawite-1936", "sort": 1936.1, "when": "1936", "title": "The Alawite statelet is folded in", "country": "syria", "phase": "marginal", "kind": "State", "summary": "France dissolves the Alawite State it had carved out of the Syrian mandate and joins it to the Syrian Republic. Alawites are a rural minority with an esoteric tradition of their own, historically distinct from the Twelver Shiism of Najaf and Qom. Their later power will come through the army.", "why": "Syria enters this history here so the Assad regime is not mistaken, later, for a Shi'a jurist's state."}, {"id": "fadaiyan-1946", "sort": 1946.1, "when": "1946", "title": "The Devotees of Islam", "country": "iran", "phase": "marginal", "kind": "Movement", "summary": "Navvab Safavi founds the Fada'iyan-e Islam in Tehran. They want sharia enforced and secular public life punished. Members assassinate the writer Ahmad Kasravi in 1946 and Prime Minister Ali Razmara in 1951. They have a program of violence and no theory of clerical government.", "why": "The first organized Shi'a Islamist group in modern Iran. It is a dead end, and the next generation will build something larger."}, {"id": "safavi-1956", "sort": 1956.01, "when": "Jan 1956", "title": "Safavi is executed", "country": "iran", "phase": "marginal", "kind": "Crackdown", "summary": "The Shah's state executes Navvab Safavi and his closest associates. Borujerdi's quietism is the unchallenged clerical line. Mohammad Reza Shah looks, in the mid-1950s, as though he has outlasted both the liberal nationalists and the religious militants.", "why": "Political Shiism in Iran goes quiet for a few years. The quiet is what makes 1963 a surprise."}, {"id": "dawa-1957", "sort": 1957.5, "when": "1957", "title": "A party in Najaf", "country": "iraq", "phase": "parties", "kind": "Movement", "summary": "The Islamic Dawa Party takes shape in Najaf, with Muhammad Baqir al-Sadr as its intellectual center. The usual founding date is 1957. It is built to compete with the Communist Party and with Arab nationalism for young Shi'a, using a modern organization rather than a seminary alone.", "why": "This is the start of organized political Shiism in Iraq: a party, a doctrine, and a claim on the state."}, {"id": "musa-1959", "sort": 1959.9, "when": "1959", "title": "A sayyid arrives in Tyre", "country": "lebanon", "phase": "parties", "kind": "Movement", "summary": "Musa al-Sadr, Iranian-born and Najaf-trained, settles among the Shi'a of southern Lebanon. They are undercounted, under-schooled, and absent from the Christian-Sunni bargain that runs the country. He spends the next fifteen years turning a neglected community into a political constituency.", "why": "Lebanese political Shiism begins as a social movement inside the Lebanese system, years before Iran's revolution and years before Hezbollah."}, {"id": "borujerdi-1961", "sort": 1961.3, "when": "Mar 1961", "title": "The quietist dies", "country": "iran", "phase": "parties", "kind": "Idea", "summary": "Ayatollah Hossein Borujerdi dies in Qom. He had been the leading marja, and he had used that standing to keep senior clerics out of partisan politics. No single successor inherits both his rank and his restraint. Khomeini is one of several contenders, and he is the one willing to attack the Shah in public.", "why": "The gate opens here. Almost everything political that follows in Iran depends on this death."}, {"id": "yemen-1962", "sort": 1962.9, "when": "Sep 1962", "title": "The Zaydi imamate falls", "country": "yemen", "phase": "parties", "kind": "State", "summary": "Republican officers in North Yemen depose Imam Muhammad al-Badr. The Zaydi imamate had been a sayyid government of a kind Twelver jurists never built in the Arab east. A civil war follows, with Egypt backing the republic and Saudi Arabia backing the royalists. The imamate does not return.", "why": "The Houthi movement, half a century later, is partly a claim on the status this coup ended. It is Zaydi politics, with its own chronology."}, {"id": "khordad-1963", "sort": 1963.6, "when": "Jun 1963", "title": "15 Khordad", "country": "iran", "phase": "parties", "kind": "Movement", "summary": "The Shah's White Revolution — land reform, a literacy corps, votes for women — passes by referendum in January. Khomeini denounces the package and the Shah's dependence on the United States. On 5 June the uprising that follows is put down. The state admits a small death toll; later historical estimates run into the hundreds. Khomeini becomes a national name.", "why": "A jurist, rather than a party or a guerrilla band, is now the face of opposition to the monarchy."}, {"id": "velayat-1970", "sort": 1970.2, "when": "1964–1970", "title": "Lectures on Islamic government", "country": "iran", "phase": "parties", "kind": "Idea", "summary": "Khomeini is exiled in November 1964, first to Turkey, then to Najaf in 1965. There, in 1970, he delivers the lectures later published as Islamic Government. The claim is specific: in the absence of the Twelfth Imam, a qualified jurist should hold the political rule of the community. This is velayat-e faqih.", "why": "The doctrine of the future Iranian state is written in an Iraqi seminary, a decade before anyone expects it to be used."}, {"id": "assad-1970", "sort": 1970.11, "when": "Nov 1970", "title": "An Alawite officer takes Damascus", "country": "syria", "phase": "parties", "kind": "State", "summary": "Hafez al-Assad, the defense minister, seizes power in the Corrective Movement. He is Alawite, and so is a growing share of the officer corps he relies on. The regime he builds is Ba'athist, presidential, and hereditary in practice. It is not a government of Shi'a jurists, and it does not claim to be one.", "why": "The Iran-Syria alliance that begins in the 1980s is an alliance between a revolutionary jurist-state and a minority-led military regime."}, {"id": "amal-1974", "sort": 1974.3, "when": "1974–1975", "title": "The Movement of the Deprived", "country": "lebanon", "phase": "parties", "kind": "Movement", "summary": "Musa al-Sadr founds Harakat al-Mahrumin in 1974, and the next year its armed wing, Amal. In 1973 he had issued a recognition of Alawites as Shi'a Muslims, a ruling that later smooths the political road between Lebanese Shi'a and Damascus. Amal's demand is representation and self-defense inside Lebanon, as the country slides into civil war in 1975.", "why": "The first Lebanese Shi'a mass movement is communal and nationalist. Hezbollah will be a split from this world, not its continuation."}, {"id": "shariati-1977", "sort": 1977.6, "when": "Jun 1977", "title": "Shariati dies", "country": "iran", "phase": "parties", "kind": "Idea", "summary": "Ali Shariati dies in England at 43. A lay intellectual, he had recast Shiism as the faith of the oppressed against what he called a quietist, accommodated clergy — his 'red' Shiism against 'black.' Thousands of young Iranians who will march in 1978 learned the revolution from him, and from Khomeini, as if the two were one argument.", "why": "The clerics who take the state will sideline Shariati's heirs. The ferment he named was still part of what made a mass revolution possible."}, {"id": "musa-1978", "sort": 1978.8, "when": "Aug 1978", "title": "Musa al-Sadr disappears", "country": "lebanon", "phase": "parties", "kind": "Movement", "summary": "Musa al-Sadr vanishes on a visit to Libya. He is never seen again. Amal continues under other men, eventually Nabih Berri, and becomes a militia among militias in the civil war. The charismatic center of Lebanese Shi'a politics is gone just as Iran's revolution is about to provide a different one.", "why": "The vacancy matters. A decade later, Hezbollah and Amal will be rivals for the same community."}, {"id": "rev-1979", "sort": 1979.2, "when": "Feb–Dec 1979", "title": "A jurist takes the state", "country": "iran", "phase": "revolution", "kind": "State", "summary": "The Shah leaves on 16 January. Khomeini returns on 1 February. A referendum on 1 April establishes the Islamic Republic. In December a constitution concentrates ultimate authority in the Leader as guardian-jurist. Parallel institutions grow beside the old state, above all the Revolutionary Guards. Lay nationalists and the left, who had filled the streets, lose the succession fight within two years.", "why": "Every later argument about political Shiism in the Middle East refers back to this year. A school that had mostly refused the modern state now runs one."}, {"id": "qatif-1979", "sort": 1979.11, "when": "Nov 1979", "title": "Qatif rises", "country": "gulf", "phase": "revolution", "kind": "Crackdown", "summary": "During Muharram, Shi'a in Qatif and al-Hasa, in Saudi Arabia's Eastern Province, protest. The same month, Sunni militants seize the Grand Mosque in Mecca, and Iranian politics is still in revolutionary motion. Saudi security forces put the Eastern Province down. Published death tolls differ.", "why": "Gulf monarchies start treating their own Shi'a citizens as a channel through which the Iranian Revolution might travel. That fear shapes the next forty years, in excess of the evidence about any given protest."}, {"id": "baqir-1980", "sort": 1980.4, "when": "Apr 1980", "title": "Baqir al-Sadr is hanged", "country": "iraq", "phase": "revolution", "kind": "Crackdown", "summary": "Saddam Hussein, president since 1979, executes Muhammad Baqir al-Sadr and his sister, Bint al-Huda. Dawa has already been driven underground by the Ba'ath. The party's remaining cadre scatter, a large share of them toward Iran. The thinker who might have led an Iraqi Shi'a politics with its own center is dead.", "why": "Iraqi political Shiism survives in exile, and the exile is in Tehran. That address will matter after 2003."}, {"id": "war-1980", "sort": 1980.9, "when": "1980–1988", "title": "Eight years of war", "country": "region", "phase": "revolution", "kind": "War", "summary": "Iraq invades Iran on 22 September 1980 and does not get the quick collapse it expected. Tehran calls the war a sacred defense and uses it to build the Guards, the Basij, and a cult of martyrdom into the structure of the state. Saddam calls it a defense against a Shi'a revolution exported to his own majority. The ceasefire comes in August 1988, after hundreds of thousands of dead, with neither regime destroyed.", "why": "The war militarizes the Islamic Republic and gives the Iraqi Ba'ath a generation-long warrant for suppressing Shi'a parties."}, {"id": "sciri-1982", "sort": 1982.11, "when": "Nov 1982", "title": "An Iraqi council, seated in Tehran", "country": "iraq", "phase": "revolution", "kind": "Movement", "summary": "Muhammad Baqir al-Hakim founds the Supreme Council for the Islamic Revolution in Iraq in Tehran. Its armed wing, the Badr Brigade, is trained by the Revolutionary Guards and fights on Iran's side in the war. After 2003 the council returns, later renamed the Islamic Supreme Council, and becomes one of the parties of the new Iraqi state.", "why": "A whole wing of Iraqi Shi'a politics is formed as an Iranian wartime institution. Its rivals will never let it forget the address."}, {"id": "hezb-1985", "sort": 1985.2, "when": "1982–1985", "title": "Hezbollah's open letter", "country": "lebanon", "phase": "revolution", "kind": "Movement", "summary": "Israel invades Lebanon in June 1982 and besieges Beirut. Guardsmen from Iran begin training young Shi'a in the Bekaa, many of them leaving Amal. The group that becomes Hezbollah coalesces in that camp. Its public manifesto, the open letter of 16 February 1985, names Khomeini as its leader and calls for an Islamic state. A 2009 manifesto will speak more as a Lebanese party. The armed allegiance to the Iranian Leader stays.", "why": "This is the export of velayat-e faqih into a militia with a social base. Amal, under Berri, stays inside Lebanese and Syrian patronage instead."}, {"id": "mecca-1987", "sort": 1987.7, "when": "Jul 1987", "title": "The clash at Mecca", "country": "gulf", "phase": "revolution", "kind": "Crackdown", "summary": "Iranian pilgrims stage a political demonstration during the Hajj. Saudi security forces move against it. Hundreds die, most of them Iranian; each government blames the other for the number and for the cause. Tehran and Riyadh break relations. They will not restore them for years.", "why": "The revolution tries to carry its politics into the central rite of Islam and fails. The Saudi-Iran rivalry acquires a religious wound on top of a strategic one."}, {"id": "khamenei-1989", "sort": 1989.6, "when": "Jun 1989", "title": "The Leader is a political cleric", "country": "iran", "phase": "contained", "kind": "State", "summary": "Khomeini dies on 3 June 1989. The Assembly of Experts selects Ali Khamenei the next day. He is not among the senior marjas. An amended constitution, approved by referendum that summer, drops the requirement that the Leader be the source of emulation. Akbar Hashemi Rafsanjani, as president, turns the state toward reconstruction.", "why": "Velayat-e faqih detaches from classical scholarship. Authority now sits in an office, and the office can outlive the man who invented it."}, {"id": "taif-1989", "sort": 1989.82, "when": "Oct 1989", "title": "Taif rewrites Lebanon", "country": "lebanon", "phase": "contained", "kind": "Diplomacy", "summary": "The Taif Accord ends the Lebanese civil war on a revised confessional formula. Parliament is split evenly between Christians and Muslims, and Shi'a representation rises inside the Muslim share. Hezbollah keeps its weapons under the heading of resistance to the Israeli occupation of the south. Amal, through Nabih Berri, takes the speakership of parliament and holds it from 1992 on.", "why": "Shi'a parties become stakeholders in the Lebanese state while one of them remains armed. That double status is the country's political problem for the next thirty-five years."}, {"id": "uprising-1991", "sort": 1991.3, "when": "Mar 1991", "title": "The uprising is buried", "country": "iraq", "phase": "contained", "kind": "Crackdown", "summary": "After the Gulf War ceasefire, rebellions seize Basra and the shrine cities of Najaf and Karbala. Saddam's Republican Guard crushes them within weeks. Tens of thousands are killed, many into mass graves. The United States, whose war had made the rising possible, does not intervene. Marsh villages in the south are drained and destroyed in the years that follow.", "why": "A generation of Iraqi Shi'a draws a hard conclusion: neither Arab nationalism nor Washington will protect them. Parties with an Iranian address gain a hearing they had not fully earned."}, {"id": "khatami-1997", "sort": 1997.5, "when": "May 1997", "title": "Khatami wins in a landslide", "country": "iran", "phase": "contained", "kind": "State", "summary": "Mohammad Khatami, a mid-ranking cleric running on reform, takes about 70 percent of the vote. The press opens, and a younger public treats the ballot as a way to change the republic from inside. Over two terms the Guardian Council, the judiciary, and the Leader's office block the structural reforms. The constituency remains.", "why": "Political Shiism in Iran is no longer only a story about the state against its enemies. It is also a fight among people who accept an Islamic republic and disagree about whose republic it is."}, {"id": "south-2000", "sort": 2000.5, "when": "May 2000", "title": "Israel leaves the south", "country": "lebanon", "phase": "contained", "kind": "War", "summary": "Israel withdraws from the occupation zone it had held in southern Lebanon since 1978, and from its local partner, the South Lebanon Army. Hezbollah claims the outcome as a military victory, the first time an Arab force has pushed Israel off occupied land by force of arms. Its domestic standing, and its claim to keep its weapons, harden around that claim.", "why": "After 2000, Hezbollah's arms are justified as deterrence and as a regional role, long after the occupation they were founded to fight has ended."}, {"id": "iraq-2003", "sort": 2005.1, "when": "2003–2005", "title": "Elections, because Sistani insisted", "country": "iraq", "phase": "state", "kind": "State", "summary": "The United States invades in March 2003 and dissolves the Ba'athist army. Dawa, the Supreme Council, and the Sadrists return from exile or step out of the underground. Sistani rejects an American plan to write a constitution without an elected body. Elections in January 2005 and a constitutional referendum that October produce a government led by Shi'a parties, with Kurdish allies and a Sunni population that largely boycotted the first vote.", "why": "Quietist Najaf does more to design the new Iraq than the revolutionaries do. A school that refuses to govern decides the rules under which others govern."}, {"id": "samarra-2006", "sort": 2006.2, "when": "Feb 2006", "title": "The shrine at Samarra", "country": "iraq", "phase": "state", "kind": "War", "summary": "Bombers destroy the golden dome of the Al-Askari shrine, burial place of two of the Twelve Imams and a holy site in a Sunni-majority city. The attack, in the orbit of the group that becomes the Islamic State, opens two years of sectarian killing. The Mahdi Army of Muqtada al-Sadr, Badr, and the police of the new Interior Ministry all become instruments of it. Sunnis are cleansed from much of Baghdad.", "why": "The Shi'a political victory of 2005 is immediately consumed by a war inside Iraq, and by a split among Shi'a parties over who owns the guns."}, {"id": "war-2006", "sort": 2006.7, "when": "Jul 2006", "title": "A war Hezbollah can survive", "country": "lebanon", "phase": "state", "kind": "War", "summary": "After a cross-border raid, Israel bombs Lebanon and invades the south. The fighting lasts until a ceasefire on 14 August. Hezbollah keeps firing rockets until the end and retains its leadership and its arsenal. In much of the Arab world the survival is received as a victory. Inside Lebanon the bill — a shattered southern suburb, a deeper split with the Sunni and Druze parties — comes due more slowly.", "why": "The alliance system acquires a demonstration effect. Militias tied to Tehran look, for a few years, like the effective armies of the region."}, {"id": "green-2009", "sort": 2009.6, "when": "Jun 2009", "title": "The Green Movement", "country": "iran", "phase": "state", "kind": "Movement", "summary": "Mahmoud Ahmadinejad is declared re-elected within hours. Millions march for Mir-Hossein Mousavi. The state answers with the Basij, arrests, and show trials. Mousavi and Mehdi Karroubi are locked in their houses. The protests do not bring down the Leader. They do establish that the Islamic Republic's hardest opposition now comes from its own public.", "why": "A Shi'a state and a Shi'a street are on opposite sides of the baton. Any account that treats 'the Shi'a' as one political actor fails here."}, {"id": "bahrain-2011", "sort": 2011.2, "when": "Feb 2011", "title": "Pearl Roundabout", "country": "gulf", "phase": "axis", "kind": "Crackdown", "summary": "Protests begin in Bahrain on 14 February, in the wave that is also sweeping Tunis and Cairo. The largest crowds call for a constitutional monarchy and an end to discrimination against the Shi'a majority by the Sunni Al Khalifa state. On 14 March Saudi and Emirati troops cross the causeway. The roundabout is cleared, opposition societies are banned, and the crackdown includes torture documented by an independent commission the king himself appointed.", "why": "This is a domestic reform movement in a Shi'a-majority country. Manama described it as an Iranian operation. The commission found no evidence of Iranian direction of the uprising."}, {"id": "qusayr-2013", "sort": 2013.5, "when": "May 2013", "title": "Hezbollah crosses into Syria", "country": "syria", "phase": "axis", "kind": "War", "summary": "The Syrian uprising has become a war, and Assad is losing ground. Iran has already sent Guardsmen and Iraqi militia recruits. In May, Hezbollah fights openly for the regime at Qusayr. Hassan Nasrallah says so in a speech. The party that had justified its arms as resistance to Israel is now an expeditionary force in a war against a largely Sunni rebellion.", "why": "The land bridge — Iran, Iraq, Syria, Lebanon — becomes a military fact. It also ties Lebanese Shi'a to the survival of an Alawite-led Ba'athist state."}, {"id": "fatwa-2014", "sort": 2014.6, "when": "Jun 2014", "title": "Sistani's fatwa", "country": "iraq", "phase": "axis", "kind": "War", "summary": "The Islamic State takes Mosul on 10 June. Three days later Sistani issues a collective-duty fatwa: Iraqis should join the security forces to defend the country. Volunteers flood in. The Popular Mobilization Forces that form around them include units loyal to Najaf, units loyal to Sadr, and units built by the Guards, among them Kataib Hezbollah and Asaib Ahl al-Haq. A 2016 law makes the PMF part of the state.", "why": "Shi'a mobilization saves the Iraqi state from the Islamic State and leaves Baghdad with armed factions it pays and does not fully command."}, {"id": "sanaa-2014", "sort": 2014.9, "when": "Sep 2014", "title": "The Houthis take Sanaa", "country": "yemen", "phase": "axis", "kind": "Movement", "summary": "Ansar Allah, the Houthi movement, seizes the Yemeni capital in alliance with forces loyal to the former president, Ali Abdullah Saleh. The Houthis are a Zaydi revival that grew out of the wars of the 2000s in Saada. Their slogan is anti-American and anti-Israeli. Their jurisprudence is Zaydi. Iranian support grows as the war widens; it does not make them Twelvers.", "why": "The southern arm of the rivalry with Saudi Arabia is a different school of Shiism, with a Yemeni grievance that predates the alliance with Tehran."}, {"id": "yemen-2015", "sort": 2015.3, "when": "Mar 2015", "title": "Riyadh goes to war in Yemen", "country": "yemen", "phase": "axis", "kind": "War", "summary": "A Saudi-led coalition intervenes to restore the displaced Yemeni government. The air war, the blockade, and the ground fighting become one of the region's worst humanitarian disasters. The Houthis hold the highlands, acquire missiles and drones, and strike Saudi cities. Tehran's relationship with them deepens under fire.", "why": "Yemen becomes a standing front. It will still be one in 2026, after several of Tehran's other fronts have collapsed."}, {"id": "jcpoa-2015", "sort": 2015.7, "when": "2015–2018", "title": "The nuclear deal, then the exit", "country": "iran", "phase": "axis", "kind": "Diplomacy", "summary": "Iran and six world powers sign the Joint Comprehensive Plan of Action in July 2015. Iran limits enrichment and accepts inspections; nuclear-related sanctions are lifted. In May 2018 the United States leaves the deal and restores maximum economic pressure. Inside Tehran the argument between diplomacy and the regional guns is settled, for the next several years, in favor of the guns.", "why": "The nuclear program and the alliance system are two tools of the same state. When one is squeezed, the other is used harder."}, {"id": "nimr-2016", "sort": 2016.01, "when": "Jan 2016", "title": "Nimr al-Nimr is executed", "country": "gulf", "phase": "axis", "kind": "Crackdown", "summary": "Saudi Arabia executes the Shi'a cleric Nimr al-Nimr, a critic of the royal family who had supported the Eastern Province protests of 2011. Protesters in Tehran storm the Saudi embassy. Riyadh breaks diplomatic relations. The Eastern Province stays quieted by force, and the regional rivalry loses its last shock absorber.", "why": "A domestic Saudi execution and an attack on an embassy in Tehran become one event. That is how linked the two arenas now feel, on both sides."}, {"id": "tishreen-2019", "sort": 2019.83, "when": "Oct 2019", "title": "The ruled turn on the parties", "country": "region", "phase": "axis", "kind": "Movement", "summary": "In Iraq, the Tishreen protests denounce corruption, the sectarian quota, and Iranian influence; hundreds are killed, many by factions of the security forces. In Lebanon, a cross-sectarian uprising targets the whole political class, Hezbollah included. In Iran, a fuel-price rise in November becomes a revolt the state crushes with live fire. The three crowds are not one movement. The complaint they share is specific: Shi'a parties have become the establishment.", "why": "The moral claim that carried political Shiism from 1957 to 2005 — we are the excluded — no longer describes the men in office."}, {"id": "soleimani-2020", "sort": 2020.01, "when": "3 Jan 2020", "title": "Soleimani is killed", "country": "region", "phase": "axis", "kind": "War", "summary": "A US drone kills Qasem Soleimani, commander of the Guards' Quds Force, and Abu Mahdi al-Muhandis of the PMF, at Baghdad airport. Soleimani had been the person who tied Hezbollah, the Iraqi factions, and the Syrian front into one staff. Iran fires missiles at an American base in Iraq and, the same week, shoots down a Ukrainian airliner leaving Tehran.", "why": "The network he built outlives him. The personal authority that made it move quickly does not."}, {"id": "amini-2022", "sort": 2022.9, "when": "Sep 2022", "title": "Woman, Life, Freedom", "country": "iran", "phase": "axis", "kind": "Movement", "summary": "Mahsa Jina Amini, a young Kurdish woman, dies in the custody of the morality police after her arrest over dress. Protests spread from Saqqez and Tehran to every province. Women burn headscarves in the street. The slogan is 'woman, life, freedom.' The crackdown kills hundreds and jails thousands. Compulsory veiling, a founding rule of the republic, becomes unenforceable in parts of the big cities and remains the law.", "why": "The deepest challenge to clerical rule since 1979 is led by women, begins in a Kurdish city, and asks for a life the jurist-state will not license."}, {"id": "beijing-2023", "sort": 2023.3, "when": "Mar 2023", "title": "Tehran and Riyadh reopen", "country": "region", "phase": "strain", "kind": "Diplomacy", "summary": "China brokers a resumption of diplomatic relations between Iran and Saudi Arabia, cut since the Nimr crisis. Embassies reopen. The Yemen war cools into a truce that is never quite a peace. Sectarian rhetoric is turned down because both states have reasons, economic and military, to want it down.", "why": "The rivalry was never only theological, and the pause shows it. The armed networks built during the rivalry stay in place."}, {"id": "gaza-2023", "sort": 2023.83, "when": "Oct 2023", "title": "Four fronts, one war", "country": "region", "phase": "strain", "kind": "War", "summary": "On 7 October Hamas, a Sunni movement, attacks Israel from Gaza. Hezbollah opens fire across the Lebanese border the next day. Iraqi militias attack American forces. From November the Houthis fire on shipping in the Red Sea and toward Israel. Tehran coordinates and supplies. For the first time the pieces of the alliance act in a single war, in support of a group that does not share their school.", "why": "The system Soleimani assembled finally operates together. The war that results is the one that takes it apart."}, {"id": "nasrallah-2024", "sort": 2024.9, "when": "Apr–Nov 2024", "title": "The commanders are killed", "country": "region", "phase": "strain", "kind": "War", "summary": "Israel strikes an Iranian consulate building in Damascus on 1 April. Iran answers on 13 April with a direct missile and drone barrage, its first on Israel. In September, pager and radio attacks maim Hezbollah's cadres, and on 27 September an airstrike kills Hassan Nasrallah and much of his senior command. Iran fires another barrage on 1 October. Israel strikes Iran on 26 October. A Lebanon ceasefire takes effect on 27 November, with Hezbollah's deterrent badly damaged and Israeli forces still on parts of the border.", "why": "The war stops being a proxy war. Hezbollah, the alliance's most capable militia, loses the leader who had defined it for thirty years."}, {"id": "assad-2024", "sort": 2024.12, "when": "8 Dec 2024", "title": "The land bridge breaks", "country": "syria", "phase": "strain", "kind": "State", "summary": "A rebel offensive that began in Aleppo reaches Damascus in under two weeks. Bashar al-Assad flees. The command that takes the capital comes out of the Sunni Islamist current that fought the regime; its leader, Ahmed al-Sharaa, is named president the following month. Iranian positions and Hezbollah's Syrian deployment collapse with the army they had propped up since 2013.", "why": "The corridor from Iran to the Mediterranean, the strategic product of a decade of expeditionary war, is gone in a fortnight."}, {"id": "twelve-2025", "sort": 2025.6, "when": "13–23 Jun 2025", "title": "Twelve days", "country": "iran", "phase": "strain", "kind": "War", "summary": "Israel strikes Iranian nuclear and military sites and kills senior commanders, and indirect nuclear talks with Washington stop. Iran fires ballistic missiles at Israeli cities. On 21 June the United States bombs Natanz, Isfahan, and Fordow. Iran retaliates against the American air base at Al-Udeid in Qatar. A ceasefire is announced on 23 June. Iraqi factions largely stay out; Hezbollah is already a reduced force.", "why": "The Islamic Republic is hit, directly and at the nuclear sites that were supposed to make such a war unthinkable, by Israel and then by the United States."}, {"id": "war-2026", "sort": 2026.1, "when": "Feb–Oct 2026", "title": "Unfinished", "country": "region", "phase": "strain", "kind": "War", "summary": "At the end of February a larger war reopens: American and Israeli strikes on Iran, Iran closing the Strait of Hormuz, Hezbollah firing again from 1 March, Iraqi militias attacking American positions. The Jewish Institute for National Security of America reports that on 17 June Trump and President Masoud Pezeshkian signed a memorandum to stop the war and reopen the strait, and that on 8 July Trump declared it over. As of 24 October no agreement is in force, and ships in Hormuz are still being attacked. In Lebanon, the Institute for the Study of War reports that a June 2026 framework put disarmament on the state's agenda, and that on 5 October security forces seized a truck of explosives bound for the southern suburbs.", "why": "Read this row as an open file. The alliance can still fire. It can no longer protect its members, its route, or its own territory the way it could in 2015. What replaces it is not yet visible."}], "MASTER": "From 1930 into the 1950s, Shi'a clerics mostly refused office and Shi'a communities were shut out of it. In 1979 a jurist took a state in Tehran and offered himself as the center. In 2005 Shi'a parties began governing Iraq. From 2011 they fought across Syria, Iraq, and Yemen. Since October 2023 that expeditionary system has been hit harder than at any time since it was built. Clerical rule in Iran, and Shi'a party rule in Iraq, are still standing."}</script>
+<script>
+const DATA = JSON.parse(document.getElementById("payload").textContent);
+DATA.EVENTS.forEach((event, index) => { event.sort = index; });
+const PHASE = Object.fromEntries(DATA.PHASES.map((p) => [p.id, p]));
+const COUNTRY = Object.fromEntries(DATA.COUNTRIES.map((c) => [c.id, c.label]));
+const COUNTRY_COLOR = {
+  iran: "#d4531c", iraq: "#e0a106", lebanon: "#1c9a62", syria: "#3b74d8",
+  yemen: "#c43b78", gulf: "#0e8f8a", region: "#6d5bd0",
+};
+const PHASE_COLOR = {
+  marginal: "#6e7c86", parties: "#2a6f97", revolution: "#c23b22",
+  contained: "#c47b2b", state: "#1f7a4d", axis: "#6b3fa0", strain: "#b4234a",
+};
+const ICONS = {
+  State: '<svg viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10H4z"/><path d="M9 20v-6h6v6"/></svg>',
+  Movement: '<svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="2.2"/><circle cx="16" cy="9" r="2.2"/><path d="M3.5 19c.7-3 2.6-4.5 4.6-4.5S12 16 12.2 19"/><path d="M12 19c.2-2.8 1.8-4.2 3.8-4.2S19.5 16.2 20.5 19"/></svg>',
+  War: '<svg viewBox="0 0 24 24"><path d="M12 3l2.1 6.4L21 12l-6.9 2.6L12 21l-2.1-6.4L3 12l6.9-2.6z"/></svg>',
+  Idea: '<svg viewBox="0 0 24 24"><path d="M6 4h7a4 4 0 010 8H6z"/><path d="M6 12h12v8H6z"/></svg>',
+  Crackdown: '<svg viewBox="0 0 24 24"><path d="M7 3v18"/><path d="M7 8h11"/><path d="M7 13h9"/><path d="M7 18h6"/></svg>',
+  Diplomacy: '<svg viewBox="0 0 24 24"><path d="M3 15c2.2-4 4-4 6.2 0C11.4 11 13.4 11 15.6 15c1.4-2.6 2.8-2.6 4.4 0"/><path d="M3 19h18"/></svg>',
+};
+const CENTROID = {
+  iran: { x: 660, y: 200, name: "Iran" },
+  iraq: { x: 400, y: 200, name: "Iraq" },
+  lebanon: { x: 160, y: 180, name: "Lebanon" },
+  syria: { x: 240, y: 160, name: "Syria" },
+  yemen: { x: 260, y: 475, name: "Yemen" },
+  gulf: { x: 530, y: 368, name: "The Gulf" },
+  region: { x: 470, y: 230, name: "Across the region" },
+};
+const PLACE = {
+  "goharshad-1935": { x: 760, y: 130, name: "Mashhad" },
+  "borujerdi-1961": { x: 600, y: 205, name: "Qom" },
+  "khordad-1963": { x: 610, y: 195, name: "Qom" },
+  "fadaiyan-1946": { x: 655, y: 175, name: "Tehran" },
+  "safavi-1956": { x: 655, y: 175, name: "Tehran" },
+  "shariati-1977": { x: 655, y: 175, name: "Tehran" },
+  "rev-1979": { x: 655, y: 175, name: "Tehran" },
+  "khamenei-1989": { x: 655, y: 175, name: "Tehran" },
+  "khatami-1997": { x: 655, y: 175, name: "Tehran" },
+  "green-2009": { x: 655, y: 175, name: "Tehran" },
+  "amini-2022": { x: 640, y: 185, name: "Tehran" },
+  "jcpoa-2015": { x: 655, y: 175, name: "Tehran" },
+  "twelve-2025": { x: 680, y: 200, name: "Iran" },
+  "sciri-1982": { x: 640, y: 180, name: "Tehran" },
+  "velayat-1970": { x: 372, y: 240, name: "Najaf" },
+  "dawa-1957": { x: 372, y: 240, name: "Najaf" },
+  "baqir-1980": { x: 372, y: 240, name: "Najaf" },
+  "fatwa-2014": { x: 372, y: 240, name: "Najaf" },
+  "uprising-1991": { x: 365, y: 255, name: "Najaf and Karbala" },
+  "iraq-1932": { x: 392, y: 188, name: "Baghdad" },
+  "iraq-2003": { x: 392, y: 188, name: "Baghdad" },
+  "soleimani-2020": { x: 392, y: 188, name: "Baghdad airport" },
+  "samarra-2006": { x: 400, y: 155, name: "Samarra" },
+  "musa-1959": { x: 150, y: 205, name: "Tyre" },
+  "amal-1974": { x: 158, y: 176, name: "Beirut" },
+  "musa-1978": { x: 158, y: 176, name: "Beirut" },
+  "hezb-1985": { x: 200, y: 200, name: "The Bekaa" },
+  "taif-1989": { x: 158, y: 176, name: "Beirut" },
+  "south-2000": { x: 148, y: 210, name: "South Lebanon" },
+  "war-2006": { x: 158, y: 176, name: "Beirut" },
+  "nasrallah-2024": { x: 158, y: 176, name: "Beirut" },
+  "assad-1970": { x: 236, y: 150, name: "Damascus" },
+  "alawite-1936": { x: 220, y: 145, name: "The Syrian coast" },
+  "qusayr-2013": { x: 200, y: 175, name: "Qusayr" },
+  "assad-2024": { x: 236, y: 150, name: "Damascus" },
+  "yemen-1962": { x: 258, y: 470, name: "Sanaa" },
+  "sanaa-2014": { x: 258, y: 470, name: "Sanaa" },
+  "yemen-2015": { x: 270, y: 480, name: "Yemen" },
+  "qatif-1979": { x: 470, y: 340, name: "Qatif" },
+  "bahrain-2011": { x: 530, y: 368, name: "Manama" },
+  "mecca-1987": { x: 290, y: 400, name: "Mecca" },
+  "nimr-2016": { x: 470, y: 345, name: "Eastern Province" },
+  "war-1980": { x: 500, y: 190, name: "The Iran–Iraq border" },
+  "gaza-2023": { x: 430, y: 220, name: "Lebanon, Iraq, Yemen, Iran" },
+  "war-2026": { x: 620, y: 400, name: "Strait of Hormuz" },
+  "beijing-2023": { x: 500, y: 250, name: "Tehran and Riyadh" },
+  "tishreen-2019": { x: 300, y: 190, name: "Baghdad, Beirut, Tehran" },
+};
+const BRIDGE = new Set(["qusayr-2013", "assad-2024", "soleimani-2020", "hezb-1985", "war-1980", "gaza-2023", "nasrallah-2024", "sciri-1982", "war-2026"]);
+
+const SCENES = [
+  {
+    id: "absence",
+    years: "1932–36",
+    title: "Three kinds of absence",
+    ids: ["iraq-1932", "goharshad-1935", "alawite-1936"],
+    lands: ["iraq", "iran", "syria"],
+    tell: "Iraq is newly independent, Shi'a-majority, and governed by a Sunni throne. In Mashhad the Shah's army fires on worshippers who have no party and no militia behind them. In Syria, France dissolves the Alawite statelet and folds it into the republic — a different tradition, with no road to Najaf. Nothing here is yet political Shiism. These are three ways of being numerous in a country and absent from its government, and they do not resemble each other.",
+  },
+  {
+    id: "deadend",
+    years: "1946–56",
+    title: "A violent dead end",
+    ids: ["fadaiyan-1946", "safavi-1956"],
+    lands: ["iran"],
+    tell: "The Devotees of Islam are the first organized Shi'a Islamist group in modern Iran. They assassinate a secular writer and a prime minister. They want sharia enforced. They have no theory of who should hold the state. In 1956 the Shah hangs them. For a few years Borujerdi's quietism is unchallenged, which is why the uprising of 1963 will feel like a break.",
+  },
+  {
+    id: "starts",
+    years: "1957–63",
+    title: "Four starts, no state",
+    ids: ["dawa-1957", "musa-1959", "borujerdi-1961", "yemen-1962", "khordad-1963"],
+    lands: ["iraq", "lebanon", "iran", "yemen"],
+    tell: "In Najaf, Muhammad Baqir al-Sadr builds a party to compete with communists and nationalists. In Tyre, Musa al-Sadr begins turning the poorest community in Lebanon into a constituency. In Qom, Borujerdi dies and the quietist brake comes off; two years later Khomeini is a national name. In North Yemen the Zaydi imamate, a different school that had actually ruled, is overthrown by republican officers. Four beginnings. No shared address. No state in Shi'a hands except the one the Zaydi imams have just lost.",
+  },
+  {
+    id: "three",
+    years: "1970–75",
+    title: "A doctrine, a coup, a movement",
+    ids: ["velayat-1970", "assad-1970", "amal-1974"],
+    lands: ["iran", "iraq", "syria", "lebanon"],
+    tell: "The same few years produce three inventions that later get collapsed into one. In Najaf, Khomeini argues that a jurist should rule. In Damascus, Hafez al-Assad takes power with the army; he is Alawite, and the regime he builds is Ba'athist. In Lebanon, Musa al-Sadr founds the Movement of the Deprived, and he has already recognized Alawites as Shi'a — a ruling that will smooth a later alliance. The alliance does not exist yet. A theory of clerical government, a minority military regime, and a Lebanese communal movement are three different answers to three different problems.",
+  },
+  {
+    id: "tehran",
+    years: "1977–80",
+    title: "The center moves",
+    ids: ["shariati-1977", "musa-1978", "rev-1979", "qatif-1979", "baqir-1980", "war-1980"],
+    lands: ["iran", "lebanon", "gulf", "iraq"],
+    tell: "Shariati's lay revolution and Khomeini's clerical one have both taught the streets. Only the clerics will inherit the state. The summer before the Shah falls, Musa al-Sadr vanishes in Libya, so Lebanese Shi'a politics loses its founder in the same season Iran gains a ruler. In November 1979, during Muharram, Qatif rises and is crushed. Gulf palaces begin to treat their own Shi'a citizens as a channel for the revolution next door. The fear will outrun the evidence for forty years. The next spring Saddam hangs Baqir al-Sadr, the Iraqi thinker who might have kept a center in Najaf, and invades. Iraqi political Shiism survives in exile, and the exile is Tehran.",
+  },
+  {
+    id: "militia",
+    years: "1982–89",
+    title: "A war, and a second country",
+    ids: ["sciri-1982", "hezb-1985", "mecca-1987", "khamenei-1989", "taif-1989"],
+    lands: ["iraq", "lebanon", "gulf", "iran"],
+    tell: "Iran and Iraq are still at war when a second project opens in the Bekaa. Guardsmen train young Shi'a, many of them leaving Amal, and Hezbollah's 1985 letter swears them to Khomeini. Amal never takes that oath. In 1987 a demonstration at the Hajj becomes a clash; hundreds die, most of them Iranian, and Riyadh and Tehran break. Then one calendar year, 1989, holds two endings. Khomeini dies, and the office of Leader passes to a political cleric who is not the senior jurist. Taif ends the Lebanese civil war and lets Hezbollah keep its weapons. The revolution stops expecting a copy of itself in every capital. It keeps a militia, an Iraqi council housed in Tehran, and an Alawite partner.",
+  },
+  {
+    id: "lessons",
+    years: "1991–2000",
+    title: "Three lessons",
+    ids: ["uprising-1991", "khatami-1997", "south-2000"],
+    lands: ["iraq", "iran", "lebanon"],
+    tell: "March 1991: the shrine cities of Iraq rise after the Gulf War, and Saddam buries the rising. Washington, whose war made the moment possible, does not come. May 1997: Iranians give Khatami a landslide and spend two terms learning the ceiling of reform inside a jurist's state. May 2000: Israel leaves south Lebanon, and Hezbollah's claim to its arms hardens around that withdrawal. Three countries, three lessons, no single moral. No one is coming to rescue you. The ballot has a wall. A militia can outlast an occupation.",
+  },
+  {
+    id: "taken",
+    years: "2003–09",
+    title: "They take Iraq, and split",
+    ids: ["iraq-2003", "samarra-2006", "war-2006", "green-2009"],
+    lands: ["iraq", "lebanon", "iran"],
+    tell: "The American invasion does what Iraqi parties could not. Sistani, heir of Najaf's quietism, forces elections, and Shi'a parties govern Iraq. The quietist writes the rules. He does not take the chair. In 2006 that new power is consumed twice, in two countries. February: the shrine at Samarra is bombed and Baghdad turns sectarian, Shi'a factions against each other as well as against Sunnis. July: Hezbollah fights Israel for a month and is still standing at the ceasefire. Same year. Two wars. Two meanings of Shi'a power. Then in 2009 millions of Iranians march against the state that rules in their name. A Shi'a public and a Shi'a government stand on opposite sides of the baton.",
+  },
+  {
+    id: "spring",
+    years: "2011–13",
+    title: "One spring, two directions",
+    ids: ["bahrain-2011", "qusayr-2013"],
+    lands: ["gulf", "syria", "lebanon", "iran"],
+    tell: "February 2011, Bahrain's Shi'a majority asks for a constitutional monarchy and an end to discrimination. In March, Saudi and Emirati troops clear Pearl Roundabout. The commission the king himself appoints does not find that Iran directed the crowd. The same spring, Syria comes apart. Iran sends men, and in May 2013 Hezbollah fights openly at Qusayr to save an Alawite-led Ba'athist state from a largely Sunni rebellion. Hold both. Shi'a citizens are crushed for demanding a share of one state. A Shi'a-allied regime spends a decade keeping another. Calling both 'the Shi'a' is how this history gets flattened.",
+  },
+  {
+    id: "eighteen",
+    years: "2014–16",
+    title: "Eighteen crowded months",
+    ids: ["fatwa-2014", "sanaa-2014", "yemen-2015", "jcpoa-2015", "nimr-2016"],
+    lands: ["iraq", "yemen", "iran", "gulf"],
+    tell: "June 2014, the Islamic State takes Mosul and Sistani calls Iraqis to the security forces. The militias that form will save the state and never fully go home. September, the Houthis take Sanaa. They are Zaydi, not Twelver. Their war with the republic is older than their patronage from Tehran. March 2015 Saudi Arabia goes to war in Yemen. July, Iran signs the nuclear deal. January 2016 Saudi Arabia executes Nimr al-Nimr and protesters storm the Saudi embassy in Tehran. Told as one bloc, this is the axis at its widest. Told on a calendar, it is an Iraqi fatwa, a Yemeni takeover, a Gulf war, a diplomatic bargain, and a domestic execution, stacked in eighteen months. The deal and the wars are both tools of the Iranian state. They pull in different directions.",
+  },
+  {
+    id: "home",
+    years: "2019–22",
+    title: "The parties are the establishment",
+    ids: ["tishreen-2019", "soleimani-2020", "amini-2022"],
+    lands: ["iraq", "lebanon", "iran"],
+    tell: "Autumn 2019, in Baghdad, Beirut, and Iranian cities, people march against the Shi'a parties in office. The crowds are not one movement. The complaint is. The line that carried political Shiism for fifty years — we are the excluded — no longer describes the men who hold the ministries and the guns. In January 2020 a US drone kills Soleimani and Abu Mahdi al-Muhandis at Baghdad airport. The network he tied together outlives him. The personal authority that made it move quickly does not. In September 2022 Mahsa Jina Amini dies in morality-police custody. The widest challenge to clerical rule since 1979 is led by women and begins in a Kurdish city. Abroad the network is still armed. At home the republic is arguing with its own public.",
+  },
+  {
+    id: "pieces",
+    years: "2023–24",
+    title: "Together, then in pieces",
+    ids: ["beijing-2023", "gaza-2023", "nasrallah-2024", "assad-2024"],
+    lands: ["iran", "lebanon", "iraq", "yemen", "syria", "gulf"],
+    tell: "March 2023, Tehran and Riyadh reopen relations, brokered in Beijing. The armed networks stay in place. Seven months later Hamas, a Sunni movement, attacks Israel. Hezbollah opens a northern front the next day. Iraqi militias strike American forces. The Houthis fire on the Red Sea. For the first time the pieces act in one war, on behalf of a group that does not share their school. Through 2024 the war stops being only a proxy war. Nasrallah is killed. Iran and Israel strike each other directly. A Lebanon ceasefire leaves Hezbollah's command broken. On 8 December Assad flees, and the land corridor to the Mediterranean, built since 2013, is gone inside a fortnight. The alliance entered the war as a system. It did not come apart as a system. The pieces dropped on different days, in different countries.",
+  },
+  {
+    id: "open",
+    years: "2025–26",
+    title: "The file is still open",
+    ids: ["twelve-2025", "war-2026"],
+    lands: ["iran", "lebanon", "iraq", "gulf"],
+    tell: "June 2025 is twelve days. Israel strikes nuclear and military sites and kills senior commanders. Iran fires missiles at Israeli cities. The United States bombs Natanz, Isfahan, and Fordow. Iran hits the American base at Al-Udeid. A ceasefire is announced. At the end of February 2026 a larger war reopens: strikes on Iran, the Strait of Hormuz closed, Hezbollah firing again from 1 March, Iraqi militias attacking American positions. A June memorandum meant to stop the war is declared over in July. As of 24 October 2026 no agreement holds, and in Lebanon the state is testing whether it can disarm what remains of Hezbollah. The expeditionary system is the weakest it has been since Iraq's Shi'a parties took office. Those parties still govern Iraq. The Islamic Republic still rules Iran. Both of those sentences are true, and they are not the same fact.",
+  },
+];
+
+function spanOf(event) {
+  const years = (event.when.match(/\d{4}/g) || [1930]).map(Number);
+  const start = years[0];
+  const end = years[years.length - 1];
+  return { start, end };
+}
+
+function sceneById(id) {
+  return SCENES.find((scene) => scene.id === id) || null;
+}
+
+function sceneForEvent(eventId) {
+  return SCENES.find((scene) => scene.ids.includes(eventId)) || null;
+}
+
+const T0 = 1930;
+const T1 = 2026;
+function xOf(year) {
+  return ((year - T0) / (T1 - T0)) * 100;
+}
+
+const fromHash = (location.hash || "#rev-1979").replace("#", "") || "rev-1979";
+const state = {
+  phase: "all",
+  country: "all",
+  selected: DATA.EVENTS.some((e) => e.id === fromHash) ? fromHash : "rev-1979",
+  scene: (sceneForEvent(fromHash) || sceneById("tehran")).id,
+};
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[c]));
+}
+
+function activeScene() {
+  return state.scene ? sceneById(state.scene) : null;
+}
+
+function visibleEvents() {
+  const scene = activeScene();
+  return DATA.EVENTS.filter((e) => {
+    if (state.phase !== "all" && e.phase !== state.phase) return false;
+    if (state.country !== "all" && e.country !== state.country) return false;
+    if (scene && state.phase === "all" && !scene.ids.includes(e.id)) return false;
+    return true;
+  }).sort((a, b) => a.sort - b.sort);
+}
+
+function emptyCopy() {
+  if (state.country === "yemen") {
+    return "Zaydi political rule ends in 1962, and the Houthi state project begins in 2014. Nothing in this guide sits in both that country and the period you have open.";
+  }
+  if (state.country === "syria") {
+    return "Syria's part in this history is the Alawite military regime and its alliance with Tehran, from Assad's coup to the collapse in December 2024. The period you have open has no Syrian event in the guide.";
+  }
+  return "No event in this guide sits in both filters. Widen the period or the country.";
+}
+
+function renderPills() {
+  const phases = document.getElementById("phase-pills");
+  const countries = document.getElementById("country-pills");
+  const phaseItems = [{ id: "all", label: "Full span" }].concat(
+    DATA.PHASES.map((p) => ({ id: p.id, label: p.years }))
+  );
+  const countryItems = [{ id: "all", label: "All" }].concat(
+    DATA.COUNTRIES.map((c) => ({ id: c.id, label: c.label }))
+  );
+  phases.innerHTML = phaseItems.map((p) => {
+    const swatch = p.id === "all" ? "" : ` style="--swatch:${PHASE_COLOR[p.id]}"`;
+    const dot = p.id === "all" ? "" : "<i></i>";
+    return `<button class="pill" data-phase="${p.id}" aria-pressed="${state.phase === p.id}"${swatch}>${dot}${esc(p.label)}</button>`;
+  }).join("");
+  countries.innerHTML = countryItems.map((c) => {
+    const swatch = c.id === "all" ? "" : ` style="--swatch:${COUNTRY_COLOR[c.id]}"`;
+    const dot = c.id === "all" ? "" : "<i></i>";
+    return `<button class="pill" data-country="${c.id}" aria-pressed="${state.country === c.id}"${swatch}>${dot}${esc(c.label)}</button>`;
+  }).join("");
+  phases.querySelectorAll("[data-phase]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.phase = btn.dataset.phase;
+      state.scene = null;
+      render();
+    });
+  });
+  countries.querySelectorAll("[data-country]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.country = btn.dataset.country;
+      render();
+    });
+  });
+}
+
+function renderDetail(events) {
+  const root = document.getElementById("detail");
+  const selected = events.find((e) => e.id === state.selected) || events[0];
+  if (!selected) {
+    root.innerHTML = `<p class="empty">${esc(emptyCopy())}</p>`;
+    return;
+  }
+  state.selected = selected.id;
+  const idx = events.findIndex((e) => e.id === selected.id);
+  const earlier = idx > 0 ? events[idx - 1] : null;
+  const later = idx < events.length - 1 ? events[idx + 1] : null;
+  const phase = PHASE[selected.phase];
+  const scene = activeScene();
+  const mates = (scene ? scene.ids : nearbyIds(selected))
+    .map((id) => DATA.EVENTS.find((e) => e.id === id))
+    .filter((e) => e && e.id !== selected.id);
+  const tone = COUNTRY_COLOR[selected.country];
+  root.style.setProperty("--tone", tone);
+  root.innerHTML = `
+    <div class="detail-top">
+      <span class="badge" style="background:${tone}">${ICONS[selected.kind] || ""}</span>
+      <div>
+        <p class="meta">${esc(selected.when)} · ${esc(phase.title)} · ${esc(COUNTRY[selected.country])} · ${esc(selected.kind)}</p>
+        <h2>${esc(selected.title)}</h2>
+      </div>
+    </div>
+    <p>${esc(selected.summary)}</p>
+    <p class="why-label">Why it is in this history</p>
+    <p class="why">${esc(selected.why)}</p>
+    ${mates.length ? `<p class="why-label">Also in these years</p><div class="also">${mates.map((m) => `<button type="button" data-id="${esc(m.id)}" style="--tone:${COUNTRY_COLOR[m.country]}"><b>${esc(m.when)}</b> ${esc(COUNTRY[m.country])} · ${esc(m.title)}</button>`).join("")}</div>` : ""}
+    <div class="nav">
+      <button type="button" id="earlier" ${earlier ? "" : "disabled"}>${earlier ? "Earlier · " + esc(earlier.when) : "Earlier"}</button>
+      <button type="button" id="later" ${later ? "" : "disabled"}>${later ? "Later · " + esc(later.when) : "Later"}</button>
+    </div>`;
+  const eBtn = document.getElementById("earlier");
+  const lBtn = document.getElementById("later");
+  if (earlier) eBtn.addEventListener("click", () => select(earlier.id, false));
+  if (later) lBtn.addEventListener("click", () => select(later.id, false));
+  root.querySelectorAll(".also [data-id]").forEach((btn) => {
+    btn.addEventListener("click", () => select(btn.dataset.id, false));
+  });
+}
+
+function nearbyIds(selected) {
+  if (!selected) return [];
+  const a = spanOf(selected);
+  return DATA.EVENTS.filter((e) => {
+    if (e.id === selected.id) return false;
+    const b = spanOf(e);
+    return b.start <= a.end + 1 && b.end >= a.start - 1;
+  }).slice(0, 5).map((e) => e.id);
+}
+
+function renderTimeline(events) {
+  const groups = DATA.PHASES
+    .map((p) => ({ phase: p, events: events.filter((e) => e.phase === p.id) }))
+    .filter((g) => g.events.length);
+  const html = groups.map((g) => {
+    const head = state.phase === "all"
+      ? `<div class="group-head"><h3 style="color:${PHASE_COLOR[g.phase.id]}">${esc(g.phase.title)}</h3><span>${esc(g.phase.years)}</span></div>`
+      : "";
+    const rows = g.events.map((e) => `
+      <button class="event" type="button" data-id="${esc(e.id)}" style="--tone:${COUNTRY_COLOR[e.country]}" ${e.id === state.selected ? 'aria-current="true"' : ""}>
+        <span class="when">${esc(e.when)}</span>
+        <span class="rail"><span class="dot"></span><span class="stem"></span></span>
+        <span>
+          <span class="event-title">${esc(e.title)}</span>
+          <span class="event-meta">${esc(COUNTRY[e.country])} · ${esc(e.kind)}</span>
+        </span>
+      </button>`).join("");
+    return head + rows;
+  }).join("");
+  const root = document.getElementById("timeline");
+  root.innerHTML = html;
+  root.querySelectorAll("[data-id]").forEach((btn) => {
+    btn.addEventListener("click", () => select(btn.dataset.id, true));
+  });
+}
+
+function placeOf(event) {
+  return PLACE[event.id] || CENTROID[event.country] || { x: 470, y: 230, name: "The region" };
+}
+
+function focusEvents(selected) {
+  const scene = activeScene();
+  if (scene) {
+    return scene.ids.map((id) => DATA.EVENTS.find((e) => e.id === id)).filter(Boolean);
+  }
+  if (!selected) return [];
+  if (state.phase !== "all" || state.country !== "all") return visibleEvents();
+  const ids = new Set([selected.id, ...nearbyIds(selected)]);
+  return DATA.EVENTS.filter((e) => ids.has(e.id));
+}
+
+function renderMap(selected) {
+  const scene = activeScene();
+  const focus = focusEvents(selected);
+  const lit = new Set(scene ? scene.lands : focus.map((e) => e.country));
+  document.querySelectorAll("[data-map]").forEach((el) => {
+    const id = el.dataset.map;
+    const filtered = state.country !== "all";
+    const on = filtered ? state.country === id : lit.has(id);
+    el.classList.toggle("is-active", on);
+    el.classList.toggle("is-dim", filtered ? state.country !== id : !lit.has(id));
+  });
+  const pins = document.getElementById("pins");
+  const groups = new Map();
+  focus.forEach((event) => {
+    const base = placeOf(event);
+    const key = base.name;
+    if (!groups.has(key)) groups.set(key, { ...base, country: event.country, events: [] });
+    groups.get(key).events.push(event);
+  });
+  pins.innerHTML = [...groups.values()].map((group) => {
+    const on = !!(selected && group.events.some((event) => event.id === selected.id));
+    const years = [...new Set(group.events.map((event) => spanOf(event).start))];
+    const label = years.length === 1 ? String(years[0]) : `${years[0]}–${years[years.length - 1]}`;
+    const titles = group.events.map((event) => event.title).join("; ");
+    return `<g transform="translate(${group.x} ${group.y})"><circle r="${on ? 9 : 6.5}" fill="${on ? "#ffe08a" : "#fffaf3"}" stroke="${on ? "#1c1915" : COUNTRY_COLOR[group.country]}" stroke-width="3"><title>${esc(group.name)} · ${esc(titles)}</title></circle><text x="12" y="-9" font-size="15" font-weight="700" fill="#1c1915" stroke="#f4efe6" stroke-width="4" paint-order="stroke">${label}</text></g>`;
+  }).join("");
+  const names = [...new Set(focus.map((event) => placeOf(event).name))];
+  const caption = document.getElementById("map-place");
+  caption.textContent = scene
+    ? `${scene.years} · ${scene.title} · ${names.join(" · ")}`
+    : (selected ? `${placeOf(selected).name} · ${selected.title}` : "Click a scene, or a country.");
+  const bridgeOn = focus.some((event) => BRIDGE.has(event.id));
+  document.getElementById("bridge").classList.toggle("show", bridgeOn);
+}
+
+function renderScenes() {
+  const root = document.getElementById("scenes");
+  root.innerHTML = SCENES.map((scene) =>
+    `<button type="button" class="scene" data-scene="${scene.id}" aria-pressed="${state.scene === scene.id}"><b>${esc(scene.years)}</b><span>${esc(scene.title)}</span></button>`
+  ).join("");
+  root.querySelectorAll("[data-scene]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const scene = sceneById(btn.dataset.scene);
+      state.scene = scene.id;
+      state.phase = "all";
+      state.country = "all";
+      if (!scene.ids.includes(state.selected)) state.selected = scene.ids[0];
+      render();
+    });
+  });
+}
+
+function renderLanes(selected) {
+  const scene = activeScene();
+  const rows = [
+    ["iran", "Iran"],
+    ["iraq", "Iraq"],
+    ["lebanon", "Lebanon"],
+    ["syria", "Syria"],
+    ["yemen", "Yemen"],
+    ["gulf", "Gulf"],
+    ["region", "Across"],
+  ];
+  let shade = "";
+  if (scene) {
+    const members = scene.ids.map((id) => DATA.EVENTS.find((e) => e.id === id)).filter(Boolean);
+    const start = Math.min(...members.map((e) => spanOf(e).start));
+    const end = Math.max(...members.map((e) => spanOf(e).end));
+    shade = `<div class="lane-shade" style="left:${xOf(start)}%;width:${Math.max(xOf(end) - xOf(start), 1.4)}%"></div>`;
+  }
+  const ticks = [1930, 1950, 1970, 1979, 2003, 2011, 2026].map((year) =>
+    `<span style="left:${xOf(year)}%">${year}</span>`
+  ).join("");
+  const lanes = rows.map(([id, label]) => {
+    const marks = DATA.EVENTS.filter((e) => e.country === id).map((event) => {
+      const span = spanOf(event);
+      const current = selected && event.id === selected.id ? ' aria-current="true"' : "";
+      const title = ` title="${esc(event.when)} ${esc(event.title)}"`;
+      if (span.end > span.start) {
+        const width = Math.max(xOf(span.end) - xOf(span.start), 1.2);
+        return `<button class="bar" type="button" data-id="${esc(event.id)}" style="--tone:${COUNTRY_COLOR[id]};left:${xOf(span.start)}%;width:${width}%"${current}${title}></button>`;
+      }
+      return `<button class="blip" type="button" data-id="${esc(event.id)}" style="--tone:${COUNTRY_COLOR[id]};left:${xOf(span.start)}%"${current}${title}></button>`;
+    }).join("");
+    return `<div class="lane"><div class="lane-name" style="--tone:${COUNTRY_COLOR[id]}">${label}</div><div class="lane-track">${shade}${marks}</div></div>`;
+  }).join("");
+  const root = document.getElementById("lanes");
+  root.innerHTML = `<div class="axis"><div></div><div class="axis-track">${ticks}</div></div>${lanes}`;
+  root.querySelectorAll("[data-id]").forEach((btn) => {
+    btn.addEventListener("click", () => select(btn.dataset.id, false));
+  });
+}
+
+function renderRibbon(selected) {
+  const root = document.getElementById("ribbon");
+  if (!root.dataset.ready) {
+    root.innerHTML = DATA.PHASES.map((p) =>
+      `<button type="button" data-phase="${p.id}" style="--band:${PHASE_COLOR[p.id]}"><b>${esc(p.years)}</b><span>${esc(p.title)}</span></button>`
+    ).join("") + `<i id="playhead"></i>`;
+    root.dataset.ready = "1";
+    root.querySelectorAll("[data-phase]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.phase = state.phase === btn.dataset.phase ? "all" : btn.dataset.phase;
+        state.scene = null;
+        render();
+      });
+    });
+  }
+  root.querySelectorAll("[data-phase]").forEach((btn) => {
+    btn.setAttribute("aria-pressed", String(state.phase === btn.dataset.phase));
+    btn.classList.toggle("is-here", !!(selected && selected.phase === btn.dataset.phase));
+  });
+  const head = document.getElementById("playhead");
+  if (selected) {
+    const index = DATA.EVENTS.findIndex((e) => e.id === selected.id);
+    head.style.left = `${((index + 0.5) / DATA.EVENTS.length) * 100}%`;
+  }
+}
+
+function render() {
+  const events = visibleEvents();
+  const scene = activeScene();
+  document.getElementById("essay").textContent = scene && state.phase === "all"
+    ? scene.tell
+    : (state.phase === "all" ? DATA.MASTER : PHASE[state.phase].essay);
+  const countries = new Set(events.map((e) => e.country));
+  const countryCount = countries.size;
+  document.getElementById("count").textContent = scene && state.phase === "all"
+    ? `${events.length} ${events.length === 1 ? "event" : "events"} · ${countryCount} ${countryCount === 1 ? "country" : "countries"} · the same years`
+    : `${events.length} of ${DATA.EVENTS.length} events`;
+  renderPills();
+  renderScenes();
+  renderDetail(events);
+  renderTimeline(events);
+  const selected = events.find((e) => e.id === state.selected) || events[0];
+  renderLanes(selected);
+  renderMap(selected);
+  renderRibbon(selected);
+  if (state.selected && events.some((e) => e.id === state.selected)) {
+    history.replaceState(null, "", "#" + state.selected);
+  }
+}
+
+function select(id, fromList) {
+  state.selected = id;
+  const scene = sceneForEvent(id);
+  if (scene) {
+    state.scene = scene.id;
+    state.phase = "all";
+  }
+  render();
+  if (fromList && window.matchMedia("(max-width: 860px)").matches) {
+    document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+document.querySelectorAll("[data-map]").forEach((el) => {
+  el.addEventListener("click", () => {
+    state.country = state.country === el.dataset.map ? "all" : el.dataset.map;
+    render();
+  });
+});
+
+document.querySelectorAll("[data-jump]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    state.phase = "all";
+    state.country = "all";
+    select(btn.dataset.jump, true);
+    document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
+
+render();
+</script>
+</body>
+</html>

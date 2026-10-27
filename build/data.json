@@ -1,0 +1,596 @@
+{
+ "COUNTRIES": [
+  {
+   "id": "iran",
+   "label": "Iran"
+  },
+  {
+   "id": "iraq",
+   "label": "Iraq"
+  },
+  {
+   "id": "lebanon",
+   "label": "Lebanon"
+  },
+  {
+   "id": "yemen",
+   "label": "Yemen"
+  },
+  {
+   "id": "gulf",
+   "label": "Gulf"
+  },
+  {
+   "id": "syria",
+   "label": "Syria"
+  },
+  {
+   "id": "region",
+   "label": "Regional"
+  }
+ ],
+ "PHASES": [
+  {
+   "id": "marginal",
+   "years": "1930–1957",
+   "title": "Marginal and quietist",
+   "essay": "Iran and Iraq hold most of the region's Shi'a, and in both countries other people hold the state. Reza Shah, then his son, subordinate the Iranian clergy. Independent Iraq is a Shi'a-majority country run by a Sunni monarchy and a Sunni officer corps. The leading jurist, Hossein Borujerdi, treats political office as a distraction from the scholarly one. The one organized challenge, the Devotees of Islam, is small, violent, and finished by 1956."
+  },
+  {
+   "id": "parties",
+   "years": "1958–1978",
+   "title": "Parties and protest",
+   "essay": "Borujerdi's death removes the quietist brake. Three projects start in three places. Muhammad Baqir al-Sadr builds a party in Najaf. Musa al-Sadr builds a communal movement among the Shi'a of Lebanon, then the poorest constituency in that system. Ruhollah Khomeini turns a protest against the Shah's reforms into a theory that a jurist should rule. In Yemen the Zaydi imamate, a separate tradition with its own history of rule, has already been overthrown."
+  },
+  {
+   "id": "revolution",
+   "years": "1979–1988",
+   "title": "Revolution and war",
+   "essay": "The Iranian Revolution is the break. A cleric returns from exile, takes the state, and writes his authority into a constitution as velayat-e faqih, the guardianship of the jurist. Saddam invades, and hangs the Iraqi party's thinker. In Lebanon, during the Israeli invasion, a new militia swears itself to Khomeini. By the ceasefire of 1988, political Shiism in the region's diplomacy means Tehran."
+  },
+  {
+   "id": "contained",
+   "years": "1989–2002",
+   "title": "A smaller system",
+   "essay": "Khomeini dies and the office of Leader passes to Ali Khamenei, a political cleric junior in scholarly rank to the great marjas, the sources of emulation lay people follow. The constitution is changed so the Leader no longer has to be one. Tehran stops expecting a copy of itself in every capital and builds a tighter system: Hezbollah's arms inside Lebanon, an Iraqi opposition housed in Iran, an alliance with Hafez al-Assad. The 1991 uprising shows what it costs to have no state. Khatami's election shows the pressure from inside Iran."
+  },
+  {
+   "id": "state",
+   "years": "2003–2010",
+   "title": "They take a state",
+   "essay": "The American invasion does what Iraqi Shi'a parties could not do alone. Exiles return, and Ali al-Sistani, heir of Najaf's quietism, forces Washington toward elections. Those elections produce the first Shi'a-led government in modern Iraq, and then a sectarian war. The same years make Hezbollah look like an Arab force that can fight Israel and remain standing. In 2009 Iranians march against a declared election result, and the marches become a challenge to the Leader."
+  },
+  {
+   "id": "axis",
+   "years": "2011–2022",
+   "title": "The alliance at war",
+   "essay": "The 2011 uprisings pull this history in opposite directions. Bahrain's Shi'a majority demands a constitutional monarchy and is crushed with Saudi and Emirati troops. In Syria, Iran and then Hezbollah fight to save an Alawite-led Ba'athist state. ISIS takes Mosul, Sistani calls men to arms, and the militias never fully stand down. The Houthis, a Zaydi movement, take Sanaa and become the southern front of the rivalry with Riyadh. By 2019 the parties that once spoke for the excluded are the establishment, and in Baghdad, Beirut, and Iranian cities people march against them."
+  },
+  {
+   "id": "strain",
+   "years": "2023–2026",
+   "title": "Under direct fire",
+   "essay": "Hamas's attack on 7 October 2023 is the act of a Sunni movement. Hezbollah, Iraqi militias, and the Houthis join the war, and then Iran and Israel fight each other in the open. In 2024 Israel kills Hassan Nasrallah and breaks much of Hezbollah's command. Assad falls, and with him the land route to the Mediterranean. June 2025 brings American bombs onto Iranian nuclear sites. A wider war from the end of February 2026 is unfinished on 24 October: a June memorandum collapsed in July, the Strait of Hormuz is still violent, and Beirut is testing whether the Lebanese state can disarm what remains of Hezbollah. The expeditionary alliance is the weakest it has been since Iraq's Shi'a parties took power. Those parties still govern Iraq. The Islamic Republic still rules Iran."
+  }
+ ],
+ "EVENTS": [
+  {
+   "id": "iraq-1932",
+   "sort": 1932.1,
+   "when": "1932",
+   "title": "A Sunni throne, a Shi'a country",
+   "country": "iraq",
+   "phase": "marginal",
+   "kind": "State",
+   "summary": "Iraq becomes formally independent under the Hashemite king Faisal. Shi'a Arabs are the majority of the population. The cabinet, the senior bureaucracy, and the officer corps stay overwhelmingly Sunni, a pattern carried over from Ottoman practice and locked in by the British-built monarchy.",
+   "why": "For the next seventy years, Iraqi political Shiism is a demand for entry into a state that was built over a Shi'a society."
+  },
+  {
+   "id": "goharshad-1935",
+   "sort": 1935.7,
+   "when": "Jul 1935",
+   "title": "The army at Goharshad",
+   "country": "iran",
+   "phase": "marginal",
+   "kind": "Crackdown",
+   "summary": "Worshippers gather at the Goharshad Mosque in Mashhad against Reza Shah's dress laws. The army fires on the crowd. The death toll is still disputed: official counts were small, later accounts much larger. The senior clergy has no party and no militia with which to answer.",
+   "why": "This is the baseline. Clerical opposition in Iran is real, local, and crushable. It is not yet a political movement."
+  },
+  {
+   "id": "alawite-1936",
+   "sort": 1936.1,
+   "when": "1936",
+   "title": "The Alawite statelet is folded in",
+   "country": "syria",
+   "phase": "marginal",
+   "kind": "State",
+   "summary": "France dissolves the Alawite State it had carved out of the Syrian mandate and joins it to the Syrian Republic. Alawites are a rural minority with an esoteric tradition of their own, historically distinct from the Twelver Shiism of Najaf and Qom. Their later power will come through the army.",
+   "why": "Syria enters this history here so the Assad regime is not mistaken, later, for a Shi'a jurist's state."
+  },
+  {
+   "id": "fadaiyan-1946",
+   "sort": 1946.1,
+   "when": "1946",
+   "title": "The Devotees of Islam",
+   "country": "iran",
+   "phase": "marginal",
+   "kind": "Movement",
+   "summary": "Navvab Safavi founds the Fada'iyan-e Islam in Tehran. They want sharia enforced and secular public life punished. Members assassinate the writer Ahmad Kasravi in 1946 and Prime Minister Ali Razmara in 1951. They have a program of violence and no theory of clerical government.",
+   "why": "The first organized Shi'a Islamist group in modern Iran. It is a dead end, and the next generation will build something larger."
+  },
+  {
+   "id": "safavi-1956",
+   "sort": 1956.01,
+   "when": "Jan 1956",
+   "title": "Safavi is executed",
+   "country": "iran",
+   "phase": "marginal",
+   "kind": "Crackdown",
+   "summary": "The Shah's state executes Navvab Safavi and his closest associates. Borujerdi's quietism is the unchallenged clerical line. Mohammad Reza Shah looks, in the mid-1950s, as though he has outlasted both the liberal nationalists and the religious militants.",
+   "why": "Political Shiism in Iran goes quiet for a few years. The quiet is what makes 1963 a surprise."
+  },
+  {
+   "id": "dawa-1957",
+   "sort": 1957.5,
+   "when": "1957",
+   "title": "A party in Najaf",
+   "country": "iraq",
+   "phase": "parties",
+   "kind": "Movement",
+   "summary": "The Islamic Dawa Party takes shape in Najaf, with Muhammad Baqir al-Sadr as its intellectual center. The usual founding date is 1957. It is built to compete with the Communist Party and with Arab nationalism for young Shi'a, using a modern organization rather than a seminary alone.",
+   "why": "This is the start of organized political Shiism in Iraq: a party, a doctrine, and a claim on the state."
+  },
+  {
+   "id": "musa-1959",
+   "sort": 1959.9,
+   "when": "1959",
+   "title": "A sayyid arrives in Tyre",
+   "country": "lebanon",
+   "phase": "parties",
+   "kind": "Movement",
+   "summary": "Musa al-Sadr, Iranian-born and Najaf-trained, settles among the Shi'a of southern Lebanon. They are undercounted, under-schooled, and absent from the Christian-Sunni bargain that runs the country. He spends the next fifteen years turning a neglected community into a political constituency.",
+   "why": "Lebanese political Shiism begins as a social movement inside the Lebanese system, years before Iran's revolution and years before Hezbollah."
+  },
+  {
+   "id": "borujerdi-1961",
+   "sort": 1961.3,
+   "when": "Mar 1961",
+   "title": "The quietist dies",
+   "country": "iran",
+   "phase": "parties",
+   "kind": "Idea",
+   "summary": "Ayatollah Hossein Borujerdi dies in Qom. He had been the leading marja, and he had used that standing to keep senior clerics out of partisan politics. No single successor inherits both his rank and his restraint. Khomeini is one of several contenders, and he is the one willing to attack the Shah in public.",
+   "why": "The gate opens here. Almost everything political that follows in Iran depends on this death."
+  },
+  {
+   "id": "yemen-1962",
+   "sort": 1962.9,
+   "when": "Sep 1962",
+   "title": "The Zaydi imamate falls",
+   "country": "yemen",
+   "phase": "parties",
+   "kind": "State",
+   "summary": "Republican officers in North Yemen depose Imam Muhammad al-Badr. The Zaydi imamate had been a sayyid government of a kind Twelver jurists never built in the Arab east. A civil war follows, with Egypt backing the republic and Saudi Arabia backing the royalists. The imamate does not return.",
+   "why": "The Houthi movement, half a century later, is partly a claim on the status this coup ended. It is Zaydi politics, with its own chronology."
+  },
+  {
+   "id": "khordad-1963",
+   "sort": 1963.6,
+   "when": "Jun 1963",
+   "title": "15 Khordad",
+   "country": "iran",
+   "phase": "parties",
+   "kind": "Movement",
+   "summary": "The Shah's White Revolution — land reform, a literacy corps, votes for women — passes by referendum in January. Khomeini denounces the package and the Shah's dependence on the United States. On 5 June the uprising that follows is put down. The state admits a small death toll; later historical estimates run into the hundreds. Khomeini becomes a national name.",
+   "why": "A jurist, rather than a party or a guerrilla band, is now the face of opposition to the monarchy."
+  },
+  {
+   "id": "velayat-1970",
+   "sort": 1970.2,
+   "when": "1964–1970",
+   "title": "Lectures on Islamic government",
+   "country": "iran",
+   "phase": "parties",
+   "kind": "Idea",
+   "summary": "Khomeini is exiled in November 1964, first to Turkey, then to Najaf in 1965. There, in 1970, he delivers the lectures later published as Islamic Government. The claim is specific: in the absence of the Twelfth Imam, a qualified jurist should hold the political rule of the community. This is velayat-e faqih.",
+   "why": "The doctrine of the future Iranian state is written in an Iraqi seminary, a decade before anyone expects it to be used."
+  },
+  {
+   "id": "assad-1970",
+   "sort": 1970.11,
+   "when": "Nov 1970",
+   "title": "An Alawite officer takes Damascus",
+   "country": "syria",
+   "phase": "parties",
+   "kind": "State",
+   "summary": "Hafez al-Assad, the defense minister, seizes power in the Corrective Movement. He is Alawite, and so is a growing share of the officer corps he relies on. The regime he builds is Ba'athist, presidential, and hereditary in practice. It is not a government of Shi'a jurists, and it does not claim to be one.",
+   "why": "The Iran-Syria alliance that begins in the 1980s is an alliance between a revolutionary jurist-state and a minority-led military regime."
+  },
+  {
+   "id": "amal-1974",
+   "sort": 1974.3,
+   "when": "1974–1975",
+   "title": "The Movement of the Deprived",
+   "country": "lebanon",
+   "phase": "parties",
+   "kind": "Movement",
+   "summary": "Musa al-Sadr founds Harakat al-Mahrumin in 1974, and the next year its armed wing, Amal. In 1973 he had issued a recognition of Alawites as Shi'a Muslims, a ruling that later smooths the political road between Lebanese Shi'a and Damascus. Amal's demand is representation and self-defense inside Lebanon, as the country slides into civil war in 1975.",
+   "why": "The first Lebanese Shi'a mass movement is communal and nationalist. Hezbollah will be a split from this world, not its continuation."
+  },
+  {
+   "id": "shariati-1977",
+   "sort": 1977.6,
+   "when": "Jun 1977",
+   "title": "Shariati dies",
+   "country": "iran",
+   "phase": "parties",
+   "kind": "Idea",
+   "summary": "Ali Shariati dies in England at 43. A lay intellectual, he had recast Shiism as the faith of the oppressed against what he called a quietist, accommodated clergy — his 'red' Shiism against 'black.' Thousands of young Iranians who will march in 1978 learned the revolution from him, and from Khomeini, as if the two were one argument.",
+   "why": "The clerics who take the state will sideline Shariati's heirs. The ferment he named was still part of what made a mass revolution possible."
+  },
+  {
+   "id": "musa-1978",
+   "sort": 1978.8,
+   "when": "Aug 1978",
+   "title": "Musa al-Sadr disappears",
+   "country": "lebanon",
+   "phase": "parties",
+   "kind": "Movement",
+   "summary": "Musa al-Sadr vanishes on a visit to Libya. He is never seen again. Amal continues under other men, eventually Nabih Berri, and becomes a militia among militias in the civil war. The charismatic center of Lebanese Shi'a politics is gone just as Iran's revolution is about to provide a different one.",
+   "why": "The vacancy matters. A decade later, Hezbollah and Amal will be rivals for the same community."
+  },
+  {
+   "id": "rev-1979",
+   "sort": 1979.2,
+   "when": "Feb–Dec 1979",
+   "title": "A jurist takes the state",
+   "country": "iran",
+   "phase": "revolution",
+   "kind": "State",
+   "summary": "The Shah leaves on 16 January. Khomeini returns on 1 February. A referendum on 1 April establishes the Islamic Republic. In December a constitution concentrates ultimate authority in the Leader as guardian-jurist. Parallel institutions grow beside the old state, above all the Revolutionary Guards. Lay nationalists and the left, who had filled the streets, lose the succession fight within two years.",
+   "why": "Every later argument about political Shiism in the Middle East refers back to this year. A school that had mostly refused the modern state now runs one."
+  },
+  {
+   "id": "qatif-1979",
+   "sort": 1979.11,
+   "when": "Nov 1979",
+   "title": "Qatif rises",
+   "country": "gulf",
+   "phase": "revolution",
+   "kind": "Crackdown",
+   "summary": "During Muharram, Shi'a in Qatif and al-Hasa, in Saudi Arabia's Eastern Province, protest. The same month, Sunni militants seize the Grand Mosque in Mecca, and Iranian politics is still in revolutionary motion. Saudi security forces put the Eastern Province down. Published death tolls differ.",
+   "why": "Gulf monarchies start treating their own Shi'a citizens as a channel through which the Iranian Revolution might travel. That fear shapes the next forty years, in excess of the evidence about any given protest."
+  },
+  {
+   "id": "baqir-1980",
+   "sort": 1980.4,
+   "when": "Apr 1980",
+   "title": "Baqir al-Sadr is hanged",
+   "country": "iraq",
+   "phase": "revolution",
+   "kind": "Crackdown",
+   "summary": "Saddam Hussein, president since 1979, executes Muhammad Baqir al-Sadr and his sister, Bint al-Huda. Dawa has already been driven underground by the Ba'ath. The party's remaining cadre scatter, a large share of them toward Iran. The thinker who might have led an Iraqi Shi'a politics with its own center is dead.",
+   "why": "Iraqi political Shiism survives in exile, and the exile is in Tehran. That address will matter after 2003."
+  },
+  {
+   "id": "war-1980",
+   "sort": 1980.9,
+   "when": "1980–1988",
+   "title": "Eight years of war",
+   "country": "region",
+   "phase": "revolution",
+   "kind": "War",
+   "summary": "Iraq invades Iran on 22 September 1980 and does not get the quick collapse it expected. Tehran calls the war a sacred defense and uses it to build the Guards, the Basij, and a cult of martyrdom into the structure of the state. Saddam calls it a defense against a Shi'a revolution exported to his own majority. The ceasefire comes in August 1988, after hundreds of thousands of dead, with neither regime destroyed.",
+   "why": "The war militarizes the Islamic Republic and gives the Iraqi Ba'ath a generation-long warrant for suppressing Shi'a parties."
+  },
+  {
+   "id": "sciri-1982",
+   "sort": 1982.11,
+   "when": "Nov 1982",
+   "title": "An Iraqi council, seated in Tehran",
+   "country": "iraq",
+   "phase": "revolution",
+   "kind": "Movement",
+   "summary": "Muhammad Baqir al-Hakim founds the Supreme Council for the Islamic Revolution in Iraq in Tehran. Its armed wing, the Badr Brigade, is trained by the Revolutionary Guards and fights on Iran's side in the war. After 2003 the council returns, later renamed the Islamic Supreme Council, and becomes one of the parties of the new Iraqi state.",
+   "why": "A whole wing of Iraqi Shi'a politics is formed as an Iranian wartime institution. Its rivals will never let it forget the address."
+  },
+  {
+   "id": "hezb-1985",
+   "sort": 1985.2,
+   "when": "1982–1985",
+   "title": "Hezbollah's open letter",
+   "country": "lebanon",
+   "phase": "revolution",
+   "kind": "Movement",
+   "summary": "Israel invades Lebanon in June 1982 and besieges Beirut. Guardsmen from Iran begin training young Shi'a in the Bekaa, many of them leaving Amal. The group that becomes Hezbollah coalesces in that camp. Its public manifesto, the open letter of 16 February 1985, names Khomeini as its leader and calls for an Islamic state. A 2009 manifesto will speak more as a Lebanese party. The armed allegiance to the Iranian Leader stays.",
+   "why": "This is the export of velayat-e faqih into a militia with a social base. Amal, under Berri, stays inside Lebanese and Syrian patronage instead."
+  },
+  {
+   "id": "mecca-1987",
+   "sort": 1987.7,
+   "when": "Jul 1987",
+   "title": "The clash at Mecca",
+   "country": "gulf",
+   "phase": "revolution",
+   "kind": "Crackdown",
+   "summary": "Iranian pilgrims stage a political demonstration during the Hajj. Saudi security forces move against it. Hundreds die, most of them Iranian; each government blames the other for the number and for the cause. Tehran and Riyadh break relations. They will not restore them for years.",
+   "why": "The revolution tries to carry its politics into the central rite of Islam and fails. The Saudi-Iran rivalry acquires a religious wound on top of a strategic one."
+  },
+  {
+   "id": "khamenei-1989",
+   "sort": 1989.6,
+   "when": "Jun 1989",
+   "title": "The Leader is a political cleric",
+   "country": "iran",
+   "phase": "contained",
+   "kind": "State",
+   "summary": "Khomeini dies on 3 June 1989. The Assembly of Experts selects Ali Khamenei the next day. He is not among the senior marjas. An amended constitution, approved by referendum that summer, drops the requirement that the Leader be the source of emulation. Akbar Hashemi Rafsanjani, as president, turns the state toward reconstruction.",
+   "why": "Velayat-e faqih detaches from classical scholarship. Authority now sits in an office, and the office can outlive the man who invented it."
+  },
+  {
+   "id": "taif-1989",
+   "sort": 1989.82,
+   "when": "Oct 1989",
+   "title": "Taif rewrites Lebanon",
+   "country": "lebanon",
+   "phase": "contained",
+   "kind": "Diplomacy",
+   "summary": "The Taif Accord ends the Lebanese civil war on a revised confessional formula. Parliament is split evenly between Christians and Muslims, and Shi'a representation rises inside the Muslim share. Hezbollah keeps its weapons under the heading of resistance to the Israeli occupation of the south. Amal, through Nabih Berri, takes the speakership of parliament and holds it from 1992 on.",
+   "why": "Shi'a parties become stakeholders in the Lebanese state while one of them remains armed. That double status is the country's political problem for the next thirty-five years."
+  },
+  {
+   "id": "uprising-1991",
+   "sort": 1991.3,
+   "when": "Mar 1991",
+   "title": "The uprising is buried",
+   "country": "iraq",
+   "phase": "contained",
+   "kind": "Crackdown",
+   "summary": "After the Gulf War ceasefire, rebellions seize Basra and the shrine cities of Najaf and Karbala. Saddam's Republican Guard crushes them within weeks. Tens of thousands are killed, many into mass graves. The United States, whose war had made the rising possible, does not intervene. Marsh villages in the south are drained and destroyed in the years that follow.",
+   "why": "A generation of Iraqi Shi'a draws a hard conclusion: neither Arab nationalism nor Washington will protect them. Parties with an Iranian address gain a hearing they had not fully earned."
+  },
+  {
+   "id": "khatami-1997",
+   "sort": 1997.5,
+   "when": "May 1997",
+   "title": "Khatami wins in a landslide",
+   "country": "iran",
+   "phase": "contained",
+   "kind": "State",
+   "summary": "Mohammad Khatami, a mid-ranking cleric running on reform, takes about 70 percent of the vote. The press opens, and a younger public treats the ballot as a way to change the republic from inside. Over two terms the Guardian Council, the judiciary, and the Leader's office block the structural reforms. The constituency remains.",
+   "why": "Political Shiism in Iran is no longer only a story about the state against its enemies. It is also a fight among people who accept an Islamic republic and disagree about whose republic it is."
+  },
+  {
+   "id": "south-2000",
+   "sort": 2000.5,
+   "when": "May 2000",
+   "title": "Israel leaves the south",
+   "country": "lebanon",
+   "phase": "contained",
+   "kind": "War",
+   "summary": "Israel withdraws from the occupation zone it had held in southern Lebanon since 1978, and from its local partner, the South Lebanon Army. Hezbollah claims the outcome as a military victory, the first time an Arab force has pushed Israel off occupied land by force of arms. Its domestic standing, and its claim to keep its weapons, harden around that claim.",
+   "why": "After 2000, Hezbollah's arms are justified as deterrence and as a regional role, long after the occupation they were founded to fight has ended."
+  },
+  {
+   "id": "iraq-2003",
+   "sort": 2005.1,
+   "when": "2003–2005",
+   "title": "Elections, because Sistani insisted",
+   "country": "iraq",
+   "phase": "state",
+   "kind": "State",
+   "summary": "The United States invades in March 2003 and dissolves the Ba'athist army. Dawa, the Supreme Council, and the Sadrists return from exile or step out of the underground. Sistani rejects an American plan to write a constitution without an elected body. Elections in January 2005 and a constitutional referendum that October produce a government led by Shi'a parties, with Kurdish allies and a Sunni population that largely boycotted the first vote.",
+   "why": "Quietist Najaf does more to design the new Iraq than the revolutionaries do. A school that refuses to govern decides the rules under which others govern."
+  },
+  {
+   "id": "samarra-2006",
+   "sort": 2006.2,
+   "when": "Feb 2006",
+   "title": "The shrine at Samarra",
+   "country": "iraq",
+   "phase": "state",
+   "kind": "War",
+   "summary": "Bombers destroy the golden dome of the Al-Askari shrine, burial place of two of the Twelve Imams and a holy site in a Sunni-majority city. The attack, in the orbit of the group that becomes the Islamic State, opens two years of sectarian killing. The Mahdi Army of Muqtada al-Sadr, Badr, and the police of the new Interior Ministry all become instruments of it. Sunnis are cleansed from much of Baghdad.",
+   "why": "The Shi'a political victory of 2005 is immediately consumed by a war inside Iraq, and by a split among Shi'a parties over who owns the guns."
+  },
+  {
+   "id": "war-2006",
+   "sort": 2006.7,
+   "when": "Jul 2006",
+   "title": "A war Hezbollah can survive",
+   "country": "lebanon",
+   "phase": "state",
+   "kind": "War",
+   "summary": "After a cross-border raid, Israel bombs Lebanon and invades the south. The fighting lasts until a ceasefire on 14 August. Hezbollah keeps firing rockets until the end and retains its leadership and its arsenal. In much of the Arab world the survival is received as a victory. Inside Lebanon the bill — a shattered southern suburb, a deeper split with the Sunni and Druze parties — comes due more slowly.",
+   "why": "The alliance system acquires a demonstration effect. Militias tied to Tehran look, for a few years, like the effective armies of the region."
+  },
+  {
+   "id": "green-2009",
+   "sort": 2009.6,
+   "when": "Jun 2009",
+   "title": "The Green Movement",
+   "country": "iran",
+   "phase": "state",
+   "kind": "Movement",
+   "summary": "Mahmoud Ahmadinejad is declared re-elected within hours. Millions march for Mir-Hossein Mousavi. The state answers with the Basij, arrests, and show trials. Mousavi and Mehdi Karroubi are locked in their houses. The protests do not bring down the Leader. They do establish that the Islamic Republic's hardest opposition now comes from its own public.",
+   "why": "A Shi'a state and a Shi'a street are on opposite sides of the baton. Any account that treats 'the Shi'a' as one political actor fails here."
+  },
+  {
+   "id": "bahrain-2011",
+   "sort": 2011.2,
+   "when": "Feb 2011",
+   "title": "Pearl Roundabout",
+   "country": "gulf",
+   "phase": "axis",
+   "kind": "Crackdown",
+   "summary": "Protests begin in Bahrain on 14 February, in the wave that is also sweeping Tunis and Cairo. The largest crowds call for a constitutional monarchy and an end to discrimination against the Shi'a majority by the Sunni Al Khalifa state. On 14 March Saudi and Emirati troops cross the causeway. The roundabout is cleared, opposition societies are banned, and the crackdown includes torture documented by an independent commission the king himself appointed.",
+   "why": "This is a domestic reform movement in a Shi'a-majority country. Manama described it as an Iranian operation. The commission found no evidence of Iranian direction of the uprising."
+  },
+  {
+   "id": "qusayr-2013",
+   "sort": 2013.5,
+   "when": "May 2013",
+   "title": "Hezbollah crosses into Syria",
+   "country": "syria",
+   "phase": "axis",
+   "kind": "War",
+   "summary": "The Syrian uprising has become a war, and Assad is losing ground. Iran has already sent Guardsmen and Iraqi militia recruits. In May, Hezbollah fights openly for the regime at Qusayr. Hassan Nasrallah says so in a speech. The party that had justified its arms as resistance to Israel is now an expeditionary force in a war against a largely Sunni rebellion.",
+   "why": "The land bridge — Iran, Iraq, Syria, Lebanon — becomes a military fact. It also ties Lebanese Shi'a to the survival of an Alawite-led Ba'athist state."
+  },
+  {
+   "id": "fatwa-2014",
+   "sort": 2014.6,
+   "when": "Jun 2014",
+   "title": "Sistani's fatwa",
+   "country": "iraq",
+   "phase": "axis",
+   "kind": "War",
+   "summary": "The Islamic State takes Mosul on 10 June. Three days later Sistani issues a collective-duty fatwa: Iraqis should join the security forces to defend the country. Volunteers flood in. The Popular Mobilization Forces that form around them include units loyal to Najaf, units loyal to Sadr, and units built by the Guards, among them Kataib Hezbollah and Asaib Ahl al-Haq. A 2016 law makes the PMF part of the state.",
+   "why": "Shi'a mobilization saves the Iraqi state from the Islamic State and leaves Baghdad with armed factions it pays and does not fully command."
+  },
+  {
+   "id": "sanaa-2014",
+   "sort": 2014.9,
+   "when": "Sep 2014",
+   "title": "The Houthis take Sanaa",
+   "country": "yemen",
+   "phase": "axis",
+   "kind": "Movement",
+   "summary": "Ansar Allah, the Houthi movement, seizes the Yemeni capital in alliance with forces loyal to the former president, Ali Abdullah Saleh. The Houthis are a Zaydi revival that grew out of the wars of the 2000s in Saada. Their slogan is anti-American and anti-Israeli. Their jurisprudence is Zaydi. Iranian support grows as the war widens; it does not make them Twelvers.",
+   "why": "The southern arm of the rivalry with Saudi Arabia is a different school of Shiism, with a Yemeni grievance that predates the alliance with Tehran."
+  },
+  {
+   "id": "yemen-2015",
+   "sort": 2015.3,
+   "when": "Mar 2015",
+   "title": "Riyadh goes to war in Yemen",
+   "country": "yemen",
+   "phase": "axis",
+   "kind": "War",
+   "summary": "A Saudi-led coalition intervenes to restore the displaced Yemeni government. The air war, the blockade, and the ground fighting become one of the region's worst humanitarian disasters. The Houthis hold the highlands, acquire missiles and drones, and strike Saudi cities. Tehran's relationship with them deepens under fire.",
+   "why": "Yemen becomes a standing front. It will still be one in 2026, after several of Tehran's other fronts have collapsed."
+  },
+  {
+   "id": "jcpoa-2015",
+   "sort": 2015.7,
+   "when": "2015–2018",
+   "title": "The nuclear deal, then the exit",
+   "country": "iran",
+   "phase": "axis",
+   "kind": "Diplomacy",
+   "summary": "Iran and six world powers sign the Joint Comprehensive Plan of Action in July 2015. Iran limits enrichment and accepts inspections; nuclear-related sanctions are lifted. In May 2018 the United States leaves the deal and restores maximum economic pressure. Inside Tehran the argument between diplomacy and the regional guns is settled, for the next several years, in favor of the guns.",
+   "why": "The nuclear program and the alliance system are two tools of the same state. When one is squeezed, the other is used harder."
+  },
+  {
+   "id": "nimr-2016",
+   "sort": 2016.01,
+   "when": "Jan 2016",
+   "title": "Nimr al-Nimr is executed",
+   "country": "gulf",
+   "phase": "axis",
+   "kind": "Crackdown",
+   "summary": "Saudi Arabia executes the Shi'a cleric Nimr al-Nimr, a critic of the royal family who had supported the Eastern Province protests of 2011. Protesters in Tehran storm the Saudi embassy. Riyadh breaks diplomatic relations. The Eastern Province stays quieted by force, and the regional rivalry loses its last shock absorber.",
+   "why": "A domestic Saudi execution and an attack on an embassy in Tehran become one event. That is how linked the two arenas now feel, on both sides."
+  },
+  {
+   "id": "tishreen-2019",
+   "sort": 2019.83,
+   "when": "Oct 2019",
+   "title": "The ruled turn on the parties",
+   "country": "region",
+   "phase": "axis",
+   "kind": "Movement",
+   "summary": "In Iraq, the Tishreen protests denounce corruption, the sectarian quota, and Iranian influence; hundreds are killed, many by factions of the security forces. In Lebanon, a cross-sectarian uprising targets the whole political class, Hezbollah included. In Iran, a fuel-price rise in November becomes a revolt the state crushes with live fire. The three crowds are not one movement. The complaint they share is specific: Shi'a parties have become the establishment.",
+   "why": "The moral claim that carried political Shiism from 1957 to 2005 — we are the excluded — no longer describes the men in office."
+  },
+  {
+   "id": "soleimani-2020",
+   "sort": 2020.01,
+   "when": "3 Jan 2020",
+   "title": "Soleimani is killed",
+   "country": "region",
+   "phase": "axis",
+   "kind": "War",
+   "summary": "A US drone kills Qasem Soleimani, commander of the Guards' Quds Force, and Abu Mahdi al-Muhandis of the PMF, at Baghdad airport. Soleimani had been the person who tied Hezbollah, the Iraqi factions, and the Syrian front into one staff. Iran fires missiles at an American base in Iraq and, the same week, shoots down a Ukrainian airliner leaving Tehran.",
+   "why": "The network he built outlives him. The personal authority that made it move quickly does not."
+  },
+  {
+   "id": "amini-2022",
+   "sort": 2022.9,
+   "when": "Sep 2022",
+   "title": "Woman, Life, Freedom",
+   "country": "iran",
+   "phase": "axis",
+   "kind": "Movement",
+   "summary": "Mahsa Jina Amini, a young Kurdish woman, dies in the custody of the morality police after her arrest over dress. Protests spread from Saqqez and Tehran to every province. Women burn headscarves in the street. The slogan is 'woman, life, freedom.' The crackdown kills hundreds and jails thousands. Compulsory veiling, a founding rule of the republic, becomes unenforceable in parts of the big cities and remains the law.",
+   "why": "The deepest challenge to clerical rule since 1979 is led by women, begins in a Kurdish city, and asks for a life the jurist-state will not license."
+  },
+  {
+   "id": "beijing-2023",
+   "sort": 2023.3,
+   "when": "Mar 2023",
+   "title": "Tehran and Riyadh reopen",
+   "country": "region",
+   "phase": "strain",
+   "kind": "Diplomacy",
+   "summary": "China brokers a resumption of diplomatic relations between Iran and Saudi Arabia, cut since the Nimr crisis. Embassies reopen. The Yemen war cools into a truce that is never quite a peace. Sectarian rhetoric is turned down because both states have reasons, economic and military, to want it down.",
+   "why": "The rivalry was never only theological, and the pause shows it. The armed networks built during the rivalry stay in place."
+  },
+  {
+   "id": "gaza-2023",
+   "sort": 2023.83,
+   "when": "Oct 2023",
+   "title": "Four fronts, one war",
+   "country": "region",
+   "phase": "strain",
+   "kind": "War",
+   "summary": "On 7 October Hamas, a Sunni movement, attacks Israel from Gaza. Hezbollah opens fire across the Lebanese border the next day. Iraqi militias attack American forces. From November the Houthis fire on shipping in the Red Sea and toward Israel. Tehran coordinates and supplies. For the first time the pieces of the alliance act in a single war, in support of a group that does not share their school.",
+   "why": "The system Soleimani assembled finally operates together. The war that results is the one that takes it apart."
+  },
+  {
+   "id": "nasrallah-2024",
+   "sort": 2024.9,
+   "when": "Apr–Nov 2024",
+   "title": "The commanders are killed",
+   "country": "region",
+   "phase": "strain",
+   "kind": "War",
+   "summary": "Israel strikes an Iranian consulate building in Damascus on 1 April. Iran answers on 13 April with a direct missile and drone barrage, its first on Israel. In September, pager and radio attacks maim Hezbollah's cadres, and on 27 September an airstrike kills Hassan Nasrallah and much of his senior command. Iran fires another barrage on 1 October. Israel strikes Iran on 26 October. A Lebanon ceasefire takes effect on 27 November, with Hezbollah's deterrent badly damaged and Israeli forces still on parts of the border.",
+   "why": "The war stops being a proxy war. Hezbollah, the alliance's most capable militia, loses the leader who had defined it for thirty years."
+  },
+  {
+   "id": "assad-2024",
+   "sort": 2024.12,
+   "when": "8 Dec 2024",
+   "title": "The land bridge breaks",
+   "country": "syria",
+   "phase": "strain",
+   "kind": "State",
+   "summary": "A rebel offensive that began in Aleppo reaches Damascus in under two weeks. Bashar al-Assad flees. The command that takes the capital comes out of the Sunni Islamist current that fought the regime; its leader, Ahmed al-Sharaa, is named president the following month. Iranian positions and Hezbollah's Syrian deployment collapse with the army they had propped up since 2013.",
+   "why": "The corridor from Iran to the Mediterranean, the strategic product of a decade of expeditionary war, is gone in a fortnight."
+  },
+  {
+   "id": "twelve-2025",
+   "sort": 2025.6,
+   "when": "13–23 Jun 2025",
+   "title": "Twelve days",
+   "country": "iran",
+   "phase": "strain",
+   "kind": "War",
+   "summary": "Israel strikes Iranian nuclear and military sites and kills senior commanders, and indirect nuclear talks with Washington stop. Iran fires ballistic missiles at Israeli cities. On 21 June the United States bombs Natanz, Isfahan, and Fordow. Iran retaliates against the American air base at Al-Udeid in Qatar. A ceasefire is announced on 23 June. Iraqi factions largely stay out; Hezbollah is already a reduced force.",
+   "why": "The Islamic Republic is hit, directly and at the nuclear sites that were supposed to make such a war unthinkable, by Israel and then by the United States."
+  },
+  {
+   "id": "war-2026",
+   "sort": 2026.1,
+   "when": "Feb–Oct 2026",
+   "title": "Unfinished",
+   "country": "region",
+   "phase": "strain",
+   "kind": "War",
+   "summary": "At the end of February a larger war reopens: American and Israeli strikes on Iran, Iran closing the Strait of Hormuz, Hezbollah firing again from 1 March, Iraqi militias attacking American positions. The Jewish Institute for National Security of America reports that on 17 June Trump and President Masoud Pezeshkian signed a memorandum to stop the war and reopen the strait, and that on 8 July Trump declared it over. As of 24 October no agreement is in force, and ships in Hormuz are still being attacked. In Lebanon, the Institute for the Study of War reports that a June 2026 framework put disarmament on the state's agenda, and that on 5 October security forces seized a truck of explosives bound for the southern suburbs.",
+   "why": "Read this row as an open file. The alliance can still fire. It can no longer protect its members, its route, or its own territory the way it could in 2015. What replaces it is not yet visible."
+  }
+ ],
+ "MASTER": "From 1930 into the 1950s, Shi'a clerics mostly refused office and Shi'a communities were shut out of it. In 1979 a jurist took a state in Tehran and offered himself as the center. In 2005 Shi'a parties began governing Iraq. From 2011 they fought across Syria, Iraq, and Yemen. Since October 2023 that expeditionary system has been hit harder than at any time since it was built. Clerical rule in Iran, and Shi'a party rule in Iraq, are still standing."
+}

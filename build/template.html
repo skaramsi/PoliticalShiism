@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shi'a Political Movements, 1916–2026</title>
+<meta name="description" content="An interactive history of four political movements among Shi'a communities in the Middle East, Wilayat al-Faqih, Hizb al-Da'wa and the Ba'ath, Amal and Hezbollah, and Ansar Allah, with the states and powers around them, from the Ottoman collapse to October 2026.">
+<style>
+__FONTS__
+  :root {
+    --bg: #141c17;
+    --panel: #1b2520;
+    --panel-2: #222e27;
+    --line: #34443a;
+    --ink: #ece4d3;
+    --muted: #d2cbb6;
+    --faint: #aaa995;
+    --terra: #c8673f;
+    --terra-deep: #9c4a2c;
+    --olive: #8f9149;
+    --sage: #91a486;
+    --moss: #3b4b3e;
+    --sand: #d6c49b;
+    --land: #27332b;
+    --stage: #46553f;
+    --lit: #7a7d3d;
+    --sans: Calibri, Carlito, "Segoe UI", -apple-system, sans-serif;
+    --serif: var(--sans);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 20px; line-height: 1.6; }
+  button { font: inherit; color: inherit; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 22px 80px; }
+  .kicker, .eyebrow { font-family: var(--sans); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terra); margin: 0 0 8px; }
+  h1 { font-size: 44px; line-height: 1.05; font-weight: 600; margin: 0 0 12px; letter-spacing: -0.02em; }
+  h2 { font-size: 26px; line-height: 1.2; font-weight: 600; margin: 0 0 6px; }
+  h3 { font-size: 19px; margin: 0 0 6px; font-weight: 600; }
+  .lede { color: var(--muted); max-width: 72ch; margin: 0 0 22px; }
+  .caption { font-family: var(--sans); font-size: 14px; color: var(--faint); margin: 0 0 12px; max-width: 84ch; }
+
+  .wrap.top { padding-bottom: 28px; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 28px; margin: 34px 0 0; }
+  .cold { border-left: 3px solid var(--terra); padding: 2px 0 2px 20px; }
+  .cold .place { font-family: var(--sans); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand); margin: 0 0 10px; }
+  .cold p { font-size: 21px; line-height: 1.55; margin: 0 0 14px; }
+  .cold p + p { color: var(--muted); font-size: 19px; }
+  .threads { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px 6px; align-self: start; }
+  .threads h3 { font-family: var(--sans); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); font-weight: 600; margin: 0 0 12px; }
+  .mv-card { display: block; width: 100%; text-align: left; background: transparent; border: 0; border-top: 1px solid var(--line); padding: 10px 0 12px; cursor: pointer; color: var(--ink); }
+  .mv-card:first-of-type { border-top: 0; padding-top: 0; }
+  .mv-card small { display: block; font-family: var(--sans); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+  .mv-card b { display: block; font-family: var(--sans); font-size: 18px; color: var(--sand); margin: 2px 0; }
+  .mv-card span { display: block; font-size: 15.5px; color: var(--muted); }
+  .mv-card:hover b { color: var(--terra); }
+  .moves { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .move { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--terra); border-radius: 14px; padding: 18px 20px; }
+  .move .where { font-family: var(--sans); font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin: 0 0 4px; }
+  .move h3 { font-size: 26px; line-height: 1.15; margin: 0; color: var(--sand); }
+  .move .native { font-size: 20px; color: var(--muted); margin: 4px 0 10px; unicode-bidi: plaintext; }
+  .move .line { font-size: 17.5px; margin: 0 0 10px; }
+  .move .label { font-family: var(--sans); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); margin: 14px 0 4px; }
+  .move .ctx { font-size: 16px; color: var(--muted); margin: 0; }
+  .move ol { list-style: none; margin: 0; padding: 0; }
+  .move li { display: flex; gap: 10px; font-size: 15.5px; padding: 3px 0; border-bottom: 1px dotted var(--line); }
+  .move li b { flex: none; width: 92px; font-family: var(--sans); font-size: 13.5px; color: var(--faint); font-weight: 600; }
+  .move .question { font-size: 20px; font-style: italic; color: var(--ink); margin: 0 0 10px; }
+  .move .ctx b { font-family: var(--sans); color: var(--sand); }
+  .move ul.why { margin: 0 0 6px; padding-left: 20px; font-size: 15.5px; }
+  .move li b.who { width: 170px; color: var(--sand); }
+  .words { margin-top: 14px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; }
+  .words .lens-label { margin-top: 0; }
+  .words p:not(.lens-label) { margin: 0 0 6px; font-size: 16px; color: var(--muted); }
+  .words b { font-family: var(--sans); color: var(--sand); margin-right: 4px; }
+  .move .now { margin: 12px 0 0; font-size: 16px; }
+  .move .now b { font-family: var(--sans); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage); margin-right: 6px; }
+  .move .follow { margin-top: 14px; font-family: var(--sans); font-size: 14px; background: transparent; border: 1px solid var(--terra); border-radius: 999px; padding: 7px 14px; color: var(--ink); cursor: pointer; }
+  .move .follow:hover { background: var(--terra); color: #fff7ea; }
+  .begin { grid-column: 1 / -1; font-family: var(--sans); font-size: 14px; color: var(--faint); margin: 4px 0 0; }
+
+  .chapters { position: sticky; top: 0; z-index: 20; display: flex; gap: 3px; padding: 8px max(22px, calc((100vw - 1156px) / 2)); background: rgba(20, 28, 23, 0.94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+  .scene { flex: 1 1 0; min-width: 0; text-align: left; border: 0; border-top: 3px solid var(--moss); background: transparent; padding: 5px 2px 0; cursor: pointer; }
+  .scene b { display: block; font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .scene.act-start { margin-left: 8px; }
+  .scene.act-start:first-child { margin-left: 0; }
+  .scene:hover { border-top-color: var(--olive); }
+  .scene.done { border-top-color: var(--olive); }
+  .scene[aria-pressed="true"] { border-top-color: var(--terra); }
+  .scene[aria-pressed="true"] b { color: var(--ink); }
+
+  .story { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr); gap: 34px; align-items: start; }
+  .story-map { position: sticky; top: 56px; z-index: 3; }
+  .story-map .map { max-height: calc(100vh - 150px); }
+  .map-box { position: relative; }
+  .stamp { position: absolute; left: 16px; bottom: 14px; z-index: 2; pointer-events: none; max-width: 46%; }
+  .stamp b { display: block; font-family: var(--serif); font-size: 46px; line-height: 1; color: rgba(236, 228, 211, 0.9); letter-spacing: -0.02em; }
+  .stamp span { display: block; font-family: var(--sans); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terra); margin-top: 6px; }
+  .steps { padding: 4vh 0 30vh; }
+  .act { min-height: 62vh; display: flex; flex-direction: column; justify-content: center; padding: 6vh 0; }
+  .act .numeral { font-family: var(--sans); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terra); margin: 0 0 6px; }
+  .act h2 { font-size: 38px; line-height: 1.08; margin: 0 0 4px; }
+  .act .yrs { font-family: var(--sans); font-size: 14px; color: var(--faint); margin: 0 0 16px; }
+  .act p.intro { font-size: 20px; color: var(--muted); margin: 0; }
+  .step { margin: 0 0 34vh; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px 18px; opacity: 0.38; transition: opacity 0.35s ease, border-color 0.35s ease; }
+  .step.active { opacity: 1; border-color: #4a5c4f; }
+  .step h3 { font-size: 30px; line-height: 1.1; margin: 0 0 12px; }
+  .step .hook { font-size: 22px; line-height: 1.4; font-style: italic; color: var(--sand); margin: 0 0 16px; }
+  .step .beat { font-size: 20px; margin: 0 0 12px; }
+  .step .moments { display: flex; flex-direction: column; gap: 4px; margin: 14px 0; padding: 12px 0 0; border-top: 1px solid var(--line); }
+  .step .moments button { display: flex; gap: 10px; align-items: baseline; text-align: left; background: transparent; border: 0; padding: 3px 0; cursor: pointer; font-size: 16px; color: var(--ink); }
+  .step .moments button span { flex: none; width: 84px; font-family: var(--sans); font-size: 13px; color: var(--faint); }
+  .step .moments button:hover { color: var(--sand); }
+  .step .moments button[aria-current="true"] { color: var(--terra); }
+  .step .moments button.context { color: var(--muted); }
+  .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .tab { position: relative; font-family: var(--sans); font-size: 14px; line-height: 1; padding: 7px 11px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--faint); cursor: pointer; }
+  .tab.has { color: var(--ink); border-color: #4c5f51; }
+  .tab.has::after { content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px; border-radius: 9px; background: var(--terra); }
+  .tab:hover { border-color: var(--sand); color: var(--ink); }
+  .tab[aria-selected="true"] { background: var(--terra); border-color: var(--terra); color: #fff7ea; }
+  .tab[aria-selected="true"]::after { background: #fff7ea; }
+  .lens-where { font-family: var(--sans); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); margin: 0 0 4px; }
+  .lens h4 { font-size: 26px; line-height: 1.15; margin: 0 0 12px; color: var(--sand); }
+  .lens-label { font-family: var(--sans); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin: 16px 0 6px; }
+  .lens-conds { display: flex; flex-direction: column; gap: 2px; }
+  .lens-conds .chip { font-size: 15px; color: var(--ink); }
+  .lens-conds .chip em { font-style: normal; color: var(--faint); }
+  .lens .moments { margin-top: 4px; padding-top: 0; border-top: 0; }
+  .lens .cast { margin-top: 12px; }
+  .lens-nav { display: flex; justify-content: space-between; gap: 8px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .lens-nav button { font-family: var(--sans); font-size: 14px; background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; color: var(--muted); cursor: pointer; }
+  .lens-nav button:hover { border-color: var(--terra); color: var(--ink); }
+  .step .leaves { margin: 16px 0 0; padding: 12px 14px; background: rgba(200, 103, 63, 0.1); border-left: 3px solid var(--terra); border-radius: 0 10px 10px 0; font-size: 18px; }
+  .step .leaves b { display: block; font-family: var(--sans); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); margin-bottom: 3px; }
+  .epilogue { margin: 0 0 56px; padding: 28px 0 0; border-top: 1px solid var(--line); }
+  .epilogue h2 { font-size: 34px; }
+  .epi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+  .epi div { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--olive); border-radius: 12px; padding: 14px 16px; }
+  .epi b { display: block; font-family: var(--sans); font-size: 14px; color: var(--sand); margin-bottom: 6px; }
+  .epi p { margin: 0; font-size: 17.5px; }
+  .epilogue .next { font-family: var(--sans); font-size: 14px; color: var(--faint); margin: 16px 0 0; }
+
+  .map-card { position: relative; background: #0e1612; border: 1px solid var(--line); border-radius: 16px; padding: 8px; }
+  .map { width: 100%; height: auto; display: block; border-radius: 10px; }
+  .map .c { fill: var(--land); stroke: #0e1612; stroke-width: 0.8; }
+  .map .c.stage { fill: var(--stage); stroke: #a8ad8a; stroke-opacity: 0.5; stroke-width: 1; cursor: pointer; transition: fill 0.2s ease; }
+  .map .c.stage.ctx { fill: #34402f; }
+  .map .c.stage.lit { fill: var(--lit); }
+  .map .c.stage.ctx.lit { fill: #5f6537; }
+  .map .c.stage.picked { fill: var(--terra-deep); }
+  .map .c.stage.dim { fill: #2e3a31; }
+  .map .c.hover { stroke: #fff4dc; stroke-opacity: 1; stroke-width: 2; }
+  .sea-label { fill: #7a9283; font-family: var(--sans); font-size: 16px; letter-spacing: 0.14em; font-weight: 600; pointer-events: none; }
+  .land-label { fill: #f2ead8; font-family: var(--sans); font-size: 22px; font-weight: 700; pointer-events: none; paint-order: stroke; stroke: #1c261f; stroke-width: 4px; }
+  .land-label.small { font-size: 17px; font-weight: 600; fill: #cfc9b4; }
+  .leader { stroke: #cfc9b4; stroke-width: 1; pointer-events: none; }
+  #overlay, #pins, #network { pointer-events: none; }
+  .thread { fill: none; stroke: var(--sand); stroke-width: 1.6; stroke-dasharray: 4 5; opacity: 0.55; }
+  .thread.on { stroke: var(--terra); stroke-width: 2.6; opacity: 0.95; stroke-dasharray: none; }
+  .net { fill: none; stroke-linecap: round; }
+  .pin circle { fill: var(--ink); stroke: #141c17; stroke-width: 2; }
+  .pin.on circle { fill: var(--terra); stroke: #fff4dc; stroke-width: 2.5; }
+  .pin text { font-family: var(--sans); font-size: 19px; font-weight: 700; fill: #fff4dc; paint-order: stroke; stroke: #141c17; stroke-width: 4.5px; }
+  .pin.on text { fill: #ffd9c4; }
+  .map-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-family: var(--sans); font-size: 13px; color: var(--faint); padding: 8px 6px 2px; }
+  .toggle { background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; font-family: var(--sans); font-size: 13px; color: var(--muted); cursor: pointer; }
+  .toggle[aria-pressed="true"] { border-color: var(--olive); color: var(--ink); }
+  .netkey { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 6px 6px 2px; font-family: var(--sans); font-size: 13px; color: var(--muted); }
+  .netkey svg { vertical-align: middle; margin-right: 5px; }
+  .tip { position: absolute; z-index: 5; width: 300px; pointer-events: none; background: #f1e8d4; color: #1d2520; border-radius: 12px; padding: 12px 14px; font-family: var(--sans); font-size: 14px; line-height: 1.4; opacity: 0; transform: translateY(4px); transition: opacity 0.12s ease, transform 0.12s ease; }
+  .tip.show { opacity: 1; transform: none; }
+  .tip h4 { font-family: var(--serif); font-size: 20px; margin: 0 0 2px; }
+  .tip .school { color: var(--terra-deep); font-weight: 600; margin: 0 0 8px; }
+  .tip dl { margin: 0; display: grid; grid-template-columns: 74px 1fr; gap: 4px 8px; }
+  .tip dt { color: #6b6a58; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.06em; padding-top: 2px; }
+  .tip dd { margin: 0; }
+  .tip .nums { display: flex; gap: 14px; margin: 10px 0 0; padding-top: 8px; border-top: 1px solid #d8ccb2; }
+  .tip .nums b { display: block; font-size: 21px; font-family: var(--serif); color: var(--terra-deep); }
+
+  .cast { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+  .cast button { font-family: var(--sans); font-size: 13px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; color: var(--sand); cursor: pointer; }
+  .cast button:hover { border-color: var(--sand); }
+  .nav button { background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-family: var(--sans); font-size: 14px; color: var(--muted); cursor: pointer; }
+  .nav button:disabled { opacity: 0.35; cursor: default; }
+
+  .section { margin: 0 0 44px; }
+  .section > p { color: var(--muted); max-width: 72ch; }
+  .mw-scroll { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px 14px 16px; }
+  .mw { min-width: var(--minw, 640px); }
+  .mw-heads { display: grid; gap: 8px; margin-bottom: 8px; }
+  .mw-head h3 { font-family: var(--sans); font-size: 13.5px; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px; color: var(--sand); }
+  .mw-head.ctx h3 { color: var(--faint); }
+  .chip { display: flex; gap: 6px; align-items: baseline; font-family: var(--sans); font-size: 13px; line-height: 1.3; color: var(--muted); margin: 0 0 4px; }
+  .chip i { flex: none; width: 8px; height: 8px; border-radius: 2px; background: var(--k); transform: translateY(1px); }
+  .mw-body { position: relative; }
+  .mw-year { position: absolute; left: 0; right: 0; border-top: 1px solid var(--line); }
+  .mw-year span { position: absolute; left: 0; top: -9px; font-family: var(--sans); font-size: 12.5px; color: var(--faint); background: var(--panel); padding-right: 6px; }
+  .mw-col { position: absolute; top: 0; bottom: 0; background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
+  .mw-col.ctx { background: rgba(255, 255, 255, 0.008); }
+  .rail { position: absolute; width: 4px; border-radius: 4px; background: var(--k); opacity: 0.85; }
+  .card { position: absolute; text-align: left; background: var(--panel-2); border: 1px solid var(--line); border-left: 3px solid var(--olive); border-radius: 8px; padding: 5px 8px 6px; cursor: pointer; font-size: 14.5px; line-height: 1.25; z-index: 2; }
+  .card b { display: block; font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--faint); letter-spacing: 0.03em; }
+  .card.out { opacity: 0.5; border-left-color: var(--moss); }
+  .card.multi { border-left-color: var(--sand); }
+  .card.context { border-left-style: dotted; }
+  .card[aria-current="true"] { background: var(--terra); border-color: var(--terra); color: #fff7ea; opacity: 1; }
+  .card[aria-current="true"] b { color: #ffe3d2; }
+  .card:hover { border-color: var(--olive); }
+  .span-bar { position: absolute; width: 6px; border-radius: 6px; background: var(--olive); opacity: 0.75; z-index: 1; }
+  .span-bar.on { background: var(--terra); opacity: 1; }
+  .span-more { position: absolute; font-family: var(--sans); font-size: 12px; color: var(--faint); z-index: 1; }
+  .knot { position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 99px; background: var(--sand); border: 2px solid var(--panel); z-index: 2; }
+  .knot.on { background: var(--terra); }
+  .tie { position: absolute; height: 0; border-top: 2px dashed var(--sand); opacity: 0.5; z-index: 1; }
+  .tie.on { border-top: 2px solid var(--terra); opacity: 1; }
+  .now-line { position: absolute; left: 0; right: 0; height: 0; border-top: 2px solid var(--terra); z-index: 3; pointer-events: none; }
+  .now-line span { position: absolute; left: 0; top: -10px; font-family: var(--sans); font-size: 12.5px; font-weight: 700; color: #fff7ea; background: var(--terra); border-radius: 4px; padding: 1px 5px; }
+  .readout { margin: 14px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+  .readout h4 { font-family: var(--sans); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sand); margin: 0 0 4px; }
+  .readout p { margin: 0; font-size: 16px; color: var(--muted); }
+  .readout .lead { grid-column: 1 / -1; font-size: 18px; color: var(--ink); }
+  .readout .lead b { color: var(--terra); }
+  .readout .cell { background: var(--panel-2); border-radius: 10px; padding: 10px 12px; }
+
+  .idea { background: var(--panel); border-radius: 14px; padding: 14px 16px 16px; border-top: 4px solid var(--tone); }
+  .idea p { margin: 0; color: var(--muted); font-size: 16.5px; }
+  .people-group { margin: 18px 0 8px; font-family: var(--sans); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sand); }
+  .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .person { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px 12px; transition: border-color 0.3s ease, background 0.3s ease; scroll-margin-top: 100px; }
+  .person.flash { border-color: var(--terra); background: #2a2a20; }
+  .person h3 { margin: 0; font-size: 20px; }
+  .person .yrs { font-family: var(--sans); font-size: 13px; color: var(--faint); margin: 0 0 6px; }
+  .person .tag { display: inline-block; font-family: var(--sans); font-size: 12.5px; letter-spacing: 0.04em; color: #141c17; background: var(--olive); border-radius: 999px; padding: 2px 8px; margin: 0 0 8px; }
+  .person p.line { margin: 0 0 10px; color: var(--muted); font-size: 16px; }
+  .ev-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .ev-chips button { font-family: var(--sans); font-size: 13px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 3px 7px; color: var(--muted); cursor: pointer; }
+  .ev-chips button:hover { border-color: var(--terra); color: var(--ink); }
+  .ev-chips button b { color: var(--sand); font-weight: 600; }
+  .powers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .power { background: transparent; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+  .power h3 { font-size: 18px; color: var(--sand); }
+  .power p { margin: 0 0 10px; color: var(--muted); font-size: 15.5px; }
+
+  .century { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 10px 12px 8px; }
+  .century svg { width: 100%; height: auto; display: block; }
+  .century text { font-family: var(--sans); }
+  .century .hit { cursor: pointer; }
+  .century .ev:hover { stroke: #fff4dc; stroke-width: 2; }
+
+  .note, .warn-note { padding: 14px 16px; margin: 0 0 30px; background: var(--panel); border-left: 4px solid var(--sage); border-radius: 0 12px 12px 0; }
+  .warn-note { border-left-color: var(--terra); }
+  .note strong, .warn-note strong { display: block; margin-bottom: 4px; }
+  .note p, .warn-note p { margin: 0; color: var(--muted); }
+
+  .filters { position: sticky; top: 0; z-index: 6; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); padding: 12px 0 10px; border-bottom: 1px solid var(--line); margin-bottom: 16px; display: flex; gap: 22px; flex-wrap: wrap; }
+  .filter-label { font-family: var(--sans); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin: 0 0 6px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 5px; }
+  .pill { font-family: var(--sans); font-size: 13.5px; line-height: 1; padding: 7px 10px; border: 1px solid var(--line); background: transparent; border-radius: 999px; cursor: pointer; color: var(--muted); }
+  .pill[aria-pressed="true"] { background: var(--olive); border-color: var(--olive); color: #141c17; font-weight: 600; }
+  .count { font-family: var(--sans); font-size: 14px; color: var(--faint); margin: 0 0 10px; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); gap: 28px; align-items: start; margin-bottom: 42px; }
+  .detail { position: sticky; top: 92px; background: var(--panel); border: 1px solid var(--line); border-top: 6px solid var(--terra); border-radius: 14px; padding: 16px 18px 14px; }
+  .detail.context { border-top-color: var(--sand); }
+  .detail-top { display: flex; gap: 12px; align-items: flex-start; }
+  .badge { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: #fff7ea; background: var(--terra); flex: none; }
+  .detail.context .badge { background: var(--olive); }
+  .badge svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linejoin: round; stroke-linecap: round; }
+  .detail h2 { font-size: 27px; margin-bottom: 6px; }
+  .meta { font-family: var(--sans); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--faint); margin: 0 0 8px; }
+  .why-label { font-family: var(--sans); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--terra); margin: 14px 0 4px; }
+  .why { color: var(--muted); margin: 0; }
+  .places { font-family: var(--sans); font-size: 13.5px; color: var(--sand); margin: 0 0 10px; }
+  .also { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .also button { font-family: var(--sans); font-size: 13px; text-align: left; background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; cursor: pointer; color: var(--muted); }
+  .also button b { color: var(--ink); }
+  .nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .empty { font-family: var(--sans); font-size: 14px; }
+  .group-head { display: flex; align-items: baseline; gap: 10px; margin: 14px 0 4px; }
+  .group-head h3 { margin: 0; color: var(--sand); }
+  .group-head span { font-family: var(--sans); font-size: 13px; color: var(--faint); }
+  .event { display: flex; gap: 10px; width: 100%; text-align: left; background: transparent; border: none; border-radius: 8px; padding: 6px 8px; cursor: pointer; }
+  .event:hover { background: rgba(255, 255, 255, 0.03); }
+  .event[aria-current="true"] { background: rgba(200, 103, 63, 0.16); }
+  .when { width: 96px; flex: none; font-family: var(--sans); font-size: 13px; color: var(--faint); padding-top: 3px; }
+  .tl-rail { width: 12px; flex: none; display: flex; flex-direction: column; align-items: center; padding-top: 7px; }
+  .dot { width: 9px; height: 9px; border-radius: 99px; background: var(--olive); flex: none; }
+  .event.context .dot { background: transparent; border: 2px solid var(--sand); }
+  .event[aria-current="true"] .dot { background: var(--terra); border-color: var(--terra); box-shadow: 0 0 0 4px rgba(200, 103, 63, 0.3); }
+  .stem { width: 1px; flex: 1; min-height: 16px; background: var(--line); }
+  .event-title { display: block; font-size: 17px; line-height: 1.3; }
+  .event[aria-current="true"] .event-title { font-weight: 600; }
+  .event-meta { display: block; font-family: var(--sans); font-size: 13px; color: var(--faint); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { font-family: var(--sans); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sand); font-weight: 600; }
+  td { color: var(--muted); }
+  td:first-child { font-weight: 600; white-space: nowrap; color: var(--ink); }
+  tr.now td { background: rgba(200, 103, 63, 0.12); }
+  .table-wrap { overflow-x: auto; border-top: 1px solid var(--line); }
+  .sources { font-size: 15px; color: var(--faint); max-width: 86ch; margin: 0; }
+  @media (max-width: 1000px) {
+    .hero, .epi { grid-template-columns: 1fr; }
+    .scene b { font-size: 0; }
+    .story, .layout { grid-template-columns: 1fr; }
+    .story-map { top: 17px; background: var(--bg); padding: 6px 0; }
+    .story-map .map { max-height: 40vh; }
+    .story-map .map-foot, .story-map .netkey { display: none; }
+    .stamp b { font-size: 30px; }
+    .step { margin-bottom: 40vh; opacity: 1; }
+    .people, .powers { grid-template-columns: 1fr 1fr; }
+    .detail { position: static; }
+  }
+  @media (max-width: 620px) {
+    h1 { font-size: 34px; }
+    .moves, .people, .powers { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap top">
+  <p class="kicker">Middle East · from the Ottoman collapse to 24 October 2026</p>
+  <h1>Shi'a Political Movements, 1916–2026</h1>
+  <p class="lede">This is a history of four political movements that grew among Shi'a communities in the twentieth century: Wilayat al-Faqih in Iran; Hizb al-Da'wa in Iraq, alongside the rise of the Ba'ath; Harakat al-Mahrumin in Lebanon, which became Amal and gave rise to Hezbollah; and Ansar Allah, the Houthis, in Yemen. It was never one plot. Iran, Iraq, Lebanon, Syria, Yemen, and the Gulf were often in different arguments at once, and Britain, France, Israel, the United States, the PLO, Jordan, and Saudi Arabia kept changing the ground under them. Scroll, and the map follows the story. In any chapter, click a country on the map or its tab to read that country's story in those years.</p>
+  <div class="hero" id="hero"></div>
+  </div>
+
+  <nav class="chapters" id="scenes" aria-label="Chapters"></nav>
+
+  <div class="wrap">
+  <div class="story">
+    <div class="story-map">
+    <div class="map-card" id="map-card">
+      <div class="map-box">
+      <div class="stamp" id="stamp" aria-hidden="true"></div>
+      <svg class="map" id="map" viewBox="0 0 __W__ __H__" role="img" aria-label="Map of the Middle East. Hover a country for a summary; click it to read its story in this chapter.">
+        <rect width="__W__" height="__H__" fill="#0e1612"/>
+        <g id="countries"></g>
+        <g id="sea-labels"></g>
+        <g id="land-labels"></g>
+        <g id="network"></g>
+        <g id="overlay"></g>
+        <g id="pins"></g>
+      </svg>
+      </div>
+      <div class="map-foot">
+        <span id="map-place"></span>
+        <button type="button" class="toggle" id="net-toggle" aria-pressed="true">Shi'a networks this year</button>
+      </div>
+      <div class="netkey" id="netkey"></div>
+      <div class="tip" id="tip" role="status"></div>
+    </div>
+    </div>
+    <div class="steps" id="story"></div>
+  </div>
+  <section class="epilogue" id="epilogue"></section>
+
+  <section class="section">
+    <p class="eyebrow">Meanwhile</p>
+    <h2 id="mw-title">Side by side</h2>
+    <p class="caption">One column per country, one clock down the side. The rails at the left of each column are conditions already in force: a mandate, a civil war, an occupation, a regime. Cards are events; dotted edges mark the outside events that shaped Shi'a politics. A dashed tie means one event reached several countries at once. The terracotta line is the moment you have selected.</p>
+    <div class="mw-scroll"><div class="mw" id="meanwhile"></div></div>
+  </section>
+
+  <section class="section" id="movements">
+    <p class="eyebrow">Historical movements</p>
+    <h2>The four movements</h2>
+    <p class="caption">Each profile gives the political setting the movement grew out of, its main stages, and where it stands in October 2026. Follow a movement to read its country's story chapter by chapter.</p>
+    <div class="moves" id="moves"></div>
+  </section>
+
+  <section class="section" id="people-section">
+    <p class="eyebrow">People</p>
+    <h2>The cast</h2>
+    <p class="caption">Each card links to the moments that person shaped. Click a date to open it on the map.</p>
+    <div id="people"></div>
+  </section>
+
+  <section class="section">
+    <p class="eyebrow">Around them</p>
+    <h2>Empires, states, and movements that shaped Shi'a politics</h2>
+    <p class="caption">Most of these were not Shi'a. Each card says what it did to the Shi'a story.</p>
+    <div class="powers" id="powers"></div>
+  </section>
+
+  <section class="section">
+    <p class="eyebrow">The century at once</p>
+    <h2>How crowded each year was</h2>
+    <p class="caption">The bars on top count how many of the six Shi'a arenas (Iran, Iraq, Lebanon, Syria, Yemen, the Gulf) were at war, in revolt, or at a turning point that year. Below, each country runs as a lane, with Jordan and Israel–Palestine as context. Terracotta bands are wars and uprisings, olive bands are outside pressure, and the thin sage line is who held the state. Vertical threads join one event across the countries it touched. Click a bar to open the scene for that year.</p>
+    <div class="century" id="century"></div>
+  </section>
+
+  <aside class="note">
+    <strong>Three communities, three politics</strong>
+    <p>Twelver Shiism is the school of Iran, Arab Iraq, Lebanese Shi'a, Bahrain, and Saudi Arabia's east. Zaydism is the school of northern Yemen and of the Houthis. The Alawites of Syria are a separate esoteric tradition; the Assad state was a military Ba'athist regime whose pact with Tehran was political. The four movements on this page are political movements with their own histories, and none of them speaks for every Shi'a community.</p>
+  </aside>
+
+  <div class="filters">
+    <div><p class="filter-label">Period</p><div class="pills" id="phase-pills"></div></div>
+    <div><p class="filter-label">Country</p><div class="pills" id="country-pills"></div></div>
+  </div>
+  <p class="count" id="count"></p>
+  <div class="layout">
+    <article class="detail" id="detail"></article>
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <section class="section">
+    <h2>Where power actually sat</h2>
+    <p class="caption">Political position at five moments. Population and piety are a different map.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Moment</th><th>Iran</th><th>Iraq</th><th>Lebanon</th><th>Gulf, Yemen, Syria</th></tr></thead>
+        <tbody>
+          <tr><td>1920</td><td>Qajar shahs, weak and indebted; clergy powerful in society</td><td>British mandate. Shi'a clerics lead the revolt and lose</td><td>French Greater Lebanon. Shi'a south annexed, with no political voice</td><td>Zaydi imam rules north Yemen. Ibn Saud holds the Shi'a east since 1913. France rules the Alawite mountains.</td></tr>
+          <tr><td>1932</td><td>Pahlavi monarchy subordinating the clergy</td><td>Shi'a majority under a Sunni Hashemite throne</td><td>A poor community with no party of its own</td><td>Alawite statelet about to be dissolved into Syria. Gulf Shi'a are subjects, without a movement.</td></tr>
+          <tr><td>1979</td><td>Revolution. Wilayat al-Faqih becomes the basis of the new constitution</td><td>Saddam's Ba'ath. Dawa underground. Its thinker has months to live</td><td>Amal exists; its founder has vanished. PLO controls much of the south. Civil war</td><td>Qatif crushed. Assad, an Alawite officer, is about to become Tehran's ally of convenience.</td></tr>
+          <tr><td>2005</td><td>Republic intact. Reformists beaten. Ahmadinejad elected</td><td>Shi'a parties win elections and write the constitution</td><td>Hezbollah armed and in parliament. Syria's army leaves</td><td>Bahrain's Shi'a majority still shut out. The Houthi wars have begun. Assad's alliance with Iran holds.</td></tr>
+          <tr class="now"><td>Oct 2026</td><td>At war with the US and Israel. A June memorandum has collapsed. Mass protests against the government in 2022</td><td>Shi'a parties still govern. Armed factions still armed</td><td>Hezbollah degraded. The state is trying to disarm and prosecute it</td><td>Assad gone since Dec 2024. Houthis hold the north. Hormuz is a battlefield. Bahrain's political structure unchanged.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <aside class="warn-note">
+    <strong>Where this gets overstated</strong>
+    <p>Iranian links are real in Lebanon, Iraq, and Yemen, and they do not turn every Shi'a crowd into an Iranian one. Bahrain in 2011 was a domestic constitutional movement; the king's own commission did not find Iranian direction. The Green Movement and Woman, Life, Freedom were Iranian publics against their own government. Tishreen was an Iraqi public against Shi'a parties. Attributions of the 1983 Beirut bombings rest on American court findings and intelligence; Hezbollah denies them. Hama's toll is disputed. The 2026 war has no published ending, and rows that depend on one research institute's note are attributed in the event itself.</p>
+  </aside>
+
+  <p class="sources">Dates through 2022 follow the standard political histories, among them Ervand Abrahamian and Nikki Keddie on Iran, Yitzhak Nakash on Iraq's Shi'a, Augustus Richard Norton on Amal and Hezbollah, Fouad Ajami on Musa al-Sadr, Chibli Mallat on Muhammad Baqir al-Sadr, Ali Rahnema on Ali Shariati, Patrick Seale on Hafez al-Assad, and Laurence Louër on Gulf Shi'a politics. Population ranges are the Pew Research Center's 2009 estimates, given as shares of each country's Muslims. From 2024 to 24 October 2026 the page follows contemporaneous reporting and research notes from the Associated Press, Brookings, the Jewish Institute for National Security of America, and the Institute for the Study of War. This is a political history, not a religious one.</p>
+</div>
+<script id="payload" type="application/json">__DATA__</script>
+<script id="geo" type="application/json">__MAP__</script>
+<script>
+const DATA = JSON.parse(document.getElementById("payload").textContent);
+const GEO = JSON.parse(document.getElementById("geo").textContent);
+const SCENES = DATA.SCENES;
+const PHASE = Object.fromEntries(DATA.PHASES.map((p) => [p.id, p]));
+const SHIA = ["iran", "iraq", "lebanon", "syria", "yemen", "gulf"];
+const ORDER = ["iran", "iraq", "lebanon", "yemen", "syria", "gulf", "jordan", "palestine"];
+const CONTEXT = new Set(["syria", "gulf", "jordan", "palestine"]);
+const LABEL = { iran: "Iran", iraq: "Iraq", lebanon: "Lebanon", syria: "Syria", yemen: "Yemen", gulf: "Gulf", jordan: "Jordan", palestine: "Israel & Palestine" };
+const T0 = 1916;
+const NOW = 2026 + 9.8 / 12;
+const ICONS = {
+  State: '<svg viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10H4z"/><path d="M9 20v-6h6v6"/></svg>',
+  Movement: '<svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="2.2"/><circle cx="16" cy="9" r="2.2"/><path d="M3.5 19c.7-3 2.6-4.5 4.6-4.5S12 16 12.2 19"/><path d="M12 19c.2-2.8 1.8-4.2 3.8-4.2S19.5 16.2 20.5 19"/></svg>',
+  War: '<svg viewBox="0 0 24 24"><path d="M12 3l2.1 6.4L21 12l-6.9 2.6L12 21l-2.1-6.4L3 12l6.9-2.6z"/></svg>',
+  Idea: '<svg viewBox="0 0 24 24"><path d="M6 4h7a4 4 0 010 8H6z"/><path d="M6 12h12v8H6z"/></svg>',
+  Crackdown: '<svg viewBox="0 0 24 24"><path d="M7 3v18"/><path d="M7 8h11"/><path d="M7 13h9"/><path d="M7 18h6"/></svg>',
+  Diplomacy: '<svg viewBox="0 0 24 24"><path d="M3 15c2.2-4 4-4 6.2 0C11.4 11 13.4 11 15.6 15c1.4-2.6 2.8-2.6 4.4 0"/><path d="M3 19h18"/></svg>',
+  Context: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.6 2.6 2.6 14.4 0 17"/><path d="M12 3.5c-2.6 2.6-2.6 14.4 0 17"/></svg>',
+};
+
+const CITY_COUNTRY = {
+  Tehran: "iran", Qom: "iran", Mashhad: "iran", Saqqez: "iran", Khorramshahr: "iran", Isfahan: "iran", Natanz: "iran", Fordow: "iran",
+  Najaf: "iraq", Karbala: "iraq", Baghdad: "iraq", Samarra: "iraq", Basra: "iraq", Mosul: "iraq",
+  Tyre: "lebanon", Beirut: "lebanon", Baalbek: "lebanon", "South Lebanon": "lebanon",
+  Damascus: "syria", Latakia: "syria", Qusayr: "syria", Aleppo: "syria", Hama: "syria", Golan: "syria",
+  Sanaa: "yemen", Saada: "yemen", Hodeidah: "yemen",
+  Qatif: "gulf", Awamiyah: "gulf", Manama: "gulf", Mecca: "gulf", Riyadh: "gulf", Taif: "gulf", Doha: "gulf", "Al-Udeid": "gulf", Hormuz: "gulf",
+  Amman: "jordan", Jerusalem: "palestine", Gaza: "palestine",
+};
+const PLACES = {
+  "ottoman-1918": ["Baghdad", "Damascus", "Beirut", "Jerusalem"],
+  "iraq-1920": ["Najaf", "Karbala"],
+  "lebanon-1920": ["Tyre", "Baalbek", "Beirut"],
+  "iraq-1932": ["Baghdad"],
+  "goharshad-1935": ["Mashhad"],
+  "alawite-1936": ["Latakia"],
+  "fadaiyan-1946": ["Tehran"],
+  "coup-1953": ["Tehran"],
+  "safavi-1956": ["Tehran"],
+  "dawa-1957": ["Najaf"],
+  "musa-1959": ["Tyre"],
+  "borujerdi-1961": ["Qom"],
+  "yemen-1962": ["Sanaa"],
+  "khordad-1963": ["Qom", "Tehran"],
+  "sixday-1967": ["Jerusalem", "Gaza", "Golan"],
+  "blacksept-1970": ["Amman", "South Lebanon"],
+  "velayat-1970": ["Najaf"],
+  "assad-1970": ["Damascus"],
+  "amal-1974": ["Baalbek", "Tyre"],
+  "shariati-1977": ["Tehran"],
+  "musa-1978": ["Beirut"],
+  "rev-1979": ["Tehran", "Qom"],
+  "plo-1979": ["Tehran", "Beirut"],
+  "saddam-1979": ["Baghdad"],
+  "hostages-1979": ["Tehran"],
+  "qatif-1979": ["Qatif"],
+  "baqir-1980": ["Najaf", "Baghdad"],
+  "war-1980": ["Khorramshahr", "Basra"],
+  "hama-1982": ["Hama"],
+  "israel-1982": ["South Lebanon", "Beirut", "Baalbek"],
+  "sciri-1982": ["Tehran"],
+  "beirut-1983": ["Beirut"],
+  "hezb-1985": ["Baalbek"],
+  "mecca-1987": ["Mecca"],
+  "khamenei-1989": ["Tehran"],
+  "taif-1989": ["Taif", "Beirut"],
+  "uprising-1991": ["Najaf", "Karbala", "Basra"],
+  "musawi-1992": ["South Lebanon"],
+  "khatami-1997": ["Tehran"],
+  "south-2000": ["South Lebanon"],
+  "iraq-2003": ["Baghdad", "Najaf"],
+  "houthi-2004": ["Saada"],
+  "crescent-2004": ["Amman"],
+  "samarra-2006": ["Samarra", "Baghdad"],
+  "war-2006": ["South Lebanon", "Beirut"],
+  "mughniyeh-2008": ["Damascus"],
+  "green-2009": ["Tehran"],
+  "bahrain-2011": ["Manama"],
+  "qusayr-2013": ["Qusayr"],
+  "fatwa-2014": ["Mosul", "Najaf"],
+  "sanaa-2014": ["Saada", "Sanaa"],
+  "yemen-2015": ["Sanaa", "Hodeidah", "Riyadh"],
+  "jcpoa-2015": ["Tehran"],
+  "nimr-2016": ["Awamiyah", "Tehran"],
+  "tishreen-2019": ["Baghdad", "Beirut", "Tehran"],
+  "soleimani-2020": ["Baghdad", "Tehran"],
+  "amini-2022": ["Saqqez", "Tehran"],
+  "beijing-2023": ["Tehran", "Riyadh"],
+  "gaza-2023": ["Gaza", "South Lebanon", "Baghdad", "Hodeidah", "Tehran"],
+  "nasrallah-2024": ["Damascus", "Beirut", "Tehran"],
+  "assad-2024": ["Aleppo", "Damascus"],
+  "twelve-2025": ["Tehran", "Natanz", "Fordow", "Isfahan", "Al-Udeid"],
+  "war-2026": ["Tehran", "Hormuz", "South Lebanon", "Baghdad"],
+};
+const ALSO = {
+  "ottoman-1918": ["jordan"],
+  "sixday-1967": ["jordan"],
+  "blacksept-1970": ["syria", "palestine"],
+  "israel-1982": ["palestine", "iran"],
+  "beirut-1983": ["iran"],
+  "hezb-1985": ["iran"],
+  "mughniyeh-2008": ["iran"],
+  "qusayr-2013": ["lebanon", "iran"],
+  "assad-2024": ["iran", "lebanon"],
+  "mecca-1987": ["iran"],
+  "sciri-1982": ["iraq"],
+  "musawi-1992": ["palestine"],
+};
+
+const CONDITIONS = [
+  { c: "iran", from: T0, to: 1925.95, label: "Qajar dynasty", kind: "rule" },
+  { c: "iran", from: 1925.95, to: 1941.7, label: "Reza Shah's rule", kind: "rule" },
+  { c: "iran", from: 1941.7, to: 1979.1, label: "Mohammad Reza Shah", kind: "rule" },
+  { c: "iran", from: 1951.3, to: 1953.65, label: "Oil nationalized under Mosaddegh", kind: "unrest" },
+  { c: "iran", from: 1979.1, to: NOW, label: "Islamic Republic", kind: "rule" },
+  { c: "iran", from: 1979.85, to: 1981.05, label: "US hostages held", kind: "pressure" },
+  { c: "iran", from: 1980.7, to: 1988.65, label: "War with Iraq", kind: "war" },
+  { c: "iran", from: 2026.15, to: NOW, label: "War with the United States and Israel", kind: "war" },
+  { c: "iraq", from: T0, to: 1920.3, label: "British military occupation", kind: "pressure" },
+  { c: "iraq", from: 1920.3, to: 1932.8, label: "British mandate", kind: "rule" },
+  { c: "iraq", from: 1921.6, to: 1958.55, label: "Hashemite monarchy", kind: "rule" },
+  { c: "iraq", from: 1958.55, to: 1968.55, label: "Officers' republics", kind: "rule" },
+  { c: "iraq", from: 1968.55, to: 2003.3, label: "Ba'ath rule", kind: "rule" },
+  { c: "iraq", from: 1979.55, to: 2003.3, label: "Saddam Hussein president", kind: "rule" },
+  { c: "iraq", from: 1980.7, to: 1988.65, label: "War with Iran", kind: "war" },
+  { c: "iraq", from: 1990.6, to: 2003.3, label: "UN sanctions", kind: "pressure" },
+  { c: "iraq", from: 2003.25, to: 2011.95, label: "US-led occupation and troop presence", kind: "pressure" },
+  { c: "iraq", from: 2005.1, to: NOW, label: "Shi'a-led governments", kind: "rule" },
+  { c: "iraq", from: 2006.15, to: 2008.5, label: "Sectarian civil war", kind: "war" },
+  { c: "iraq", from: 2014.45, to: 2017.95, label: "War with the Islamic State", kind: "war" },
+  { c: "lebanon", from: 1920.3, to: 1943.85, label: "French Mandate", kind: "rule" },
+  { c: "lebanon", from: 1969.85, to: 1982.65, label: "PLO armed presence in the south", kind: "pressure" },
+  { c: "lebanon", from: 1975.3, to: 1990.8, label: "Civil war", kind: "war" },
+  { c: "lebanon", from: 1976.45, to: 2005.3, label: "Syrian troops in Lebanon", kind: "pressure" },
+  { c: "lebanon", from: 1982.45, to: 2000.4, label: "Israeli occupation of the south", kind: "pressure" },
+  { c: "lebanon", from: 2019.8, to: NOW, label: "Financial collapse", kind: "pressure" },
+  { c: "lebanon", from: 2023.77, to: 2024.9, label: "Border war with Israel", kind: "war" },
+  { c: "syria", from: 1920.3, to: 1946.3, label: "French Mandate", kind: "rule" },
+  { c: "syria", from: 1963.2, to: 1970.85, label: "Ba'ath rule before Assad", kind: "rule" },
+  { c: "syria", from: 1967.45, to: NOW, label: "Israel holds the Golan", kind: "pressure" },
+  { c: "syria", from: 1970.85, to: 2024.93, label: "Assad family rule", kind: "rule" },
+  { c: "syria", from: 1979.45, to: 1982.2, label: "Brotherhood revolt, crushed at Hama", kind: "war" },
+  { c: "syria", from: 2011.2, to: 2024.93, label: "Civil war", kind: "war" },
+  { c: "syria", from: 2024.93, to: NOW, label: "Post-Assad government", kind: "rule" },
+  { c: "yemen", from: 1918.9, to: 1962.75, label: "Zaydi imamate rules the north", kind: "rule" },
+  { c: "yemen", from: 1962.75, to: 1970.3, label: "North Yemen civil war", kind: "war" },
+  { c: "yemen", from: 2004.5, to: 2010.15, label: "Saada wars", kind: "war" },
+  { c: "yemen", from: 2015.2, to: 2022.3, label: "Saudi-led war", kind: "war" },
+  { c: "yemen", from: 2023.85, to: 2025.05, label: "Red Sea attacks on shipping", kind: "war" },
+  { c: "gulf", from: T0, to: 1971.65, label: "Bahrain under British protection", kind: "rule" },
+  { c: "gulf", from: T0, to: 1932.7, label: "Ibn Saud's state, holding the Shi'a east since 1913", kind: "rule" },
+  { c: "gulf", from: 1932.7, to: NOW, label: "Saudi kingdom", kind: "rule" },
+  { c: "gulf", from: 1988.3, to: 1991.25, label: "Riyadh and Tehran without relations", kind: "pressure" },
+  { c: "gulf", from: 1994.95, to: 2001.15, label: "Bahrain's uprising of the 1990s", kind: "unrest" },
+  { c: "gulf", from: 2011.1, to: 2013.9, label: "Protests in Bahrain and the Eastern Province", kind: "unrest" },
+  { c: "gulf", from: 2016.0, to: 2023.2, label: "Riyadh and Tehran without relations", kind: "pressure" },
+  { c: "gulf", from: 2026.15, to: NOW, label: "Hormuz shipping under attack", kind: "war" },
+  { c: "jordan", from: 1921.3, to: 1946.4, label: "Transjordan under British mandate", kind: "rule" },
+  { c: "jordan", from: 1946.4, to: NOW, label: "Hashemite kingdom", kind: "rule" },
+  { c: "jordan", from: 1948.37, to: 1967.45, label: "Rules the West Bank", kind: "pressure" },
+  { c: "jordan", from: 1970.7, to: 1971.55, label: "War with the PLO", kind: "war" },
+  { c: "palestine", from: 1920.3, to: 1948.37, label: "British Mandate Palestine", kind: "rule" },
+  { c: "palestine", from: 1948.37, to: 1949.55, label: "War of 1948 and the Nakba", kind: "war" },
+  { c: "palestine", from: 1967.45, to: NOW, label: "Israeli occupation of the West Bank", kind: "pressure" },
+  { c: "palestine", from: 1987.95, to: 1993.7, label: "First intifada", kind: "unrest" },
+  { c: "palestine", from: 2000.75, to: 2005.1, label: "Second intifada", kind: "unrest" },
+  { c: "palestine", from: 2023.77, to: NOW, label: "Gaza war and its aftermath", kind: "war" },
+];
+const KIND_COLOR = { war: "#c8673f", unrest: "#d99a6c", pressure: "#8f9149", rule: "#91a486" };
+
+const NET_STYLE = {
+  emulation: { color: "#91a486", width: 1.4, dash: "1 5", label: "Najaf and Qom's religious networks" },
+  training: { color: "#8f9149", width: 2, dash: "6 5", label: "PLO training" },
+  alliance: { color: "#d6c49b", width: 2.2, dash: "8 5", label: "State alliance" },
+  oath: { color: "#c8673f", width: 3.4, dash: "", label: "Oath to the Leader" },
+  factions: { color: "#c8673f", width: 2.2, dash: "", label: "Armed factions" },
+  exile: { color: "#c8673f", width: 1.8, dash: "3 4", label: "Exiles housed in Iran" },
+  attempt: { color: "#d99a6c", width: 1.4, dash: "2 4", label: "Plot" },
+  crosssect: { color: "#8f9149", width: 2.2, dash: "", label: "Cross-sect partner (Sunni)" },
+  arms: { color: "#c8673f", width: 2.2, dash: "5 4", label: "Arms and training" },
+};
+
+const SUMMARY = {
+  iran: { name: "Iran", school: "Twelver Shi'a majority", share: "Pew (2009) estimates 90–95% of Iran's Muslims are Shi'a.", arc: "A weak dynasty, then the Pahlavi monarchy, then from 1979 the Islamic Republic, founded on Wilayat al-Faqih. Challenged from inside in 1997, 2009, 2019, and 2022.", now: "At war with the United States and Israel; a June memorandum collapsed in July." },
+  iraq: { name: "Iraq", school: "Twelver Arab Shi'a majority; Sunni Arabs and Kurds", share: "Pew (2009) estimates 65–70% of Iraq's Muslims are Shi'a.", arc: "Home of Najaf's seminary and the shrine cities. A Shi'a majority that led the 1920 revolt, was shut out under the monarchy and the Ba'ath, and has governed since 2005.", now: "Shi'a parties still govern. Armed factions tied to Iran still armed." },
+  lebanon: { name: "Lebanon", school: "Twelver Shi'a, one of eighteen recognized sects", share: "Pew (2009) estimates 45–55% of Lebanon's Muslims are Shi'a. There has been no census since 1932.", arc: "Annexed to Greater Lebanon by France in 1920. The poorest community in the 1950s, then Musa al-Sadr's movement, then Amal and Hezbollah.", now: "Hezbollah is degraded. The state is trying to disarm it and has moved to prosecute an explosives transfer (ISW)." },
+  syria: { name: "Syria", school: "Sunni majority; Alawite minority, distinct from Twelver Shiism", share: "Pew (2009) estimates 15–20% of Syria's Muslims are Shi'a, counting Alawites.", arc: "A French mandate with an Alawite statelet, then an Alawite officer's Ba'athist regime, allied with Tehran from 1980 and saved by it after 2011.", now: "Assad fled on 8 December 2024. Ahmed al-Sharaa was named president the following month." },
+  yemen: { name: "Yemen", school: "Zaydi in the north; Shafi'i Sunni majority", share: "Pew (2009) estimates 35–40% of Yemen's Muslims are Shi'a, mostly Zaydi.", arc: "A Zaydi imamate until 1962. The Houthi revival grew out of the Saada wars and took Sanaa in 2014.", now: "The Houthis hold Sanaa and the north." },
+  gulf: { name: "The Gulf monarchies", school: "Twelver communities under Sunni dynasties", share: "Pew (2009) estimates 65–75% of Bahrain's Muslims and 10–15% of Saudi Arabia's are Shi'a.", arc: "Saudi Shi'a live on the eastern oil fields. Their rulers have often treated them as an Iranian channel: Qatif 1979, Bahrain 2011, Nimr 2016.", now: "Bahrain's political structure unchanged. Hormuz shipping is still being attacked (AP)." },
+  jordan: { name: "Jordan", school: "Sunni Hashemite monarchy; context for this history", share: "Shi'a are not a significant community here.", arc: "Its king expelled the PLO in 1970, sending it into the Shi'a south of Lebanon. It backed Iraq in the 1980s and named the 'Shi'a crescent' in 2004.", now: "Hashemite monarchy." },
+  palestine: { name: "Israel and Palestine", school: "Context for this history: no Shi'a political arena here", share: "Hamas and the PLO are Sunni and secular movements.", arc: "The 1967 war, the PLO's move to Lebanon, Israel's invasions and occupation of south Lebanon, and Gaza after 2023 all reshaped Shi'a politics next door.", now: "The Gaza war of 2023 and its aftermath; Israel at war with Iran in 2025 and 2026." },
+};
+for (const [c, o] of Object.entries(DATA.SUMMARY || {})) Object.assign(SUMMARY[c], o);
+const NEIGHBOR = {
+  Turkey: "The Ottoman heartland. The empire whose fall in 1918 opened this history.",
+  Egypt: "Birthplace of the Muslim Brotherhood (1928) and of Nasser's Arab nationalism, broken in 1967. Backed the Yemeni republic against the Zaydi royalists in the 1960s.",
+  Oman: "Ibadi, neither Sunni nor Shi'a. Shares the Strait of Hormuz with Iran.",
+  Afghanistan: "Outside the main stage of this history.",
+};
+
+const MONTHS = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 };
+DATA.EVENTS.forEach((event, index) => {
+  const tokens = event.when.match(/Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|\d{4}/g) || [];
+  const years = tokens.filter((t) => /^\d{4}$/.test(t)).map(Number);
+  const months = tokens.filter((t) => MONTHS[t]).map((t) => MONTHS[t]);
+  const y1 = years[0];
+  const y2 = years[years.length - 1];
+  if (!months.length) {
+    event.start = y1 + 0.5;
+    event.end = y2 + 0.5;
+  } else {
+    event.start = y1 + (months[0] - 1) / 12;
+    event.end = y2 + months[months.length - 1] / 12;
+    if (event.end - event.start <= 1 / 12 + 0.001) event.end = event.start;
+  }
+  event.order = index;
+  event.year = y1;
+  event.context = event.kind === "Context";
+  event.places = event.places || PLACES[event.id] || [];
+  const touched = new Set(event.places.map((p) => CITY_COUNTRY[p]).filter(Boolean));
+  if (event.country !== "region") touched.add(event.country);
+  (ALSO[event.id] || []).forEach((c) => touched.add(c));
+  event.touches = ORDER.filter((c) => touched.has(c));
+  event.home = event.country !== "region" ? event.country : event.touches[0];
+});
+DATA.EVENTS.sort((a, b) => a.start - b.start || a.order - b.order);
+const EV = Object.fromEntries(DATA.EVENTS.map((e) => [e.id, e]));
+const PEOPLE_BY_EVENT = {};
+DATA.PEOPLE.forEach((p, i) => {
+  p.id = `person-${i}`;
+  p.events.forEach((id) => { (PEOPLE_BY_EVENT[id] = PEOPLE_BY_EVENT[id] || []).push(p); });
+});
+
+SCENES.forEach((scene) => {
+  const m = scene.years.match(/(\d{4})–(\d{2,4})/);
+  const a = Number(m[1]);
+  const b = m[2].length === 2 ? Number(m[1].slice(0, 2) + m[2]) : Number(m[2]);
+  scene.w0 = a;
+  scene.w1 = Math.min(b + 1, NOW);
+});
+
+const MOTION = {};
+for (let y = T0; y <= 2026; y++) MOTION[y] = new Set();
+DATA.EVENTS.forEach((e) => {
+  for (let y = Math.floor(e.start); y <= Math.floor(e.end); y++) e.touches.forEach((c) => SHIA.includes(c) && MOTION[y] && MOTION[y].add(c));
+});
+CONDITIONS.filter((k) => (k.kind === "war" || k.kind === "unrest") && SHIA.includes(k.c)).forEach((k) => {
+  for (let y = Math.floor(k.from); y <= Math.floor(Math.min(k.to, NOW)); y++) MOTION[y] && MOTION[y].add(k.c);
+});
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function fmtT(t) {
+  const y = Math.floor(t + 1e-6);
+  const m = Math.min(11, Math.round((t - y) * 12));
+  return `${Object.keys(MONTHS)[m]} ${y}`;
+}
+function sinceLabel(k, w0) {
+  if (k.from > w0) return `from ${fmtT(k.from)}`;
+  if (k.from <= T0) return "already in place";
+  return `since ${Math.floor(k.from)}`;
+}
+function sceneById(id) { return SCENES.find((s) => s.id === id) || null; }
+function sceneForEvent(id) { return SCENES.find((s) => s.ids.includes(id)) || null; }
+function sceneForYear(y) {
+  return SCENES.find((s) => y >= s.w0 && y < s.w1)
+    || SCENES.slice().sort((a, b) => Math.abs((a.w0 + a.w1) / 2 - y) - Math.abs((b.w0 + b.w1) / 2 - y))[0];
+}
+function overlaps(e, w0, w1) { return e.start < w1 && e.end >= w0; }
+
+const fromHash = location.hash.slice(1);
+const firstId = EV[fromHash] ? fromHash : SCENES[0].ids[0];
+const state = { phase: "all", country: "all", selected: firstId, scene: (sceneForEvent(firstId) || SCENES[0]).id, network: true, lens: null };
+function activeScene() { return state.scene && state.phase === "all" ? sceneById(state.scene) : null; }
+
+function windowNow(selected) {
+  const scene = activeScene();
+  if (scene) return [scene.w0, scene.w1];
+  if (state.phase !== "all") {
+    const [a, b] = PHASE[state.phase].years.split("–").map(Number);
+    return [a, Math.min(b + 1, NOW)];
+  }
+  const y = Math.floor(selected ? selected.start : 1979);
+  return [y - 2, Math.min(y + 3, NOW)];
+}
+
+function visibleEvents() {
+  const scene = activeScene();
+  return DATA.EVENTS.filter((e) => {
+    if (state.phase !== "all" && e.phase !== state.phase) return false;
+    if (state.country !== "all" && !e.touches.includes(state.country)) return false;
+    if (scene && !scene.ids.includes(e.id)) return false;
+    return true;
+  });
+}
+
+function goToStage(behavior = "smooth") {
+  const step = document.querySelector(`.step[data-scene="${state.scene}"]`);
+  if (!step) return;
+  scrollLock = Date.now() + 1000;
+  step.scrollIntoView({ behavior, block: "center" });
+}
+function showPerson(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  el.classList.add("flash");
+  setTimeout(() => el.classList.remove("flash"), 1600);
+}
+
+/* ---------- map ---------- */
+function buildMap() {
+  const g = document.getElementById("countries");
+  g.innerHTML = GEO.countries.map((c) => {
+    const cls = c.stage ? `c stage${CONTEXT.has(c.stage) ? " ctx" : ""}` : "c";
+    const attrs = c.stage ? ` data-stage="${c.stage}" tabindex="0" role="button" aria-label="${esc(c.name)}"` : "";
+    return `<path class="${cls}" data-name="${esc(c.name)}"${attrs} d="${c.d}"/>`;
+  }).join("");
+  document.getElementById("sea-labels").innerHTML = GEO.seas.map((s) => s.name === "MEDITERRANEAN"
+    ? `<text class="sea-label" x="6" y="${s.y - 6}"><tspan x="6">MEDITER-</tspan><tspan x="6" dy="17">RANEAN</tspan></text>`
+    : `<text class="sea-label" x="${s.x}" y="${s.y}" text-anchor="middle">${s.name}</text>`).join("");
+  const C = GEO.cities;
+  const labels = [
+    { t: "IRAN", x: 640, y: 330 },
+    { t: "IRAQ", x: 285, y: 300 },
+    { t: "SYRIA", x: 196, y: 222 },
+    { t: "SAUDI ARABIA", x: 330, y: 620 },
+    { t: "YEMEN", x: 455, y: 830 },
+    { t: "LEBANON", x: 12, y: 232, small: true, leader: [68, 236, C.Beirut.x - 6, C.Beirut.y - 2] },
+    { t: "ISRAEL & PALESTINE", x: 6, y: 392, small: true, leader: [60, 382, 78, 352] },
+    { t: "JORDAN", x: 148, y: 372, small: true },
+    { t: "BAHRAIN", x: 600, y: 470, small: true, leader: [598, 474, C.Manama.x + 6, C.Manama.y - 4] },
+    { t: "TURKEY", x: 220, y: 70, small: true },
+    { t: "EGYPT", x: 40, y: 520, small: true },
+    { t: "KUWAIT", x: 430, y: 405, small: true },
+    { t: "OMAN", x: 760, y: 720, small: true },
+    { t: "UAE", x: 655, y: 580, small: true },
+    { t: "AFGHANISTAN", x: 830, y: 330, small: true },
+  ];
+  document.getElementById("land-labels").innerHTML = labels.map((l) =>
+    (l.leader ? `<line class="leader" x1="${l.leader[0]}" y1="${l.leader[1]}" x2="${l.leader[2]}" y2="${l.leader[3]}"/>` : "")
+    + `<text class="land-label${l.small ? " small" : ""}" x="${l.x}" y="${l.y}">${l.t}</text>`
+  ).join("");
+
+  const tip = document.getElementById("tip");
+  const card = document.getElementById("map-card");
+  const paths = g.querySelectorAll("path");
+  function show(path, evt) {
+    const stage = path.dataset.stage;
+    const name = path.dataset.name;
+    paths.forEach((p) => p.classList.toggle("hover", stage ? p.dataset.stage === stage : p === path));
+    if (stage) {
+      const s = SUMMARY[stage];
+      const all = DATA.EVENTS.filter((e) => e.touches.includes(stage));
+      const scene = activeScene();
+      const inScene = scene ? all.filter((e) => scene.ids.includes(e.id)) : [];
+      const war = new Set();
+      CONDITIONS.filter((k) => k.c === stage && (k.kind === "war" || k.kind === "unrest")).forEach((k) => {
+        for (let y = Math.floor(k.from); y <= Math.floor(Math.min(k.to, NOW)); y++) war.add(y);
+      });
+      const people = DATA.PEOPLE.filter((p) => p.events.some((id) => EV[id] && EV[id].home === stage)).slice(0, 5).map((p) => p.name);
+      const title = s.name === name || (stage === "palestine") ? s.name : `${name} · ${s.name}`;
+      tip.innerHTML = `<h4>${esc(title)}</h4>
+        <p class="school">${esc(s.school)}</p>
+        <dl>
+          <dt>Population</dt><dd>${esc(s.share)}</dd>
+          <dt>The arc</dt><dd>${esc(s.arc)}</dd>
+          ${people.length ? `<dt>People</dt><dd>${esc(people.join(", "))}</dd>` : ""}
+          <dt>Oct 2026</dt><dd>${esc(s.now)}</dd>
+          ${scene ? `<dt>This scene</dt><dd>${inScene.length ? inScene.map((e) => esc(e.title)).join("; ") : "Nothing new here in these years."}</dd>` : ""}
+        </dl>
+        <div class="nums">
+          <span><b>${all.length}</b>events here</span>
+          <span><b>${war.size}</b>years of war or revolt</span>
+          <span><b>${all.length ? all[0].year : "–"}</b>first entry</span>
+        </div>`;
+    } else {
+      tip.innerHTML = `<h4>${esc(name)}</h4>${NEIGHBOR[name] ? `<p style="margin:0">${esc(NEIGHBOR[name])}</p>` : ""}`;
+    }
+    place(evt);
+    tip.classList.add("show");
+  }
+  function place(evt) {
+    const box = card.getBoundingClientRect();
+    let x = evt.clientX - box.left + 16;
+    let y = evt.clientY - box.top + 16;
+    if (x + 310 > box.width) x = evt.clientX - box.left - 316;
+    if (y + tip.offsetHeight > box.height) y = Math.max(8, box.height - tip.offsetHeight - 8);
+    tip.style.left = `${Math.max(8, x)}px`;
+    tip.style.top = `${y}px`;
+  }
+  paths.forEach((path) => {
+    path.addEventListener("mouseenter", (evt) => show(path, evt));
+    path.addEventListener("mousemove", place);
+    path.addEventListener("mouseleave", () => {
+      tip.classList.remove("show");
+      paths.forEach((p) => p.classList.remove("hover"));
+    });
+    if (path.dataset.stage) {
+      const pick = () => {
+        const c = path.dataset.stage;
+        if (!activeScene()) enterScene((sceneForEvent(state.selected) || SCENES[0]).id);
+        setLens(state.lens === c ? null : c);
+      };
+      path.addEventListener("click", pick);
+      path.addEventListener("keydown", (evt) => { if (evt.key === "Enter" || evt.key === " ") { evt.preventDefault(); pick(); } });
+      path.addEventListener("focus", () => {
+        const r = path.getBoundingClientRect();
+        show(path, { clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 });
+      });
+      path.addEventListener("blur", () => tip.classList.remove("show"));
+    }
+  });
+  document.getElementById("net-toggle").addEventListener("click", () => {
+    state.network = !state.network;
+    renderMap(EV[state.selected]);
+  });
+}
+
+function mapEvents(selected) {
+  const scene = activeScene();
+  if (scene) return scene.ids.map((id) => EV[id]);
+  const [w0, w1] = windowNow(selected);
+  return visibleEvents().filter((e) => overlaps(e, w0, w1));
+}
+
+function arc(p, q, bend = 0.18) {
+  const mx = (p.x + q.x) / 2;
+  const my = (p.y + q.y) / 2 - Math.hypot(q.x - p.x, q.y - p.y) * bend;
+  return `M${p.x} ${p.y} Q${mx} ${my} ${q.x} ${q.y}`;
+}
+
+function renderMap(selected) {
+  const scene = activeScene();
+  const lens = scene && state.lens;
+  const focus = lens ? lensEvents(scene, lens) : mapEvents(selected);
+  const lit = new Set(lens ? [lens] : scene ? scene.lands : []);
+  if (!lens) focus.forEach((e) => e.touches.forEach((c) => lit.add(c)));
+  const qatar = focus.some((e) => e.places.some((n) => n === "Doha" || n === "Al-Udeid"));
+  const shown = (p) => {
+    if (p.dataset.stage !== "gulf") return true;
+    const n = p.dataset.name;
+    return n === "Saudi Arabia" || n === "Bahrain" || (n === "Qatar" && qatar);
+  };
+  document.querySelectorAll("#countries path[data-stage]").forEach((p) => {
+    const id = p.dataset.stage;
+    const filtered = state.country !== "all";
+    const on = lit.has(id) && shown(p);
+    const picked = lens ? lens === id && (id !== "gulf" || on) : filtered && state.country === id;
+    p.classList.toggle("picked", picked);
+    p.classList.toggle("lit", !filtered && !lens && on);
+    p.classList.toggle("dim", lens ? !picked : filtered ? state.country !== id : !on);
+  });
+  const C = GEO.cities;
+  const t = selected ? selected.start : 1979;
+  const links = state.network ? DATA.INFLUENCE.filter((l) => l.from <= t && l.to > t) : [];
+  document.getElementById("network").innerHTML = links.map((l) => {
+    const s = NET_STYLE[l.type];
+    return `<path class="net" d="${arc(C[l.a], C[l.b], 0.22)}" stroke="${s.color}" stroke-width="${s.width}" ${s.dash ? `stroke-dasharray="${s.dash}"` : ""} opacity="0.85"><title>${esc(l.label)}</title></path>`;
+  }).join("");
+  const types = [...new Set(links.map((l) => l.type))];
+  const net = document.getElementById("net-toggle");
+  net.setAttribute("aria-pressed", String(state.network));
+  net.textContent = state.network ? `Shi'a networks in ${Math.floor(t)}: on` : "Shi'a networks: off";
+  document.getElementById("netkey").innerHTML = state.network ? types.map((k) => {
+    const s = NET_STYLE[k];
+    const items = links.filter((l) => l.type === k).map((l) => l.label).join("; ");
+    return `<span title="${esc(items)}"><svg width="26" height="8"><line x1="1" y1="4" x2="25" y2="4" stroke="${s.color}" stroke-width="${s.width}" ${s.dash ? `stroke-dasharray="${s.dash}"` : ""} stroke-linecap="round"/></svg>${esc(s.label)}</span>`;
+  }).join("") : "";
+
+  const groups = new Map();
+  focus.forEach((e) => e.places.forEach((name) => {
+    if (!groups.has(name)) groups.set(name, []);
+    groups.get(name).push(e);
+  }));
+  document.getElementById("overlay").innerHTML = focus.filter((e) => e.places.length > 1).map((e) => {
+    const pts = e.places.map((p) => C[p]);
+    const d = pts.slice(1).map((p) => arc(pts[0], p)).join(" ");
+    return `<path class="thread${selected && e.id === selected.id ? " on" : ""}" d="${d}"/>`;
+  }).join("");
+  document.getElementById("pins").innerHTML = [...groups.entries()].map(([name, evs]) => {
+    const p = C[name];
+    const on = selected && evs.some((e) => e.id === selected.id);
+    const right = p.x < 760;
+    return `<g class="pin${on ? " on" : ""}" transform="translate(${p.x} ${p.y})"><circle r="${on ? 8 : 5.5}"/><text x="${right ? 10 : -10}" y="4" text-anchor="${right ? "start" : "end"}">${esc(name)}</text></g>`;
+  }).join("");
+  document.getElementById("map-place").textContent = scene ? `${groups.size} places in ${scene.years}` : `${groups.size} places`;
+}
+
+/* ---------- story ---------- */
+const STORY = DATA.STORY;
+const LENS_NOTES = DATA.LENS;
+const ACT_OF = Object.fromEntries(STORY.acts.flatMap((a) => a.scenes.map((id) => [id, a])));
+
+function beats(text) {
+  const sentences = text.split(/(?<=[.!?])\s+(?=[A-Z'‘"])/);
+  const per = Math.ceil(sentences.length / Math.min(3, Math.ceil(sentences.length / 3)));
+  const out = [];
+  for (let i = 0; i < sentences.length; i += per) out.push(sentences.slice(i, i + per).join(" "));
+  return out;
+}
+
+function buildStory() {
+  document.getElementById("hero").innerHTML = `
+    <div class="cold">
+      <p class="place">${esc(STORY.open.place)}</p>
+      ${STORY.open.text.map((t) => `<p>${esc(t)}</p>`).join("")}
+    </div>
+    <div class="threads">
+      <h3>Four movements to follow</h3>
+      ${DATA.MOVEMENTS.map((m) => `<button type="button" class="mv-card" data-follow="${m.country}"><small>${esc(m.where)} · ${esc(m.years)}</small><b>${esc(m.name)}</b><span>Follow it through the story →</span></button>`).join("")}
+    </div>
+    <p class="begin">${SCENES.length} chapters in ${STORY.acts.length} acts. Scroll to begin ↓</p>`;
+
+  document.getElementById("story").innerHTML = STORY.acts.map((act) => `
+    <div class="act">
+      <p class="numeral">Act ${esc(act.n)}</p>
+      <h2>${esc(act.title)}</h2>
+      <p class="yrs">${esc(act.years)}</p>
+      <p class="intro">${esc(act.intro)}</p>
+    </div>
+    ${act.scenes.map((id) => {
+      const s = sceneById(id);
+      const i = SCENES.indexOf(s);
+      const cast = [...new Map(s.ids.flatMap((e) => PEOPLE_BY_EVENT[e] || []).map((p) => [p.id, p])).values()];
+      const moments = s.ids.map((e) => EV[e]).sort((a, b) => a.start - b.start);
+      const tabs = [["", "Whole region"], ...ORDER.map((c) => [c, LABEL[c]])].map(([c, label]) => {
+        const has = c && (LENS_NOTES[s.id]?.[c] || lensEvents(s, c).length);
+        return `<button type="button" class="tab${has ? " has" : ""}${c && CONTEXT.has(c) ? " ctx" : ""}" role="tab" data-lens="${c}">${esc(label)}</button>`;
+      }).join("");
+      return `<article class="step" data-scene="${s.id}" id="chapter-${s.id}">
+        <p class="eyebrow">Chapter ${i + 1} · ${esc(s.years)}</p>
+        <h3>${esc(s.title)}</h3>
+        <div class="tabs" role="tablist" aria-label="Region or country">${tabs}</div>
+        <div class="region">
+          <p class="hook">${esc(s.hook)}</p>
+          ${beats(s.tell).map((b) => `<p class="beat">${esc(b)}</p>`).join("")}
+          <div class="moments">${moments.map((e) => `<button type="button" data-id="${e.id}"${e.context ? ' class="context"' : ""}><span>${esc(e.when)}</span>${esc(e.title)}</button>`).join("")}</div>
+          ${cast.length ? `<div class="cast">${cast.map((p) => `<button type="button" data-person="${p.id}">${esc(p.name)}</button>`).join("")}</div>` : ""}
+          ${s.leaves ? `<p class="leaves"><b>The question it leaves</b>${esc(s.leaves)}</p>` : ""}
+        </div>
+        <div class="lens" hidden></div>
+      </article>`;
+    }).join("")}`).join("");
+
+  const ep = STORY.epilogue;
+  document.getElementById("epilogue").innerHTML = `
+    <p class="eyebrow">${esc(ep.asOf)}</p>
+    <h2>${esc(ep.title)}</h2>
+    <div class="epi">${ep.items.map((it) => `<div><b>${esc(it.name)}</b><p>${esc(it.text)}</p></div>`).join("")}</div>
+    <p class="next">Below, the same century runs country by country, then the four movements, the people, and the powers around them.</p>`;
+
+  const root = document.getElementById("story");
+  root.addEventListener("click", (evt) => {
+    const b = evt.target.closest("button");
+    if (!b || !root.contains(b)) return;
+    if (b.dataset.lens !== undefined) {
+      const step = b.closest(".step");
+      if (step.dataset.scene !== state.scene) enterScene(step.dataset.scene);
+      setLens(b.dataset.lens || null);
+    } else if (b.dataset.person) showPerson(b.dataset.person);
+    else if (b.dataset.id) select(b.dataset.id);
+    else if (b.dataset.goScene) { openScene(b.dataset.goScene); }
+    else if (b.dataset.jump) { select(b.dataset.jump); goToStage(); }
+  });
+
+  const steps = [...root.querySelectorAll(".step")];
+  let pending = null;
+  const follow = () => {
+    pending = null;
+    if (Date.now() < scrollLock) return;
+    const pinned = document.querySelector(".story-map").getBoundingClientRect();
+    const line = innerWidth <= 1000 ? Math.min(innerHeight * 0.8, pinned.bottom + 60) : innerHeight * 0.42;
+    const box = root.getBoundingClientRect();
+    if (box.top > line || box.bottom < line) return;
+    let current = null;
+    for (const el of steps) if (el.getBoundingClientRect().top <= line) current = el;
+    if (!current) return;
+    const id = current.dataset.scene;
+    if (id !== state.scene || state.phase !== "all" || state.country !== "all") enterScene(id);
+  };
+  addEventListener("scroll", () => { if (!pending) pending = setTimeout(follow, 90); }, { passive: true });
+}
+
+let scrollLock = 0;
+function enterScene(id) {
+  const scene = sceneById(id);
+  state.scene = id;
+  state.phase = "all";
+  state.country = "all";
+  if (!scene.ids.includes(state.selected)) state.selected = scene.ids[0];
+  render();
+}
+
+function lensEvents(scene, c) {
+  return DATA.EVENTS.filter((e) => e.touches.includes(c) && overlaps(e, scene.w0, scene.w1));
+}
+
+function setLens(c) {
+  state.lens = c;
+  render();
+  const step = document.querySelector(`.step[data-scene="${state.scene}"]`);
+  if (step && step.getBoundingClientRect().top < 60) {
+    scrollLock = Date.now() + 700;
+    step.scrollIntoView({ behavior: "instant", block: "start" });
+  }
+}
+
+function lensHTML(scene, c) {
+  const i = SCENES.indexOf(scene);
+  const s = SUMMARY[c];
+  const note = LENS_NOTES[scene.id]?.[c];
+  const evs = lensEvents(scene, c);
+  const conds = CONDITIONS.filter((k) => k.c === c && k.from < scene.w1 && k.to > scene.w0);
+  const people = [...new Map(evs.flatMap((e) => PEOPLE_BY_EVENT[e.id] || []).map((p) => [p.id, p])).values()];
+  const before = DATA.EVENTS.filter((e) => e.touches.includes(c) && e.start < scene.w0).pop();
+  const after = DATA.EVENTS.find((e) => e.touches.includes(c) && e.start >= scene.w1);
+  const prev = SCENES[i - 1];
+  const next = SCENES[i + 1];
+  return `<p class="lens-where">${esc(s.name)} · ${esc(scene.years)}</p>
+    <h4>${esc(note ? note[0] : "Quiet in these years")}</h4>
+    <p class="beat">${esc(note ? note[1] : `This history records no turning point in ${s.name} in ${scene.years}.`)}</p>
+    ${conds.length ? `<p class="lens-label">In force</p><div class="lens-conds">${conds.map((k) => `<span class="chip" style="--k:${KIND_COLOR[k.kind]}"><i></i>${esc(k.label)} <em>${esc(sinceLabel(k, scene.w0))}</em></span>`).join("")}</div>` : ""}
+    ${evs.length ? `<p class="lens-label">On the timeline</p><div class="moments">${evs.map((e) => `<button type="button" data-id="${e.id}"${e.context ? ' class="context"' : ""}><span>${esc(e.when)}</span>${esc(e.title)}</button>`).join("")}</div>` : ""}
+    ${!evs.length && (before || after) ? `<div class="moments">${before ? `<button type="button" data-jump="${before.id}"><span>Before</span>${esc(before.title)} (${before.year})</button>` : ""}${after ? `<button type="button" data-jump="${after.id}"><span>Next</span>${esc(after.title)} (${after.year})</button>` : ""}</div>` : ""}
+    ${people.length ? `<div class="cast">${people.map((p) => `<button type="button" data-person="${p.id}">${esc(p.name)}</button>`).join("")}</div>` : ""}
+    <div class="lens-nav">
+      ${prev ? `<button type="button" data-go-scene="${prev.id}">← ${esc(LABEL[c])}, ${esc(prev.years)}</button>` : "<span></span>"}
+      ${next ? `<button type="button" data-go-scene="${next.id}">${esc(LABEL[c])}, ${esc(next.years)} →</button>` : "<span></span>"}
+    </div>`;
+}
+
+function renderStory(selected) {
+  const scene = activeScene();
+  document.querySelectorAll(".step").forEach((el) => {
+    const on = !!scene && el.dataset.scene === scene.id;
+    el.classList.toggle("active", on);
+    const lensOn = on && !!state.lens;
+    el.querySelector(".region").hidden = lensOn;
+    const lens = el.querySelector(".lens");
+    lens.hidden = !lensOn;
+    lens.innerHTML = lensOn ? lensHTML(scene, state.lens) : "";
+    el.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", String((t.dataset.lens || null) === state.lens)));
+  });
+  document.querySelectorAll(".moments [data-id]").forEach((b) => b.setAttribute("aria-current", String(!!selected && b.dataset.id === selected.id)));
+  const stamp = document.getElementById("stamp");
+  stamp.innerHTML = scene
+    ? `<b>${esc(scene.years)}</b><span>${state.lens ? esc(SUMMARY[state.lens].name) : `Act ${esc(ACT_OF[scene.id].n)} · ${esc(scene.title)}`}</span>`
+    : state.phase !== "all" ? `<b>${esc(PHASE[state.phase].years)}</b><span>${esc(PHASE[state.phase].title)}</span>` : "";
+}
+
+function renderScenes() {
+  const root = document.getElementById("scenes");
+  const current = activeScene();
+  const at = current ? SCENES.indexOf(current) : -1;
+  root.innerHTML = SCENES.map((s, i) => {
+    const act = ACT_OF[s.id];
+    const first = act.scenes[0] === s.id;
+    return `<button type="button" class="scene${first ? " act-start" : ""}${i < at ? " done" : ""}" data-scene="${s.id}" aria-pressed="${i === at}" title="Act ${esc(act.n)} · ${esc(s.years)} · ${esc(s.title)}"><b>${esc(s.years)}</b></button>`;
+  }).join("");
+  root.querySelectorAll("[data-scene]").forEach((b) => b.addEventListener("click", () => openScene(b.dataset.scene)));
+}
+
+function openScene(id) {
+  enterScene(id);
+  goToStage();
+}
+
+/* ---------- meanwhile ---------- */
+function renderMeanwhile(selected) {
+  const root = document.getElementById("meanwhile");
+  const scene = activeScene();
+  const [w0, w1] = windowNow(selected);
+  const inWindow = DATA.EVENTS.filter((e) => overlaps(e, w0, w1));
+  const members = new Set(scene ? scene.ids : inWindow.map((e) => e.id));
+  let cols = ORDER.filter((c) => inWindow.some((e) => e.touches.includes(c)) || (scene && scene.lands.includes(c)));
+  if (state.country !== "all" && !cols.includes(state.country)) cols = cols.concat(state.country);
+  const n = cols.length;
+  const span = w1 - w0;
+  const pxYear = Math.max(64, Math.min(170, 560 / span));
+  const H = Math.round(span * pxYear);
+  const yOf = (t) => Math.round((Math.max(w0, Math.min(w1, t)) - w0) * pxYear);
+  const GUT = 46;
+  const left = (i, off = 0) => `calc(${GUT}px + (100% - ${GUT}px) * ${i} / ${n} + ${off}px)`;
+  const width = (k, off = 0) => `calc((100% - ${GUT}px) * ${k} / ${n} - ${off}px)`;
+  document.getElementById("mw-title").textContent = scene
+    ? `${scene.years}, country by country`
+    : `${Math.floor(w0)}–${Math.ceil(w1) - 1}, country by country`;
+
+  const condsOf = (c) => CONDITIONS.filter((k) => k.c === c && k.from < w1 && k.to > w0);
+  const heads = cols.map((c) => `<div class="mw-head${CONTEXT.has(c) ? " ctx" : ""}"><h3>${LABEL[c]}</h3>${condsOf(c).map((k) =>
+    `<p class="chip" style="--k:${KIND_COLOR[k.kind]}"><i></i><span>${esc(k.label)} <span style="color:var(--faint)">${esc(sinceLabel(k, w0))}</span></span></p>`
+  ).join("") || `<p class="chip" style="--k:var(--line)"><i></i><span>No standing condition recorded</span></p>`}</div>`).join("");
+
+  let body = "";
+  for (let y = Math.ceil(w0); y < w1; y++) body += `<div class="mw-year" style="top:${yOf(y)}px"><span>${y}</span></div>`;
+  const railCount = {};
+  cols.forEach((c, i) => {
+    body += `<div class="mw-col${CONTEXT.has(c) ? " ctx" : ""}" style="left:${left(i, 2)};width:${width(1, 4)}"></div>`;
+    const conds = condsOf(c);
+    conds.forEach((k, j) => {
+      body += `<div class="rail" title="${esc(k.label)}" style="--k:${KIND_COLOR[k.kind]};left:${left(i, 6 + j * 6)};top:${yOf(k.from)}px;height:${Math.max(4, yOf(k.to) - yOf(k.from))}px"></div>`;
+    });
+    railCount[c] = conds.length;
+  });
+
+  inWindow.forEach((e) => {
+    const visible = e.touches.filter((c) => cols.includes(c));
+    if (!visible.length) return;
+    const home = cols.includes(e.home) ? e.home : visible[0];
+    const i = cols.indexOf(home);
+    const on = selected && e.id === selected.id;
+    const offset = 10 + Math.min(railCount[home], 5) * 6;
+    const yStart = yOf(e.start);
+    if (e.end - e.start > 0.15) {
+      body += `<div class="span-bar${on ? " on" : ""}" style="left:${left(i + 1, -12)};top:${yStart}px;height:${Math.max(6, yOf(e.end) - yStart)}px"></div>`;
+      if (e.end > w1) body += `<div class="span-more" style="left:${left(i, offset)};top:${H + 2}px">continues to ${Math.floor(e.end)}</div>`;
+    }
+    if (visible.length > 1) {
+      const idx = visible.map((c) => cols.indexOf(c));
+      const lo = Math.min(...idx);
+      const hi = Math.max(...idx);
+      body += `<div class="tie${on ? " on" : ""}" style="left:${left(lo + 0.5)};width:${width(hi - lo)};top:${yStart}px"></div>`;
+      idx.filter((k) => k !== i).forEach((k) => {
+        body += `<div class="knot${on ? " on" : ""}" title="${esc(e.title)}" style="left:${left(k + 0.5)};top:${yStart}px"></div>`;
+      });
+    }
+    const cls = ["card", members.has(e.id) ? "" : "out", visible.length > 1 ? "multi" : "", e.context ? "context" : ""].join(" ");
+    body += `<button type="button" class="${cls}" data-id="${e.id}" data-col="${home}" data-y="${yStart}" ${on ? 'aria-current="true"' : ""} style="left:${left(i, offset)};width:${width(1, offset + 18)};top:${yStart}px"><b>${esc(e.when)}${visible.length > 1 ? ` · ${visible.length} countries` : ""}</b>${esc(e.title)}</button>`;
+  });
+  if (selected && overlaps(selected, w0, w1)) {
+    body += `<div class="now-line" style="top:${yOf(selected.start)}px"><span>${esc(fmtT(selected.start).split(" ")[0])}</span></div>`;
+  }
+
+  root.style.setProperty("--minw", `${GUT + n * 150}px`);
+  root.innerHTML = `<div class="mw-heads" style="grid-template-columns:${GUT - 8}px repeat(${n}, minmax(0, 1fr))"><div></div>${heads}</div>
+    <div class="mw-body" id="mw-body" style="height:${H + 24}px">${body}</div>
+    <div class="readout" id="readout"></div>`;
+  const bodyEl = document.getElementById("mw-body");
+  let bottom = H + 24;
+  cols.forEach((c) => {
+    let floor = -Infinity;
+    bodyEl.querySelectorAll(`.card[data-col="${c}"]`).forEach((el) => {
+      const top = Math.max(Number(el.dataset.y), floor + 4);
+      el.style.top = `${top}px`;
+      floor = top + el.offsetHeight;
+      bottom = Math.max(bottom, floor + 8);
+    });
+  });
+  bodyEl.style.height = `${bottom}px`;
+  bodyEl.querySelectorAll("[data-id]").forEach((el) => el.addEventListener("click", () => select(el.dataset.id)));
+
+  const out = document.getElementById("readout");
+  if (!selected || !overlaps(selected, w0, w1)) { out.innerHTML = ""; return; }
+  const t = selected.start;
+  const others = cols.filter((c) => !selected.touches.includes(c));
+  const cells = others.map((c) => {
+    const active = CONDITIONS.filter((k) => k.c === c && k.from <= t && k.to > t).sort((a, b) => (a.kind === "rule") - (b.kind === "rule"));
+    const recent = DATA.EVENTS.filter((e) => e.touches.includes(c) && e.start <= t && e.start > t - 4 && e.id !== selected.id).pop();
+    const parts = active.map((k) => `${k.label}${k.kind !== "rule" && k.from > T0 ? `, year ${Math.floor(t - k.from) + 1}` : ""}`);
+    return `<div class="cell"><h4>${LABEL[c]}</h4><p>${parts.length ? esc(parts.join(". ")) + "." : "No standing condition recorded."}${recent ? ` Latest: ${esc(recent.title)} (${esc(recent.when)}).` : ""}</p></div>`;
+  }).join("");
+  const where = selected.touches.map((c) => LABEL[c]).join(", ");
+  out.innerHTML = `<p class="lead">In <b>${esc(fmtT(t))}</b>: ${esc(selected.title)} (${esc(where)}).${others.length ? " Meanwhile:" : ""}</p>${cells}`;
+}
+
+/* ---------- ideas, people, powers ---------- */
+function chips(ids) {
+  return `<div class="ev-chips">${ids.filter((id) => EV[id]).map((id) => `<button type="button" data-id="${id}"><b>${esc(EV[id].year)}</b> ${esc(EV[id].title)}</button>`).join("")}</div>`;
+}
+function buildStatic() {
+  document.getElementById("moves").innerHTML = DATA.MOVEMENTS.map((m) => `
+    <article class="move" id="move-${m.country}">
+      <p class="where">${esc(m.where)} · ${esc(m.years)}</p>
+      <h3>${esc(m.name)}</h3>
+      <p class="native" lang="ar" dir="rtl">${esc(m.native)}</p>
+      <p class="line">${esc(m.line)}</p>
+      <p class="label">The setting</p>
+      <p class="ctx">${esc(m.context)}</p>
+      <p class="label">Stages</p>
+      <ol>${m.stages.map(([y, s]) => `<li><b>${esc(y)}</b><span>${esc(s)}</span></li>`).join("")}</ol>
+      <p class="now"><b>Oct 2026</b>${esc(m.now)}</p>
+      <button type="button" class="follow" data-follow="${m.country}">Follow on the map →</button>
+    </article>`).join("");
+  const groups = [...new Set(DATA.PEOPLE.map((p) => p.group))];
+  document.getElementById("people").innerHTML = groups.map((g) => `<p class="people-group">${esc(g)}</p><div class="people">${DATA.PEOPLE.filter((p) => p.group === g).map((p) => `
+    <article class="person" id="${p.id}">
+      <h3>${esc(p.name)}</h3>
+      <p class="yrs">${esc(p.years)}</p>
+      <span class="tag">${esc(p.tag)}</span>
+      <p class="line">${esc(p.line)}</p>
+      ${chips(p.events)}
+    </article>`).join("")}</div>`).join("");
+  document.getElementById("powers").innerHTML = DATA.POWERS.map((p) => `<div class="power"><h3>${esc(p.name)}</h3><p>${esc(p.line)}</p>${chips(p.events)}</div>`).join("");
+  document.querySelectorAll("#people [data-id], #powers [data-id]").forEach((b) => b.addEventListener("click", () => {
+    state.phase = "all";
+    state.country = "all";
+    select(b.dataset.id);
+    goToStage();
+  }));
+}
+
+/* ---------- century ---------- */
+function renderCentury(selected) {
+  const root = document.getElementById("century");
+  const scene = activeScene();
+  const W = 1000;
+  const L = 112;
+  const R = 10;
+  const histH = 64;
+  const axisY = histH + 20;
+  const laneTop = axisY + 12;
+  const laneH = 28;
+  const x = (t) => L + ((t - T0) / (NOW - T0)) * (W - L - R);
+  const bw = (W - L - R) / (NOW - T0);
+  let s = "";
+  for (let y = T0; y <= 2026; y++) {
+    const k = MOTION[y].size;
+    const h = (k / 6) * histH;
+    const names = SHIA.filter((c) => MOTION[y].has(c)).map((c) => LABEL[c]).join(", ");
+    s += `<rect class="hit" data-year="${y}" x="${x(y) + 0.4}" y="${histH - h + 6}" width="${Math.max(1, bw - 1.1)}" height="${Math.max(h, 1.5)}" rx="1.5" fill="${k >= 4 ? "#c8673f" : k >= 2 ? "#8f9149" : "#46553f"}"><title>${y}: ${k} of 6${names ? ` — ${names}` : ""}</title></rect>`;
+  }
+  s += `<text x="${L - 8}" y="16" text-anchor="end" font-size="12.5" fill="#aaa995">6</text><text x="${L - 8}" y="${histH + 6}" text-anchor="end" font-size="12.5" fill="#aaa995">0</text>`;
+  s += `<text x="4" y="40" font-size="12.5" fill="#d2cbb6">Shi'a arenas</text><text x="4" y="54" font-size="12.5" fill="#d2cbb6">in motion</text>`;
+  for (let y = 1920; y <= 2020; y += 10) s += `<text x="${x(y)}" y="${axisY + 2}" text-anchor="middle" font-size="12.5" fill="#aaa995">${y}</text>`;
+  const lanesBottom = laneTop + ORDER.length * laneH;
+  if (scene) s += `<rect x="${x(scene.w0)}" y="2" width="${Math.max(3, x(scene.w1) - x(scene.w0))}" height="${lanesBottom}" fill="#ece4d3" opacity="0.07" rx="3"/>`;
+  ORDER.forEach((c, i) => {
+    const y0 = laneTop + i * laneH;
+    const mid = y0 + laneH / 2;
+    const ctx = CONTEXT.has(c);
+    s += `<rect x="${L}" y="${y0 + 2}" width="${W - L - R}" height="${laneH - 4}" rx="6" fill="${ctx ? "#19221d" : i % 2 ? "#1f2a24" : "#222e27"}"/>`;
+    s += `<text x="4" y="${mid + 4}" font-size="${ctx ? 12.5 : 14}" font-weight="${ctx ? 500 : 700}" fill="${ctx ? "#aaa995" : "#d6c49b"}">${LABEL[c]}</text>`;
+    CONDITIONS.filter((k) => k.c === c).forEach((k) => {
+      if (k.kind === "rule") {
+        s += `<rect x="${x(k.from) + 1}" y="${y0 + laneH - 7}" width="${Math.max(2, x(k.to) - x(k.from) - 2)}" height="2.5" rx="1" fill="#91a486" opacity="0.7"><title>${esc(k.label)}</title></rect>`;
+      } else {
+        s += `<rect x="${x(k.from)}" y="${mid - 6}" width="${Math.max(3, x(k.to) - x(k.from))}" height="12" rx="4" fill="${KIND_COLOR[k.kind]}" opacity="${k.kind === "pressure" ? 0.42 : 0.55}"><title>${esc(k.label)}</title></rect>`;
+      }
+    });
+  });
+  DATA.EVENTS.forEach((e) => {
+    const rows = e.touches.map((c) => ORDER.indexOf(c));
+    if (!rows.length) return;
+    const on = selected && e.id === selected.id;
+    const inScene = scene && scene.ids.includes(e.id);
+    if (rows.length > 1) {
+      const top = laneTop + Math.min(...rows) * laneH + laneH / 2;
+      const bot = laneTop + Math.max(...rows) * laneH + laneH / 2;
+      s += `<line x1="${x(e.start)}" x2="${x(e.start)}" y1="${top}" y2="${bot}" stroke="${on ? "#c8673f" : "#d6c49b"}" stroke-width="${on ? 2.5 : 1.2}" opacity="${on ? 1 : inScene ? 0.85 : 0.35}"/>`;
+    }
+    rows.forEach((r) => {
+      const mid = laneTop + r * laneH + laneH / 2;
+      const fill = on ? "#c8673f" : e.context ? "#141c17" : "#ece4d3";
+      const stroke = e.context && !on ? "#d6c49b" : "#141c17";
+      s += `<circle class="hit ev" data-id="${e.id}" cx="${x(e.start)}" cy="${mid}" r="${on ? 6.5 : 4.2}" fill="${fill}" stroke="${stroke}" stroke-width="1.6" opacity="${on || inScene ? 1 : 0.7}"><title>${esc(e.when)} · ${esc(e.title)}</title></circle>`;
+    });
+  });
+  root.innerHTML = `<svg viewBox="0 0 ${W} ${lanesBottom + 6}" role="img" aria-label="How many Shi'a arenas were in motion each year, with a lane per country">${s}</svg>`;
+  root.querySelectorAll("[data-year]").forEach((el) => el.addEventListener("click", () => { openScene(sceneForYear(Number(el.dataset.year)).id); goToStage(); }));
+  root.querySelectorAll("[data-id]").forEach((el) => el.addEventListener("click", () => select(el.dataset.id)));
+}
+
+/* ---------- list + detail ---------- */
+function renderPills() {
+  const phases = document.getElementById("phase-pills");
+  const countries = document.getElementById("country-pills");
+  phases.innerHTML = [{ id: "all", label: "By scene" }].concat(DATA.PHASES.map((p) => ({ id: p.id, label: p.years })))
+    .map((p) => `<button class="pill" data-phase="${p.id}" aria-pressed="${state.phase === p.id}">${esc(p.label)}</button>`).join("");
+  countries.innerHTML = [{ id: "all", label: "All" }].concat(ORDER.map((c) => ({ id: c, label: LABEL[c] })))
+    .map((c) => `<button class="pill" data-country="${c.id}" aria-pressed="${state.country === c.id}">${esc(c.label)}</button>`).join("");
+  phases.querySelectorAll("[data-phase]").forEach((b) => b.addEventListener("click", () => {
+    state.phase = b.dataset.phase;
+    if (state.phase === "all") state.scene = (sceneForEvent(state.selected) || SCENES[0]).id;
+    render();
+  }));
+  countries.querySelectorAll("[data-country]").forEach((b) => b.addEventListener("click", () => {
+    state.country = b.dataset.country;
+    render();
+  }));
+}
+
+function renderDetail(events) {
+  const root = document.getElementById("detail");
+  const selected = events.find((e) => e.id === state.selected) || events[0];
+  if (!selected) {
+    root.innerHTML = `<p class="empty">No event in this guide sits in both filters. Widen the period or the country.</p>`;
+    return null;
+  }
+  state.selected = selected.id;
+  const idx = events.indexOf(selected);
+  const earlier = idx > 0 ? events[idx - 1] : null;
+  const later = idx < events.length - 1 ? events[idx + 1] : null;
+  const phase = PHASE[selected.phase];
+  const mates = DATA.EVENTS.filter((e) => e.id !== selected.id && overlaps(e, selected.start - 1, selected.end + 1)).slice(0, 6);
+  const people = PEOPLE_BY_EVENT[selected.id] || [];
+  root.classList.toggle("context", selected.context);
+  root.innerHTML = `
+    <div class="detail-top">
+      <span class="badge">${ICONS[selected.kind] || ""}</span>
+      <div>
+        <p class="meta">${esc(selected.when)} · ${esc(phase.title)} · ${selected.context ? "Context" : esc(selected.kind)}</p>
+        <h2>${esc(selected.title)}</h2>
+      </div>
+    </div>
+    <p class="places">${esc(selected.places.join(" · "))}${selected.touches.length > 1 ? ` · reached ${selected.touches.map((c) => LABEL[c]).join(", ")}` : ""}</p>
+    <p>${esc(selected.summary)}</p>
+    <p class="why-label">${selected.context ? "What it meant for Shi'a politics" : "Why it is in this history"}</p>
+    <p class="why">${esc(selected.why)}</p>
+    ${people.length ? `<p class="why-label">People</p><div class="cast">${people.map((p) => `<button type="button" data-person="${p.id}">${esc(p.name)}</button>`).join("")}</div>` : ""}
+    ${mates.length ? `<p class="why-label">Within a year of it</p><div class="also">${mates.map((m) => `<button type="button" data-id="${m.id}"><b>${esc(m.when)}</b> ${esc(LABEL[m.home] || "")} · ${esc(m.title)}</button>`).join("")}</div>` : ""}
+    <div class="nav">
+      <button type="button" data-id="${earlier ? earlier.id : ""}" ${earlier ? "" : "disabled"}>${earlier ? "← " + esc(earlier.when) : "Earlier"}</button>
+      <button type="button" data-id="${later ? later.id : ""}" ${later ? "" : "disabled"}>${later ? esc(later.when) + " →" : "Later"}</button>
+    </div>`;
+  root.querySelectorAll("button[data-id]").forEach((b) => b.addEventListener("click", () => b.dataset.id && select(b.dataset.id)));
+  root.querySelectorAll("[data-person]").forEach((b) => b.addEventListener("click", () => showPerson(b.dataset.person)));
+  return selected;
+}
+
+function renderTimeline(events) {
+  const groups = DATA.PHASES.map((p) => ({ p, evs: events.filter((e) => e.phase === p.id) })).filter((g) => g.evs.length);
+  const root = document.getElementById("timeline");
+  root.innerHTML = groups.map((g) => `<div class="group-head"><h3>${esc(g.p.title)}</h3><span>${esc(g.p.years)}</span></div>` + g.evs.map((e) => `
+    <button class="event${e.context ? " context" : ""}" type="button" data-id="${e.id}" ${e.id === state.selected ? 'aria-current="true"' : ""}>
+      <span class="when">${esc(e.when)}</span>
+      <span class="tl-rail"><span class="dot"></span><span class="stem"></span></span>
+      <span><span class="event-title">${esc(e.title)}</span><span class="event-meta">${esc(e.touches.map((c) => LABEL[c]).join(" · "))} · ${e.context ? "Context" : esc(e.kind)}</span></span>
+    </button>`).join("")).join("");
+  root.querySelectorAll("[data-id]").forEach((b) => b.addEventListener("click", () => select(b.dataset.id)));
+}
+
+function render() {
+  const events = visibleEvents();
+  const scene = activeScene();
+  const selected = renderDetail(events) || EV[state.selected];
+  const countries = new Set(events.flatMap((e) => e.touches));
+  document.getElementById("count").textContent = scene
+    ? `Scene ${SCENES.indexOf(scene) + 1}: ${events.length} ${events.length === 1 ? "event" : "events"} across ${countries.size} ${countries.size === 1 ? "country" : "countries"}`
+    : `${events.length} of ${DATA.EVENTS.length} events`;
+  renderPills();
+  renderScenes();
+  renderStory(selected);
+  renderTimeline(events);
+  renderMap(selected);
+  renderMeanwhile(selected);
+  renderCentury(selected);
+  if (selected && booted) history.replaceState(null, "", "#" + selected.id);
+}
+
+function select(id) {
+  state.selected = id;
+  if (state.phase === "all") {
+    const scene = sceneForEvent(id);
+    if (scene) state.scene = scene.id;
+  }
+  render();
+}
+
+buildMap();
+buildStatic();
+buildStory();
+let booted = false;
+render();
+document.addEventListener("click", (evt) => {
+  const b = evt.target.closest("[data-follow]");
+  if (!b) return;
+  const m = DATA.MOVEMENTS.find((x) => x.country === b.dataset.follow);
+  state.lens = m.country;
+  openScene(m.first);
+});
+
+booted = true;
+if (EV[fromHash]) goToStage("instant");
+if (document.fonts) document.fonts.ready.then(() => renderMeanwhile(EV[state.selected]));
+let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => renderMeanwhile(EV[state.selected]), 150);
+});
+</script>
+</body>
+</html>
