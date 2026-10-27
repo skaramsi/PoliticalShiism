@@ -42,7 +42,6 @@ __FONTS__
   .land.live { cursor: pointer; fill: #314033; }
   .land.pick { fill: var(--terra); cursor: pointer; }
   .label { fill: var(--sand); font-size: 22px; font-family: var(--sans); pointer-events: none; }
-  svg.zoomed .label { display: none; }
   article { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px 16px; }
   .where { margin: 0 0 6px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terra); }
   article h2 { margin: 0 0 10px; font-size: 28px; line-height: 1.15; color: var(--sand); font-weight: 600; }
@@ -92,11 +91,6 @@ function esc(s) {
 
 yearsEl.innerHTML = SCENES.map((s, n) => `<button type="button" data-y="${n}">${esc(s.years)}</button>`).join("");
 
-const byStage = {};
-for (const c of GEO.countries) {
-  if (!LIVE.has(c.stage)) continue;
-  (byStage[c.stage] = byStage[c.stage] || []).push(c);
-}
 svg.innerHTML = GEO.countries.filter((c) => LIVE.has(c.stage)).map((c) =>
   `<path class="land" data-c="${c.stage}" d="${c.d}"></path>`).join("")
   + Object.entries(MARK).map(([id, m]) => `<text class="label" x="${m[0]}" y="${m[1]}">${m[2]}</text>`).join("");
@@ -116,22 +110,6 @@ function noteFor(scene, id) {
   return { title: note[0], paras };
 }
 
-function zoom(id) {
-  svg.classList.toggle("zoomed", !!id);
-  if (!id) {
-    svg.setAttribute("viewBox", "0 90 900 800");
-    return;
-  }
-  const parts = byStage[id] || [];
-  const cx = parts.reduce((s, c) => s + c.cx, 0) / (parts.length || 1);
-  const cy = parts.reduce((s, c) => s + c.cy, 0) / (parts.length || 1);
-  const w = 520;
-  const h = 400;
-  const x = Math.max(0, Math.min(900 - w, cx - w / 2));
-  const y = Math.max(0, Math.min(943 - h, cy - h / 2));
-  svg.setAttribute("viewBox", `${x} ${y} ${w} ${h}`);
-}
-
 function render() {
   const scene = SCENES[year];
   [...yearsEl.children].forEach((b, n) => {
@@ -143,7 +121,6 @@ function render() {
     path.classList.toggle("pick", on);
     path.classList.toggle("live", !on);
   });
-  zoom(country);
   const picked = country && noteFor(scene, country);
   const where = picked ? `${LABEL[country]} · ${scene.years}` : scene.years;
   const title = picked ? picked.title : scene.title;
