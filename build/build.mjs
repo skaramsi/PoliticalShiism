@@ -32,7 +32,32 @@ const scenes = SCENE_PLAN.map((plan) => {
   const extra = IRAN.SCENES?.[s.id];
   return extra ? { ...s, years: extra.years || s.years, ids: [...s.ids, ...extra.add] } : s;
 });
+const DROP_SCENES = new Set(["prologue"]);
+const DROP_EVENTS = new Set(["ottoman-1918", "iraq-1920", "lebanon-1920", "iraq-1932"]);
+for (const s of scenes) {
+  if (s.id === "absence") {
+    s.years = "1935–36";
+    s.title = "On the margins";
+    s.ids = s.ids.filter((id) => !DROP_EVENTS.has(id));
+  }
+}
+const keptScenes = scenes.filter((s) => !DROP_SCENES.has(s.id));
+scenes.length = 0;
+scenes.push(...keptScenes);
+data.EVENTS = data.EVENTS.filter((e) => !DROP_EVENTS.has(e.id));
+for (const p of PEOPLE) p.events = p.events.filter((id) => !DROP_EVENTS.has(id));
+for (const p of POWERS) p.events = p.events.filter((id) => !DROP_EVENTS.has(id));
+STORY.acts = STORY.acts.map((a) => ({ ...a, scenes: a.scenes.filter((id) => !DROP_SCENES.has(id)) })).filter((a) => a.scenes.length);
+STORY.acts[0] = { ...STORY.acts[0], years: "1935–1963", title: "On the margins", intro: "By the mid-1930s, Shi'a communities live inside new states with little say in them: a Sunni monarchy in Iraq, a confessional republic in Lebanon, a modernizing Shah in Iran, and a Zaydi imamate in Yemen until 1962. The first organizers appear later, Dawa in Najaf and Musa al-Sadr in Tyre." };
+STORY.open = {
+  place: "The setting, from 1936",
+  text: [
+    "By the mid-1930s the map of the region is set. Lebanon shares power among Christians, Sunnis, Shi'a, and Druze. Iraq is a Shi'a-majority country under a Sunni monarchy. Iran is ruled by Reza Shah. North Yemen still has a Zaydi imam.",
+    "This page follows four political movements that grow among Shi'a communities after that: Wilayat al-Faqih in Iran, Hizb al-Da'wa in Iraq beside the rise of the Ba'ath, Harakat al-Mahrumin in Lebanon which becomes Amal and then Hezbollah, and Ansar Allah in Yemen. Scroll for the story. Click a country on the map, or its tab, to read that country in those years.",
+  ],
+};
 for (const [sid, note] of Object.entries(IRAN.LENS)) (LENS[sid] = LENS[sid] || {}).iran = note;
+delete LENS.prologue;
 
 const ids = new Set(data.EVENTS.map((e) => e.id));
 const problems = [];
@@ -55,7 +80,7 @@ for (const [sid, byCountry] of Object.entries(LENS)) {
   for (const c of Object.keys(byCountry)) if (!countryIds.has(c)) problems.push(`lens country ${sid}/${c}`);
 }
 for (const m of RW.MOVEMENTS) if (!scenes.some((s) => s.id === m.first)) problems.push(`movement ${m.name} first ${m.first}`);
-for (const k of Object.keys(RW.EVENTS)) if (!ids.has(k)) problems.push(`rewrite event ${k}`);
+for (const k of Object.keys(RW.EVENTS)) if (!DROP_EVENTS.has(k) && !ids.has(k)) problems.push(`rewrite event ${k}`);
 for (const k of Object.keys(RW.PEOPLE)) if (!PEOPLE.some((p) => p.name === k)) problems.push(`rewrite person ${k}`);
 for (const k of Object.keys(STORY.tells)) if (!scenes.some((s) => s.id === k)) problems.push(`rewrite tell ${k}`);
 for (const l of INFLUENCE) for (const c of [l.a, l.b]) if (!geo.cities[c]) problems.push(`influence city ${c}`);
@@ -78,7 +103,7 @@ data.INFLUENCE = INFLUENCE.map((l, i) => (RW.INFLUENCE_LABELS[i] ? { ...l, label
 const safe = (obj) => JSON.stringify(obj).replace(/</g, "\\u003c");
 const face = (style, weight, file) => `  @font-face { font-family: "Carlito"; font-style: ${style}; font-weight: ${weight}; font-display: swap; src: url(data:font/woff;base64,${readFileSync(here(`./fonts/${file}`)).toString("base64")}) format("woff"); }`;
 const fonts = [face("normal", 400, "carlito-Regular.woff"), face("normal", 700, "carlito-Bold.woff"), face("italic", 400, "carlito-Italic.woff")].join("\n");
-const html = readFileSync(here("./page.html"), "utf8")
+const html = readFileSync(here("./template.html"), "utf8")
   .replace("__FONTS__", () => fonts)
   .replaceAll("__W__", String(geo.width))
   .replaceAll("__H__", String(geo.height))

@@ -1,4 +1,4 @@
-export const MASTER = "From the 1920s into the 1950s, Shi'a communities across the region were mostly shut out of the states that ruled them. From the late 1950s four movements grew among them: Hizb al-Da'wa in Iraq, competing there with the Ba'ath; Harakat al-Mahrumin in Lebanon, which became Amal and gave rise to Hezbollah; Khomeini's Wilayat al-Faqih in Iran, which took power in 1979; and the Zaydi revival in Yemen that became Ansar Allah. Since October 2023 the alliance among them has been hit harder than at any time since it was built.";
+export const MASTER = "From the mid-1930s, Shi'a communities across the region lived inside states that gave them little say. From the late 1950s four movements grew among them: Hizb al-Da'wa in Iraq, competing there with the Ba'ath; Harakat al-Mahrumin in Lebanon, which became Amal and gave rise to Hezbollah; Khomeini's Wilayat al-Faqih in Iran, which took power in 1979; and the Zaydi revival in Yemen that became Ansar Allah. From October 2023 that alliance has been in the hardest war it has faced.";
 
 export const PHASES = {
   marginal: {

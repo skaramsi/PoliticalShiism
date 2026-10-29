@@ -70,7 +70,7 @@ export const STORY = {
       leaves: "Shi'a parties now hold ministries in Baghdad and guns in Beirut. Can they still claim to speak for the excluded?",
     },
     spring: {
-      hook: "Within two years, Shi'a are crushed for protesting in one country and sent to fight for a regime in another.",
+      hook: "Within two years, Shi'a protesters are put down in one country, and fighters are sent to defend a regime in another.",
       leaves: "If the network can save Assad, how far will it stretch?",
     },
     eighteen: {
@@ -83,7 +83,7 @@ export const STORY = {
     },
     pieces: {
       hook: "For a few months the whole network fights one war. Then it breaks, one piece at a time.",
-      leaves: "With the corridor gone and its commanders dead, the pressure turns toward Iran itself.",
+      leaves: "With the land route gone and its commanders hit hard, the war moves closer to Iran itself.",
     },
     open: {
       hook: "The war reaches Iran itself.",
@@ -94,9 +94,9 @@ export const STORY = {
     title: "Where the four movements stand",
     asOf: "As of 24 October 2026",
     items: [
-      { name: "Wilayat al-Faqih · Iran", text: "The system founded in 1979 still governs Iran, and has been at war with the United States and Israel since February 2026." },
-      { name: "Dawa and the Ba'ath · Iraq", text: "Dawa and the other Shi'a parties have governed Iraq since 2005, and the armed factions tied to Iran are still armed. The Ba'ath has been banned since 2003." },
-      { name: "Amal and Hezbollah · Lebanon", text: "Both remain Lebanon's main Shi'a parties. Hezbollah's command was broken in 2024, and the state is testing whether it can disarm what remains of it." },
+      { name: "Wilayat al-Faqih · Iran", text: "The Islamic Republic founded in 1979 still governs Iran. Since February 2026 it has been at war with the United States and Israel." },
+      { name: "Dawa and the Ba'ath · Iraq", text: "Dawa and the other Shi'a parties have governed Iraq since 2005. Armed factions remain part of the landscape. The Ba'ath has been banned since 2003." },
+      { name: "Amal and Hezbollah · Lebanon", text: "Both remain Lebanon's main Shi'a parties. After the 2024 war, Hezbollah's leadership was hit hard, and the Lebanese state is pressing the question of its arms." },
       { name: "Ansar Allah · Yemen", text: "The Houthis still hold Sanaa and the north." },
     ],
   },

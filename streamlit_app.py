@@ -3,7 +3,7 @@ from pathlib import Path
 import streamlit as st
 import streamlit.components.v1 as components
 
-st.set_page_config(page_title="Political Shiism, 1916–2026", layout="wide")
+st.set_page_config(page_title="Political Shiism, 1936–2026", layout="wide")
 
 st.markdown(
     """
